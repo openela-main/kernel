@@ -1,0 +1,11 @@
+--- a/init/main.c       2022-01-17 11:02:11.000000000 +0000
++++ b/init/main.c       2022-01-27 17:26:31.186106224 +0000
+@@ -573,7 +573,7 @@ asmlinkage __visible void __init start_k
+        page_alloc_init();
+
+        pr_notice("Kernel command line: %s\n", boot_command_line);
+-       pr_notice("Specific versions of hardware are certified with Red Hat Enterprise Linux 8. Please see the list of hardware certified with Red Hat Enterprise Linux 8 at https://catalog.redhat.com.\n");
++       pr_notice("Specific versions of hardware are certified with Enterprise Linux 8. Please see the list of hardware certified with all Enterprise Linux 8 systems at https://catalog.redhat.com.\n");
+        parse_early_param();
+        after_dashes = parse_args("Booting kernel",
+                                  static_command_line, __start___param,

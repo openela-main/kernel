@@ -1,0 +1,24 @@
+From 30b65a28f88db6cb27384293b68bd38ed469157e Mon Sep 17 00:00:00 2001
+From: Sherif Nagy <sherif@rockylinux.org>
+Date: Wed, 19 May 2021 17:51:09 +0100
+Subject: [PATCH 3/3] fixing vmlinuz.tmp removal
+
+---
+ SPECS/kernel.spec | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
+index 0e5942b..e3e8504 100644
+--- a/SPECS/kernel.spec
++++ b/SPECS/kernel.spec
+@@ -1316,7 +1316,6 @@ BuildKernel() {
+ 
+     %ifarch x86_64 aarch64
+     %pesign -s -i $SignImage -o vmlinuz.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n %{pesign_name_0}
+-    rm vmlinuz.tmp
+     %endif
+     %ifarch s390x ppc64le
+     if [ -x /usr/bin/rpm-sign ]; then
+-- 
+2.31.1
+

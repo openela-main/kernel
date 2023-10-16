@@ -1,0 +1,289 @@
+From 50c45d16ed4e6f983fa8c799cfbbf564bae13f57 Mon Sep 17 00:00:00 2001
+From: Louis Abel <tucklesepk@gmail.com>
+Date: Tue, 30 May 2023 09:12:46 -0700
+Subject: [PATCH] Debrand kernel
+
+---
+ SOURCES/kernel-aarch64-debug.config  |  2 +-
+ SOURCES/kernel-aarch64.config        |  2 +-
+ SOURCES/kernel-ppc64le-debug.config  |  2 +-
+ SOURCES/kernel-ppc64le.config        |  2 +-
+ SOURCES/kernel-s390x-debug.config    |  2 +-
+ SOURCES/kernel-s390x-zfcpdump.config |  2 +-
+ SOURCES/kernel-s390x.config          |  2 +-
+ SOURCES/kernel-x86_64-debug.config   |  2 +-
+ SOURCES/kernel-x86_64.config         |  2 +-
+ SPECS/kernel.spec                    | 62 +++++++++-------------------
+ 10 files changed, 28 insertions(+), 52 deletions(-)
+
+diff --git a/SOURCES/kernel-aarch64-debug.config b/SOURCES/kernel-aarch64-debug.config
+index b46f57f..9f151ff 100644
+--- a/SOURCES/kernel-aarch64-debug.config
++++ b/SOURCES/kernel-aarch64-debug.config
+@@ -2919,7 +2919,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-aarch64.config b/SOURCES/kernel-aarch64.config
+index 18975c9..43ad3cf 100644
+--- a/SOURCES/kernel-aarch64.config
++++ b/SOURCES/kernel-aarch64.config
+@@ -2982,7 +2982,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-ppc64le-debug.config b/SOURCES/kernel-ppc64le-debug.config
+index 135c12b..5528382 100644
+--- a/SOURCES/kernel-ppc64le-debug.config
++++ b/SOURCES/kernel-ppc64le-debug.config
+@@ -2593,7 +2593,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-ppc64le.config b/SOURCES/kernel-ppc64le.config
+index 2e51473..217105d 100644
+--- a/SOURCES/kernel-ppc64le.config
++++ b/SOURCES/kernel-ppc64le.config
+@@ -2653,7 +2653,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-s390x-debug.config b/SOURCES/kernel-s390x-debug.config
+index d7fedd1..8905b06 100644
+--- a/SOURCES/kernel-s390x-debug.config
++++ b/SOURCES/kernel-s390x-debug.config
+@@ -2714,7 +2714,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-s390x-zfcpdump.config b/SOURCES/kernel-s390x-zfcpdump.config
+index 9eec20e..6dd43a3 100644
+--- a/SOURCES/kernel-s390x-zfcpdump.config
++++ b/SOURCES/kernel-s390x-zfcpdump.config
+@@ -2925,7 +2925,7 @@ CONFIG_CRYPTO_ECHAINIV=y
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=y
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-s390x.config b/SOURCES/kernel-s390x.config
+index f290d9b..ad54f98 100644
+--- a/SOURCES/kernel-s390x.config
++++ b/SOURCES/kernel-s390x.config
+@@ -2776,7 +2776,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-x86_64-debug.config b/SOURCES/kernel-x86_64-debug.config
+index a30c257..6bc0338 100644
+--- a/SOURCES/kernel-x86_64-debug.config
++++ b/SOURCES/kernel-x86_64-debug.config
+@@ -2654,7 +2654,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SOURCES/kernel-x86_64.config b/SOURCES/kernel-x86_64.config
+index 2fdad59..26256e6 100644
+--- a/SOURCES/kernel-x86_64.config
++++ b/SOURCES/kernel-x86_64.config
+@@ -2716,7 +2716,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+ CONFIG_CRYPTO_ESSIV=y
+ CONFIG_CRYPTO_FCRYPT=m
+ CONFIG_CRYPTO_FIPS=y
+-CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux 8 - Kernel Cryptographic API"
++CONFIG_CRYPTO_FIPS_NAME="OpenELA 8 - Kernel Cryptographic API"
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_CRYPTO_GF128MUL=y
+ CONFIG_CRYPTO_GHASH=y
+diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
+index 3dfd11a..5c21fdd 100644
+--- a/SPECS/kernel.spec
++++ b/SPECS/kernel.spec
+@@ -447,34 +447,11 @@ Source9: x509.genkey
+ %define signing_key_filename kernel-signing-s390.cer
+ %endif
+ 
+-Source10: redhatsecurebootca3.cer
+-Source11: redhatsecurebootca5.cer
+-Source12: redhatsecureboot301.cer
+-Source13: redhatsecureboot501.cer
+-Source14: secureboot_s390.cer
+-Source15: secureboot_ppc.cer
+-Source16: redhatsecurebootca7.cer
+-
+-%define secureboot_ca_0 %{SOURCE10}
+-%define secureboot_ca_1 %{SOURCE11}
+-%define secureboot_ca_2 %{SOURCE16}
++BuildRequires: system-sb-certs
+ 
+-%ifarch x86_64 aarch64
+-%define secureboot_key_0 %{SOURCE12}
+-%define pesign_name_0 redhatsecureboot301
+-%define secureboot_key_1 %{SOURCE13}
+-%define pesign_name_1 redhatsecureboot501
+-%endif
+-
+-%ifarch s390x
+-%define secureboot_key_0 %{SOURCE14}
+-%define pesign_name_0 redhatsecureboot302
+-%endif
+-
+-%ifarch ppc64le
+-%define secureboot_key_0 %{SOURCE15}
+-%define pesign_name_0 redhatsecureboot701
+-%endif
++%define secureboot_ca_0 %{_datadir}/pki/sb-certs/secureboot-ca-%{_arch}.cer
++%define secureboot_key_0 %{_datadir}/pki/sb-certs/secureboot-kernel-%{_arch}.cer
++%define pesign_name_0 openelabootsigningcert
+ 
+ Source17: mod-blacklist.sh
+ Source18: mod-sign.sh
+@@ -503,8 +480,8 @@ Source43: generate_bls_conf.sh
+ 
+ Source44: mod-internal.list
+ 
+-Source100: rheldup3.x509
+-Source101: rhelkpatch1.x509
++Source100: openeladup1.x509
++Source101: openelakpatch1.x509
+ 
+ %if %{with_kabichk}
+ Source200: check-kabi
+@@ -547,7 +524,7 @@ Patch999999: linux-kernel-test.patch
+ BuildRoot: %{_tmppath}/%{name}-%{KVERREL}-root
+ 
+ %description
+-This is the package which provides the Linux %{name} for Red Hat Enterprise
++This is the package which provides the Linux %{name} for OpenELA
+ Linux. It is based on upstream Linux at version %{version} and maintains kABI
+ compatibility of a set of approved symbols, however it is heavily modified with
+ backports and fixes pulled from newer upstream Linux %{name} releases. This means
+@@ -556,7 +533,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
+ core. Some of the components/backports that may be pulled in are: changes like
+ updates to the core kernel (eg.: scheduler, cgroups, memory management, security
+ fixes and features), updates to block layer, supported filesystems, major driver
+-updates for supported hardware in Red Hat Enterprise Linux, enhancements for
++updates for supported hardware in OpenELA, enhancements for
+ enterprise customers, etc.
+ 
+ #
+@@ -800,13 +777,13 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+ %endif
+ 
+ %package -n %{name}-abi-stablelists
+-Summary: The Red Hat Enterprise Linux kernel ABI symbol stablelists
++Summary: The OpenELA kernel ABI symbol stablelists
+ Group: System Environment/Kernel
+ AutoReqProv: no
+ Obsoletes: %{name}-abi-whitelists < %{rpmversion}-%{pkg_release}
+ Provides: %{name}-abi-whitelists
+ %description -n %{name}-abi-stablelists
+-The kABI package contains information pertaining to the Red Hat Enterprise
++The kABI package contains information pertaining to the OpenELA
+ Linux kernel ABI, including lists of kernel symbols that are needed by
+ external Linux kernel modules, and a yum plugin to aid enforcement.
+ 
+@@ -816,7 +793,7 @@ Summary: The baseline dataset for kABI verification using DWARF data
+ Group: System Environment/Kernel
+ AutoReqProv: no
+ %description kernel-kabidw-base-internal
+-The package contains data describing the current ABI of the Red Hat Enterprise
++The package contains data describing the current ABI of the OpenELA
+ Linux kernel, suitable for the kabi-dw tool.
+ %endif
+ 
+@@ -891,7 +868,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
+ AutoReq: no\
+ AutoProv: yes\
+ %description %{?1:%{1}-}modules-internal\
+-This package provides kernel modules for the %{?2:%{2} }kernel package for Red Hat internal usage.\
++This package provides kernel modules for the %{?2:%{2} }kernel package for OpenELA internal usage.\
+ %{nil}
+ 
+ #
+@@ -1093,6 +1070,8 @@ mv linux-%{rpmversion}-%{pkgrelease} linux-%{KVERREL}
+ 
+ cd linux-%{KVERREL}
+ 
++ApplyOptionalPatch debrand-single-cpu.patch
++ApplyOptionalPatch debrand-rh-i686-cpu.patch
+ ApplyOptionalPatch linux-kernel-test.patch
+ 
+ # END OF PATCH APPLICATIONS
+@@ -1166,7 +1145,7 @@ openssl x509 -inform der -in %{SOURCE100} -out rheldup3.pem
+ openssl x509 -inform der -in %{SOURCE101} -out rhelkpatch1.pem
+ cat rheldup3.pem rhelkpatch1.pem > ../certs/rhel.pem
+ %ifarch ppc64le
+-openssl x509 -inform der -in %{secureboot_ca_2} -out secureboot.pem
++openssl x509 -inform pem -in %{secureboot_ca_0} -out secureboot.pem
+ cat secureboot.pem >> ../certs/rhel.pem
+ %endif
+ for i in *.config; do
+@@ -1317,9 +1296,7 @@ BuildKernel() {
+     fi
+ 
+     %ifarch x86_64 aarch64
+-    %pesign -s -i $SignImage -o vmlinuz.tmp -a %{secureboot_ca_0} -c %{secureboot_key_0} -n %{pesign_name_0}
+-    %pesign -s -i vmlinuz.tmp -o vmlinuz.signed -a %{secureboot_ca_1} -c %{secureboot_key_1} -n %{pesign_name_1}
+-    rm vmlinuz.tmp
++    %pesign -s -i $SignImage -o vmlinuz.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n %{pesign_name_0}
+     %endif
+     %ifarch s390x ppc64le
+     if [ -x /usr/bin/rpm-sign ]; then
+@@ -1746,12 +1723,11 @@ BuildKernel() {
+     # Red Hat UEFI Secure Boot CA cert, which can be used to authenticate the kernel
+     mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer
+     %ifarch x86_64 aarch64
+-        install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca-20200609.cer
+-        install -m 0644 %{secureboot_ca_1} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca-20140212.cer
+-        ln -s kernel-signing-ca-20200609.cer $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
++        install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca-20230427.cer
++        ln -s kernel-signing-ca-20230427.cer $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
+     %else
+         %ifarch ppc64le
+-            install -m 0644 %{secureboot_ca_2} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
++            install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
+         %else
+             install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
+         %endif
+-- 
+2.40.1
+
