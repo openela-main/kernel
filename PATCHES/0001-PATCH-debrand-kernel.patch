@@ -1,17 +1,21 @@
-From f69cb5a26954bc59f0e0488a9adce4a012e7a698 Mon Sep 17 00:00:00 2001
-From: Louis Abel <label@rockylinux.org>
-Date: Mon, 8 May 2023 22:58:58 -0700
-Subject: [PATCH] Debrand kernel
+From 6f022cc47236c4aec17151cb3bc4a7e25cc5ebaf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Dirk=20M=C3=BCller?= <dmueller@suse.com>
+Date: Fri, 10 Nov 2023 10:06:35 +0100
+Subject: [PATCH] [PATCH] debrand kernel
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Signed-off-by: Dirk Müller <dmueller@suse.com>
 ---
- SPECS/kernel.spec | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ SPECS/kernel.spec | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 16be854..3fe49cc 100755
+index b6f9c53..1ba7081 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -779,18 +779,14 @@ Source1: Makefile.rhelver
+@@ -810,18 +810,14 @@ Source1: Makefile.rhelver
  %define secureboot_ca_0 %{_datadir}/pki/sb-certs/secureboot-ca-%{_arch}.cer
  %define secureboot_key_0 %{_datadir}/pki/sb-certs/secureboot-kernel-%{_arch}.cer
  
@@ -33,18 +37,18 @@ index 16be854..3fe49cc 100755
  %endif
  
  # signkernel
-@@ -864,8 +860,8 @@ Source82: update_scripts.sh
- Source84: mod-internal.list
+@@ -901,8 +897,8 @@ Source84: mod-internal.list
  Source85: mod-partner.list
+ Source86: mod-kvm.list
  
 -Source100: rheldup3.x509
 -Source101: rhelkpatch1.x509
 +Source100: openeladup1.x509
 +Source101: openelakpatch1.x509
- 
- Source150: dracut-virt.conf
- 
-@@ -911,6 +907,7 @@ Patch1: patch-%{patchversion}-redhat.patch
+ Source102: rhelimaca1.x509
+ Source103: rhelima.x509
+ Source104: rhelima_centos.x509
+@@ -962,6 +958,7 @@ Patch1: patch-%{patchversion}-redhat.patch
  
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -52,8 +56,8 @@ index 16be854..3fe49cc 100755
  
  # END OF PATCH DEFINITIONS
  
-@@ -1155,10 +1152,10 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
- %endif
+@@ -1245,10 +1242,10 @@ Summary: gcov graph and source files for coverage data collection.\
+ %{nil}
  
  %package -n kernel-abi-stablelists
 -Summary: The Red Hat Enterprise Linux kernel ABI symbol stablelists
@@ -65,7 +69,7 @@ index 16be854..3fe49cc 100755
  Linux kernel ABI, including lists of kernel symbols that are needed by
  external Linux kernel modules, and a yum plugin to aid enforcement.
  
-@@ -1168,7 +1165,7 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -1258,7 +1255,7 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -74,7 +78,7 @@ index 16be854..3fe49cc 100755
  Linux kernel, suitable for the kabi-dw tool.
  %endif
  
-@@ -1268,7 +1265,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
+@@ -1358,7 +1355,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -82,8 +86,8 @@ index 16be854..3fe49cc 100755
 +This package provides kernel modules for the %{?2:%{2} }kernel package for OpenELA internal usage.\
  %{nil}
  
- #
-@@ -1560,6 +1557,7 @@ cp -a %{SOURCE1} .
+ %if %{with_realtime}
+@@ -1697,6 +1694,7 @@ cp -a %{SOURCE1} .
  ApplyOptionalPatch patch-%{patchversion}-redhat.patch
  %endif
  
@@ -91,7 +95,7 @@ index 16be854..3fe49cc 100755
  ApplyOptionalPatch linux-kernel-test.patch
  
  # END OF PATCH APPLICATIONS
-@@ -1652,7 +1650,7 @@ done
+@@ -1790,7 +1788,7 @@ done
  # Adjust FIPS module name for RHEL
  %if 0%{?rhel}
  for i in *.config; do
@@ -100,6 +104,22 @@ index 16be854..3fe49cc 100755
  done
  %endif
  
+@@ -2428,12 +2426,12 @@ BuildKernel() {
+ %if %{efiuki}
+     if [ "$Variant" != "rt" ] && [ "$Variant" != "rt-debug" ]; then
+         popd
+-    
++
+         KernelUnifiedImageDir="$RPM_BUILD_ROOT/lib/modules/$KernelVer"
+         KernelUnifiedImage="$KernelUnifiedImageDir/$InstallName-virt.efi"
+-    
++
+         mkdir -p $KernelUnifiedImageDir
+-    
++
+         dracut --conf=%{SOURCE150} \
+                --confdir=$(mktemp -d) \
+                --verbose \
 -- 
-2.40.1
+2.42.0
 
