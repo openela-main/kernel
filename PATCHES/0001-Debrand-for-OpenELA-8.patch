@@ -148,8 +148,8 @@ index 9f1c152..cf5fd0b 100644
 -Source14: secureboot_s390.cer
 -Source15: secureboot_ppc.cer
 -Source16: redhatsecurebootca7.cer
-+Source10: openelasecurebootca.cer
-+Source12: openelasecureboot.cer
++Source10: openela-root-ca.der
++Source12: openela-signing.der
  
  %define secureboot_ca_0 %{SOURCE10}
 -%define secureboot_ca_1 %{SOURCE11}
