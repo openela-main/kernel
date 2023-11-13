@@ -1,58 +1,53 @@
-From ecc377777e1f9441ea6615628e2918d719426935 Mon Sep 17 00:00:00 2001
+From 8c75a7f9eb3eaf373919d8999c44c12571b7f65f Mon Sep 17 00:00:00 2001
 From: Mustafa Gezen <mustafa@ctrliq.com>
-Date: Mon, 13 Nov 2023 16:48:47 +0100
-Subject: [PATCH] Debrand for OpenELA
+Date: Mon, 13 Nov 2023 17:45:11 +0100
+Subject: [PATCH] Debrand for OpenELA 9.3
 
 ---
- SPECS/kernel.spec | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ SPECS/kernel.spec | 54 +++++++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index b57e97b..09d579f 100755
+index e1b2276..8930de9 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -779,17 +779,14 @@ Source1: Makefile.rhelver
- %define secureboot_ca_0 %{_datadir}/pki/sb-certs/secureboot-ca-%{_arch}.cer
- %define secureboot_key_0 %{_datadir}/pki/sb-certs/secureboot-kernel-%{_arch}.cer
- 
--%if 0%{?centos}
--%define pesign_name_0 centossecureboot201
--%else
- %ifarch x86_64 aarch64
--%define pesign_name_0 redhatsecureboot501
-+%define pesign_name_0 openelabootsigningcert
- %endif
- %ifarch s390x
--%define pesign_name_0 redhatsecureboot302
-+%define pesign_name_0 openelabootsigningcert
- %endif
- %ifarch ppc64le
--%define pesign_name_0 redhatsecureboot701
-+%define pesign_name_0 openelabootsigningcert
- %endif
- %endif
- 
-@@ -864,8 +861,8 @@ Source82: update_scripts.sh
- Source84: mod-internal.list
+@@ -901,18 +901,16 @@ Source84: mod-internal.list
  Source85: mod-partner.list
+ Source86: mod-kvm.list
  
 -Source100: rheldup3.x509
 -Source101: rhelkpatch1.x509
+-Source102: rhelimaca1.x509
+-Source103: rhelima.x509
+-Source104: rhelima_centos.x509
 +Source100: openeladup1.x509
 +Source101: openelakpatch1.x509
  
- Source150: dracut-virt.conf
+-%if 0%{?centos}
+-%define ima_signing_cert %{SOURCE104}
+-%else
+-%define ima_signing_cert %{SOURCE103}
+-%endif
++%define driver_cert %{SOURCE100}
++%define kpatch_cert %{SOURCE101}
++
++Source102: openela-ima-ca.crt
++Source103: openela-imarelease.crt
  
-@@ -911,6 +908,7 @@ Patch1: patch-%{patchversion}-redhat.patch
++%define ima_signing_cert %{SOURCE103}
+ %define ima_cert_name ima.cer
+ 
+ Source150: dracut-virt.conf
+@@ -962,6 +960,7 @@ Patch1: patch-%{patchversion}-redhat.patch
  
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
-+Patch1000000: 1000-Debrand-specific-Red-Hat-messages.patch
++Patch1000000: 1000-debrand-some-messages.patch
  
  # END OF PATCH DEFINITIONS
  
-@@ -1155,11 +1153,11 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
- %endif
+@@ -1245,11 +1244,11 @@ Summary: gcov graph and source files for coverage data collection.\
+ %{nil}
  
  %package -n kernel-abi-stablelists
 -Summary: The Red Hat Enterprise Linux kernel ABI symbol stablelists
@@ -61,23 +56,23 @@ index b57e97b..09d579f 100755
  %description -n kernel-abi-stablelists
 -The kABI package contains information pertaining to the Red Hat Enterprise
 -Linux kernel ABI, including lists of kernel symbols that are needed by
-+The kABI package contains information pertaining to the
-+OpenELA kernel ABI, including lists of kernel symbols that are needed by
++The kABI package contains information pertaining to the OpenELA
++kernel ABI, including lists of kernel symbols that are needed by
  external Linux kernel modules, and a yum plugin to aid enforcement.
  
  %if %{with_kabidw_base}
-@@ -1168,8 +1166,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -1258,8 +1257,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
 -The package contains data describing the current ABI of the Red Hat Enterprise
 -Linux kernel, suitable for the kabi-dw tool.
-+The package contains data describing the current ABI of the
-+OpenELA kernel, suitable for the kabi-dw tool.
++The package contains data describing the current ABI of the OpenELA
++kernel, suitable for the kabi-dw tool.
  %endif
  
  #
-@@ -1268,7 +1266,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
+@@ -1358,7 +1357,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -85,8 +80,8 @@ index b57e97b..09d579f 100755
 +This package provides kernel modules for the %{?2:%{2} }kernel package for OpenELA internal usage.\
  %{nil}
  
- #
-@@ -1412,7 +1410,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
+ %if %{with_realtime}
+@@ -1531,7 +1530,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-partner\
@@ -95,15 +90,26 @@ index b57e97b..09d579f 100755
  %{nil}
  
  # Now, each variant package.
-@@ -1561,6 +1559,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
+@@ -1698,6 +1697,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
  %endif
  
  ApplyOptionalPatch linux-kernel-test.patch
-+ApplyOptionalPatch 1000-Debrand-specific-Red-Hat-messages.patch
++ApplyOptionalPatch 1000-debrand-some-messages.patch
  
  # END OF PATCH APPLICATIONS
  
-@@ -1652,7 +1651,7 @@ done
+@@ -1771,8 +1771,8 @@ done
+ # Add DUP and kpatch certificates to system trusted keys for RHEL
+ %if 0%{?rhel}
+ %if %{signkernel}%{signmodules}
+-openssl x509 -inform der -in %{SOURCE100} -out rheldup3.pem
+-openssl x509 -inform der -in %{SOURCE101} -out rhelkpatch1.pem
++openssl x509 -inform der -in %{driver_cert} -out rheldup3.pem
++openssl x509 -inform der -in %{kpatch_cert} -out rhelkpatch1.pem
+ openssl x509 -inform der -in %{SOURCE102} -out rhelimaca1.pem
+ cat rheldup3.pem rhelkpatch1.pem rhelimaca1.pem > ../certs/rhel.pem
+ %if %{signkernel}
+@@ -1790,7 +1790,7 @@ done
  # Adjust FIPS module name for RHEL
  %if 0%{?rhel}
  for i in *.config; do
@@ -112,15 +118,40 @@ index b57e97b..09d579f 100755
  done
  %endif
  
-@@ -2371,7 +2370,7 @@ BuildKernel() {
-     # prune junk from kernel-devel
-     find $RPM_BUILD_ROOT/usr/src/kernels -name ".*.cmd" -delete
+@@ -2452,13 +2452,16 @@ BuildKernel() {
+         sed -i 's/\x0.*$//' $KernelUnifiedImage.sbat
+         # Add RHEL/CentOS specific entries
+ %if 0%{?centos}
+-        SBATsuffix="centos"
++        SBATsuffix="rhel"
+ %else
+         SBATsuffix="rhel"
+ %endif
+         echo "linux,1,Red Hat,linux,$KernelVer,https://bugzilla.redhat.com/" >> $KernelUnifiedImage.sbat
++        echo "linux,1,OpenELA,linux,$KernelVer,https://bugs.openela.org/" >> $KernelUnifiedImage.sbat
+         echo "linux.$SBATsuffix,1,Red Hat,linux,$KernelVer,https://bugzilla.redhat.com/" >> $KernelUnifiedImage.sbat
++        echo "linux.openela,1,OpenELA,linux,$KernelVer,https://bugs.openela.org/" >> $KernelUnifiedImage.sbat
+         echo "kernel-uki-virt.$SBATsuffix,1,Red Hat,kernel-uki-virt,$KernelVer,https://bugzilla.redhat.com/" >> $KernelUnifiedImage.sbat
++        echo "kernel-uki-virt.openela,1,OpenELA,kernel-uki-virt,$KernelVer,https://bugs.openela.org/" >> $KernelUnifiedImage.sbat
+         # Remove the original .sbat section
+         objcopy --remove-section .sbat $KernelUnifiedImage
+         # Get the end of the last section
+@@ -2473,13 +2476,8 @@ BuildKernel() {
  
--    # Red Hat UEFI Secure Boot CA cert, which can be used to authenticate the kernel
-+    # OpenELA UEFI Secure Boot CA cert, which can be used to authenticate the kernel
-     mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer
  %if %{signkernel}
-     install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
+ 
+-%if 0%{?centos}
+-	UKI_secureboot_name=centossecureboot204
+-	UKI_secureboot_cert=%{SOURCE151}
+-%else
+-	UKI_secureboot_name=redhatsecureboot504
+-	UKI_secureboot_cert=%{SOURCE152}
+-%endif
++	      UKI_secureboot_name=openelabootsigningcert
++        UKI_secureboot_cert=%{_datadir}/pki/sb-certs/secureboot-uki-virt-%{_arch}.cer
+ 
+         %pesign -s -i $KernelUnifiedImage -o $KernelUnifiedImage.signed -a %{secureboot_ca_0} -c $UKI_secureboot_cert -n $UKI_secureboot_name
+         if [ ! -s $KernelUnifiedImage.signed ]; then
 -- 
 2.39.3 (Apple Git-145)
 
