@@ -99,7 +99,7 @@ index b57e97b..09d579f 100755
  %endif
  
  ApplyOptionalPatch linux-kernel-test.patch
-+ApplyOptionalPatch 1000-Debrand-specific-Red-Hat-messages.patch
++ApplyOptionalPatch 1000-debrand-some-messages.patch
  
  # END OF PATCH APPLICATIONS
  
