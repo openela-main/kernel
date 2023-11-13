@@ -1,17 +1,17 @@
-From f69cb5a26954bc59f0e0488a9adce4a012e7a698 Mon Sep 17 00:00:00 2001
-From: Louis Abel <label@rockylinux.org>
-Date: Mon, 8 May 2023 22:58:58 -0700
-Subject: [PATCH] Debrand kernel
+From a44fab14a6d22c89b1af7a34fb6d292a6e805352 Mon Sep 17 00:00:00 2001
+From: Mustafa Gezen <mustafa@ctrliq.com>
+Date: Mon, 13 Nov 2023 16:48:47 +0100
+Subject: [PATCH] Debrand for OpenELA
 
 ---
- SPECS/kernel.spec | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ SPECS/kernel.spec | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 16be854..3fe49cc 100755
+index b57e97b..eb7fbf0 100755
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -779,18 +779,14 @@ Source1: Makefile.rhelver
+@@ -779,17 +779,14 @@ Source1: Makefile.rhelver
  %define secureboot_ca_0 %{_datadir}/pki/sb-certs/secureboot-ca-%{_arch}.cer
  %define secureboot_key_0 %{_datadir}/pki/sb-certs/secureboot-kernel-%{_arch}.cer
  
@@ -28,12 +28,11 @@ index 16be854..3fe49cc 100755
  %endif
  %ifarch ppc64le
 -%define pesign_name_0 redhatsecureboot701
--%endif
 +%define pesign_name_0 openelabootsigningcert
  %endif
+ %endif
  
- # signkernel
-@@ -864,8 +860,8 @@ Source82: update_scripts.sh
+@@ -864,8 +861,8 @@ Source82: update_scripts.sh
  Source84: mod-internal.list
  Source85: mod-partner.list
  
@@ -44,7 +43,7 @@ index 16be854..3fe49cc 100755
  
  Source150: dracut-virt.conf
  
-@@ -911,6 +907,7 @@ Patch1: patch-%{patchversion}-redhat.patch
+@@ -911,6 +908,7 @@ Patch1: patch-%{patchversion}-redhat.patch
  
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -52,7 +51,7 @@ index 16be854..3fe49cc 100755
  
  # END OF PATCH DEFINITIONS
  
-@@ -1155,10 +1152,10 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+@@ -1155,11 +1153,11 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
  %endif
  
  %package -n kernel-abi-stablelists
@@ -61,20 +60,24 @@ index 16be854..3fe49cc 100755
  AutoReqProv: no
  %description -n kernel-abi-stablelists
 -The kABI package contains information pertaining to the Red Hat Enterprise
-+The kABI package contains information pertaining to the OpenELA
- Linux kernel ABI, including lists of kernel symbols that are needed by
+-Linux kernel ABI, including lists of kernel symbols that are needed by
++The kABI package contains information pertaining to the
++OpenELA kernel ABI, including lists of kernel symbols that are needed by
  external Linux kernel modules, and a yum plugin to aid enforcement.
  
-@@ -1168,7 +1165,7 @@ Summary: The baseline dataset for kABI verification using DWARF data
+ %if %{with_kabidw_base}
+@@ -1168,8 +1166,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
 -The package contains data describing the current ABI of the Red Hat Enterprise
-+The package contains data describing the current ABI of the OpenELA
- Linux kernel, suitable for the kabi-dw tool.
+-Linux kernel, suitable for the kabi-dw tool.
++The package contains data describing the current ABI of the
++OpenELA kernel, suitable for the kabi-dw tool.
  %endif
  
-@@ -1268,7 +1265,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
+ #
+@@ -1268,7 +1266,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -83,14 +86,15 @@ index 16be854..3fe49cc 100755
  %{nil}
  
  #
-@@ -1560,6 +1557,7 @@ cp -a %{SOURCE1} .
- ApplyOptionalPatch patch-%{patchversion}-redhat.patch
- %endif
+@@ -1412,7 +1410,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
+ AutoReq: no\
+ AutoProv: yes\
+ %description %{?1:%{1}-}modules-partner\
+-This package provides kernel modules for the %{?2:%{2} }kernel package for Red Hat partners usage.\
++This package provides kernel modules for the %{?2:%{2} }kernel package for OpenELA partners usage.\
+ %{nil}
  
-+ApplyOptionalPatch 1000-Debrand-specific-Red-Hat-messages.patch
- ApplyOptionalPatch linux-kernel-test.patch
- 
- # END OF PATCH APPLICATIONS
+ # Now, each variant package.
 @@ -1652,7 +1650,7 @@ done
  # Adjust FIPS module name for RHEL
  %if 0%{?rhel}
@@ -100,6 +104,15 @@ index 16be854..3fe49cc 100755
  done
  %endif
  
+@@ -2371,7 +2369,7 @@ BuildKernel() {
+     # prune junk from kernel-devel
+     find $RPM_BUILD_ROOT/usr/src/kernels -name ".*.cmd" -delete
+ 
+-    # Red Hat UEFI Secure Boot CA cert, which can be used to authenticate the kernel
++    # OpenELA UEFI Secure Boot CA cert, which can be used to authenticate the kernel
+     mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer
+ %if %{signkernel}
+     install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
 -- 
-2.40.1
+2.39.3 (Apple Git-145)
 
