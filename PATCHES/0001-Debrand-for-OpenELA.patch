@@ -1,14 +1,14 @@
-From a44fab14a6d22c89b1af7a34fb6d292a6e805352 Mon Sep 17 00:00:00 2001
+From ecc377777e1f9441ea6615628e2918d719426935 Mon Sep 17 00:00:00 2001
 From: Mustafa Gezen <mustafa@ctrliq.com>
 Date: Mon, 13 Nov 2023 16:48:47 +0100
 Subject: [PATCH] Debrand for OpenELA
 
 ---
- SPECS/kernel.spec | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ SPECS/kernel.spec | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index b57e97b..eb7fbf0 100755
+index b57e97b..09d579f 100755
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -779,17 +779,14 @@ Source1: Makefile.rhelver
@@ -95,7 +95,15 @@ index b57e97b..eb7fbf0 100755
  %{nil}
  
  # Now, each variant package.
-@@ -1652,7 +1650,7 @@ done
+@@ -1561,6 +1559,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
+ %endif
+ 
+ ApplyOptionalPatch linux-kernel-test.patch
++ApplyOptionalPatch 1000-Debrand-specific-Red-Hat-messages.patch
+ 
+ # END OF PATCH APPLICATIONS
+ 
+@@ -1652,7 +1651,7 @@ done
  # Adjust FIPS module name for RHEL
  %if 0%{?rhel}
  for i in *.config; do
@@ -104,7 +112,7 @@ index b57e97b..eb7fbf0 100755
  done
  %endif
  
-@@ -2371,7 +2369,7 @@ BuildKernel() {
+@@ -2371,7 +2370,7 @@ BuildKernel() {
      # prune junk from kernel-devel
      find $RPM_BUILD_ROOT/usr/src/kernels -name ".*.cmd" -delete
  
