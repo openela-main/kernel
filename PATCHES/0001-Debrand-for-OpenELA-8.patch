@@ -1,6 +1,6 @@
-From 84b1a37ae1e34695795095a4076867e4effc86e3 Mon Sep 17 00:00:00 2001
+From cf81598917157a854808c1a4097d1d3a28e80645 Mon Sep 17 00:00:00 2001
 From: Mustafa Gezen <mustafa@ctrliq.com>
-Date: Mon, 13 Nov 2023 17:20:16 +0100
+Date: Mon, 13 Nov 2023 19:26:18 +0100
 Subject: [PATCH] Debrand for OpenELA 8
 
 ---
@@ -13,8 +13,8 @@ Subject: [PATCH] Debrand for OpenELA 8
  SOURCES/kernel-s390x.config          |  2 +-
  SOURCES/kernel-x86_64-debug.config   |  2 +-
  SOURCES/kernel-x86_64.config         |  2 +-
- SPECS/kernel.spec                    | 52 +++++++++-------------------
- 10 files changed, 25 insertions(+), 45 deletions(-)
+ SPECS/kernel.spec                    | 54 +++++++++-------------------
+ 10 files changed, 26 insertions(+), 46 deletions(-)
 
 diff --git a/SOURCES/kernel-aarch64-debug.config b/SOURCES/kernel-aarch64-debug.config
 index b46f57f..56ad047 100644
@@ -134,7 +134,7 @@ index 36df590..927715a 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 9f1c152..cf5fd0b 100644
+index 9f1c152..a54450d 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -447,34 +447,12 @@ Source9: x509.genkey
@@ -148,8 +148,8 @@ index 9f1c152..cf5fd0b 100644
 -Source14: secureboot_s390.cer
 -Source15: secureboot_ppc.cer
 -Source16: redhatsecurebootca7.cer
-+Source10: openela-root-ca.der
-+Source12: openela-signing.der
++Source10: openelasecurebootca.cer
++Source12: openelasecureboot.cer
  
  %define secureboot_ca_0 %{SOURCE10}
 -%define secureboot_ca_1 %{SOURCE11}
@@ -157,7 +157,7 @@ index 9f1c152..cf5fd0b 100644
 -
 -%ifarch x86_64 aarch64
  %define secureboot_key_0 %{SOURCE12}
- %define pesign_name_0 redhatsecureboot301
+-%define pesign_name_0 redhatsecureboot301
 -%define secureboot_key_1 %{SOURCE13}
 -%define pesign_name_1 redhatsecureboot501
 -%endif
@@ -171,6 +171,7 @@ index 9f1c152..cf5fd0b 100644
 -%define secureboot_key_0 %{SOURCE15}
 -%define pesign_name_0 redhatsecureboot701
 -%endif
++%define pesign_name_0 openelabootsigningcert
  
  Source17: mod-blacklist.sh
  Source18: mod-sign.sh
