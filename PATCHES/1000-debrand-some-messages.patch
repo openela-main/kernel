@@ -19,7 +19,7 @@ index c16b538e5..486dc63d8 100644
  	page_address_init();
  	pr_notice("%s", linux_banner);
 -	pr_notice("The list of certified hardware and cloud instances for Red Hat Enterprise Linux 9 can be viewed at the Red Hat Ecosystem Catalog, https://catalog.redhat.com.\n");
-+	pr_notice("The list of certified hardware and cloud instances for Enterprise Linux 9 can be viewed at the Red Hat Ecosystem Catalog, https://catalog.redhat.com.\n");
++	pr_notice("The list of certified hardware and cloud instances for OpenELA 9 can be viewed at https://catalog.openela.org.\n");
  	early_security_init();
  	setup_arch(&command_line);
  	setup_boot_config();
@@ -45,7 +45,7 @@ index 95196f56a..99aac07e6 100644
  {
  	/* Print one single message */
 -	pr_crit("Warning: %s - this hardware has not undergone testing by Red Hat and might not be certified. Please consult https://catalog.redhat.com for certified hardware.\n", msg);
-+	pr_crit("Warning: %s - this hardware has not undergone testing by Red Hat nor the OpenELA project and might not be certified. Please consult the Red Hat catalog at https://catalog.redhat.com for certified hardware.\n", msg);
++	pr_crit("Warning: %s - this hardware has not undergone testing by Red Hat nor the OpenELA project and might not be certified.\n", msg);
  }
  EXPORT_SYMBOL(mark_hardware_unsupported);
  
@@ -54,7 +54,7 @@ index 95196f56a..99aac07e6 100644
  void mark_hardware_deprecated(const char *msg)
  {
 -	pr_crit("Warning: %s - this hardware is not recommended for new deployments. It continues to be supported in this RHEL release, but it is likely to be removed in the next major release. Driver updates and fixes for this device will be limited to critical issues. Please contact Red Hat Support or your device's hardware vendor for additional information.\n", msg);
-+	pr_crit("Warning: %s - this hardware is not recommended for new deployments. It continues to be supported in this Enterprise Linux release, but it is likely to be removed in the next major release. Driver updates and fixes for this device will be limited to critical issues. Please contact your support vendor or your device's hardware vendor for additional information.\n", msg);
++	pr_crit("Warning: %s - this hardware is not recommended for new deployments. It continues to be supported in this OpenELA release, but it is likely to be removed in the next major release. Driver updates and fixes for this device will be limited to critical issues. Please contact your support vendor or your device's hardware vendor for additional information.\n", msg);
  }
  EXPORT_SYMBOL(mark_hardware_deprecated);
  
@@ -72,7 +72,7 @@ index 95196f56a..99aac07e6 100644
  void mark_driver_deprecated(const char *name)
  {
 -	pr_crit("Warning: %s - this driver is not recommended for new deployments. It continues to be supported in this RHEL release, but it is likely to be removed in the next major release. Driver updates and fixes will be limited to critical issues. Please contact Red Hat Support for additional information.\n",
-+	pr_crit("Warning: %s - this hardware is not recommended for new deployments. It continues to be supported in this Enterprise Linux release, but it is likely to be removed in the next major release. Driver updates and fixes for this device will be limited to critical issues. Please contact your support vendor or your device's hardware vendor for additional information.\n", msg);
++	pr_crit("Warning: %s - this hardware is not recommended for new deployments. It continues to be supported in this OpenELA release, but it is likely to be removed in the next major release. Driver updates and fixes for this device will be limited to critical issues. Please contact your support vendor or your device's hardware vendor for additional information.\n", msg);
  	        name ? name : "kernel");
  }
  EXPORT_SYMBOL(mark_driver_deprecated);
