@@ -1,0 +1,126 @@
+From ecc377777e1f9441ea6615628e2918d719426935 Mon Sep 17 00:00:00 2001
+From: Mustafa Gezen <mustafa@ctrliq.com>
+Date: Mon, 13 Nov 2023 16:48:47 +0100
+Subject: [PATCH] Debrand for OpenELA
+
+---
+ SPECS/kernel.spec | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
+
+diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
+index b57e97b..09d579f 100755
+--- a/SPECS/kernel.spec
++++ b/SPECS/kernel.spec
+@@ -779,17 +779,14 @@ Source1: Makefile.rhelver
+ %define secureboot_ca_0 %{_datadir}/pki/sb-certs/secureboot-ca-%{_arch}.cer
+ %define secureboot_key_0 %{_datadir}/pki/sb-certs/secureboot-kernel-%{_arch}.cer
+ 
+-%if 0%{?centos}
+-%define pesign_name_0 centossecureboot201
+-%else
+ %ifarch x86_64 aarch64
+-%define pesign_name_0 redhatsecureboot501
++%define pesign_name_0 openelabootsigningcert
+ %endif
+ %ifarch s390x
+-%define pesign_name_0 redhatsecureboot302
++%define pesign_name_0 openelabootsigningcert
+ %endif
+ %ifarch ppc64le
+-%define pesign_name_0 redhatsecureboot701
++%define pesign_name_0 openelabootsigningcert
+ %endif
+ %endif
+ 
+@@ -864,8 +861,8 @@ Source82: update_scripts.sh
+ Source84: mod-internal.list
+ Source85: mod-partner.list
+ 
+-Source100: rheldup3.x509
+-Source101: rhelkpatch1.x509
++Source100: openeladup1.x509
++Source101: openelakpatch1.x509
+ 
+ Source150: dracut-virt.conf
+ 
+@@ -911,6 +908,7 @@ Patch1: patch-%{patchversion}-redhat.patch
+ 
+ # empty final patch to facilitate testing of kernel patches
+ Patch999999: linux-kernel-test.patch
++Patch1000000: 1000-debrand-some-messages.patch
+ 
+ # END OF PATCH DEFINITIONS
+ 
+@@ -1155,11 +1153,11 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+ %endif
+ 
+ %package -n kernel-abi-stablelists
+-Summary: The Red Hat Enterprise Linux kernel ABI symbol stablelists
++Summary: The OpenELA kernel ABI symbol stablelists
+ AutoReqProv: no
+ %description -n kernel-abi-stablelists
+-The kABI package contains information pertaining to the Red Hat Enterprise
+-Linux kernel ABI, including lists of kernel symbols that are needed by
++The kABI package contains information pertaining to the
++OpenELA kernel ABI, including lists of kernel symbols that are needed by
+ external Linux kernel modules, and a yum plugin to aid enforcement.
+ 
+ %if %{with_kabidw_base}
+@@ -1168,8 +1166,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+ Group: System Environment/Kernel
+ AutoReqProv: no
+ %description kernel-kabidw-base-internal
+-The package contains data describing the current ABI of the Red Hat Enterprise
+-Linux kernel, suitable for the kabi-dw tool.
++The package contains data describing the current ABI of the
++OpenELA kernel, suitable for the kabi-dw tool.
+ %endif
+ 
+ #
+@@ -1268,7 +1266,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
+ AutoReq: no\
+ AutoProv: yes\
+ %description %{?1:%{1}-}modules-internal\
+-This package provides kernel modules for the %{?2:%{2} }kernel package for Red Hat internal usage.\
++This package provides kernel modules for the %{?2:%{2} }kernel package for OpenELA internal usage.\
+ %{nil}
+ 
+ #
+@@ -1412,7 +1410,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
+ AutoReq: no\
+ AutoProv: yes\
+ %description %{?1:%{1}-}modules-partner\
+-This package provides kernel modules for the %{?2:%{2} }kernel package for Red Hat partners usage.\
++This package provides kernel modules for the %{?2:%{2} }kernel package for OpenELA partners usage.\
+ %{nil}
+ 
+ # Now, each variant package.
+@@ -1561,6 +1559,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
+ %endif
+ 
+ ApplyOptionalPatch linux-kernel-test.patch
++ApplyOptionalPatch 1000-debrand-some-messages.patch
+ 
+ # END OF PATCH APPLICATIONS
+ 
+@@ -1652,7 +1651,7 @@ done
+ # Adjust FIPS module name for RHEL
+ %if 0%{?rhel}
+ for i in *.config; do
+-  sed -i 's/CONFIG_CRYPTO_FIPS_NAME=.*/CONFIG_CRYPTO_FIPS_NAME="Red Hat Enterprise Linux %{rhel} - Kernel Cryptographic API"/' $i
++  sed -i 's/CONFIG_CRYPTO_FIPS_NAME=.*/CONFIG_CRYPTO_FIPS_NAME="OpenELA %{rhel} - Kernel Cryptographic API"/' $i
+ done
+ %endif
+ 
+@@ -2371,7 +2370,7 @@ BuildKernel() {
+     # prune junk from kernel-devel
+     find $RPM_BUILD_ROOT/usr/src/kernels -name ".*.cmd" -delete
+ 
+-    # Red Hat UEFI Secure Boot CA cert, which can be used to authenticate the kernel
++    # OpenELA UEFI Secure Boot CA cert, which can be used to authenticate the kernel
+     mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer
+ %if %{signkernel}
+     install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
+-- 
+2.39.3 (Apple Git-145)
+
