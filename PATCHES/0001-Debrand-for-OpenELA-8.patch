@@ -1,6 +1,6 @@
-From cf81598917157a854808c1a4097d1d3a28e80645 Mon Sep 17 00:00:00 2001
+From 138325a517504c90e785672285d8f0334ff35d27 Mon Sep 17 00:00:00 2001
 From: Mustafa Gezen <mustafa@ctrliq.com>
-Date: Mon, 13 Nov 2023 19:26:18 +0100
+Date: Wed, 15 Nov 2023 15:54:08 +0100
 Subject: [PATCH] Debrand for OpenELA 8
 
 ---
@@ -13,14 +13,14 @@ Subject: [PATCH] Debrand for OpenELA 8
  SOURCES/kernel-s390x.config          |  2 +-
  SOURCES/kernel-x86_64-debug.config   |  2 +-
  SOURCES/kernel-x86_64.config         |  2 +-
- SPECS/kernel.spec                    | 54 +++++++++-------------------
- 10 files changed, 26 insertions(+), 46 deletions(-)
+ SPECS/kernel.spec                    | 61 +++++++++-------------------
+ 10 files changed, 28 insertions(+), 51 deletions(-)
 
 diff --git a/SOURCES/kernel-aarch64-debug.config b/SOURCES/kernel-aarch64-debug.config
-index b46f57f..56ad047 100644
+index e1cb171..9933cae 100644
 --- a/SOURCES/kernel-aarch64-debug.config
 +++ b/SOURCES/kernel-aarch64-debug.config
-@@ -2919,7 +2919,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2946,7 +2946,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -30,10 +30,10 @@ index b46f57f..56ad047 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-aarch64.config b/SOURCES/kernel-aarch64.config
-index 18975c9..d8d0e3a 100644
+index c65bd1f..7bb273e 100644
 --- a/SOURCES/kernel-aarch64.config
 +++ b/SOURCES/kernel-aarch64.config
-@@ -2982,7 +2982,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -3009,7 +3009,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -43,10 +43,10 @@ index 18975c9..d8d0e3a 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-ppc64le-debug.config b/SOURCES/kernel-ppc64le-debug.config
-index 135c12b..72d0586 100644
+index 9abb285..2cb5548 100644
 --- a/SOURCES/kernel-ppc64le-debug.config
 +++ b/SOURCES/kernel-ppc64le-debug.config
-@@ -2593,7 +2593,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2618,7 +2618,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -56,10 +56,10 @@ index 135c12b..72d0586 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-ppc64le.config b/SOURCES/kernel-ppc64le.config
-index 2e51473..cee92db 100644
+index 70f18bd..0851e63 100644
 --- a/SOURCES/kernel-ppc64le.config
 +++ b/SOURCES/kernel-ppc64le.config
-@@ -2653,7 +2653,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2678,7 +2678,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -69,10 +69,10 @@ index 2e51473..cee92db 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-s390x-debug.config b/SOURCES/kernel-s390x-debug.config
-index d7fedd1..fbc2125 100644
+index 9b6e4a4..5bd75b1 100644
 --- a/SOURCES/kernel-s390x-debug.config
 +++ b/SOURCES/kernel-s390x-debug.config
-@@ -2714,7 +2714,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2739,7 +2739,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -82,10 +82,10 @@ index d7fedd1..fbc2125 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-s390x-zfcpdump.config b/SOURCES/kernel-s390x-zfcpdump.config
-index 9eec20e..9af4a98 100644
+index 4a5a0a6..fe72021 100644
 --- a/SOURCES/kernel-s390x-zfcpdump.config
 +++ b/SOURCES/kernel-s390x-zfcpdump.config
-@@ -2925,7 +2925,7 @@ CONFIG_CRYPTO_ECHAINIV=y
+@@ -2950,7 +2950,7 @@ CONFIG_CRYPTO_ECHAINIV=y
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=y
  CONFIG_CRYPTO_FIPS=y
@@ -95,10 +95,10 @@ index 9eec20e..9af4a98 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-s390x.config b/SOURCES/kernel-s390x.config
-index f290d9b..a23587a 100644
+index b58d105..0ec971d 100644
 --- a/SOURCES/kernel-s390x.config
 +++ b/SOURCES/kernel-s390x.config
-@@ -2776,7 +2776,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2801,7 +2801,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -108,10 +108,10 @@ index f290d9b..a23587a 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-x86_64-debug.config b/SOURCES/kernel-x86_64-debug.config
-index 09dc447..5295043 100644
+index 18547b4..dcf6d62 100644
 --- a/SOURCES/kernel-x86_64-debug.config
 +++ b/SOURCES/kernel-x86_64-debug.config
-@@ -2654,7 +2654,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2677,7 +2677,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -121,10 +121,10 @@ index 09dc447..5295043 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-x86_64.config b/SOURCES/kernel-x86_64.config
-index 36df590..927715a 100644
+index e9a23b4..a0838b6 100644
 --- a/SOURCES/kernel-x86_64.config
 +++ b/SOURCES/kernel-x86_64.config
-@@ -2716,7 +2716,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2739,7 +2739,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -134,48 +134,53 @@ index 36df590..927715a 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 9f1c152..a54450d 100644
+index d630c1f..dea75e3 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -447,34 +447,12 @@ Source9: x509.genkey
+@@ -447,37 +447,12 @@ Source9: x509.genkey
  %define signing_key_filename kernel-signing-s390.cer
  %endif
  
 -Source10: redhatsecurebootca3.cer
--Source11: redhatsecurebootca5.cer
--Source12: redhatsecureboot301.cer
+-Source11: centossecurebootca2.cer
+-Source12: centossecureboot201.cer
 -Source13: redhatsecureboot501.cer
--Source14: secureboot_s390.cer
--Source15: secureboot_ppc.cer
+-Source14: redhatsecureboot302.cer
+-Source15: redhatsecureboot303.cer
 -Source16: redhatsecurebootca7.cer
-+Source10: openelasecurebootca.cer
-+Source12: openelasecureboot.cer
- 
- %define secureboot_ca_0 %{SOURCE10}
--%define secureboot_ca_1 %{SOURCE11}
--%define secureboot_ca_2 %{SOURCE16}
+-%if 0%{?centos}
+-%define secureboot_ca_0  %{SOURCE11}
+-%define secureboot_key_0 %{SOURCE12}
+-%define pesign_name_0 centossecureboot201
+-%else
 -
 -%ifarch x86_64 aarch64
- %define secureboot_key_0 %{SOURCE12}
--%define pesign_name_0 redhatsecureboot301
--%define secureboot_key_1 %{SOURCE13}
--%define pesign_name_1 redhatsecureboot501
+-%define secureboot_ca_0 %{SOURCE10}
+-%define secureboot_key_0 %{SOURCE13}
+-%define pesign_name_0 redhatsecureboot501
 -%endif
 -
 -%ifarch s390x
+-%define secureboot_ca_0 %{SOURCE10}
 -%define secureboot_key_0 %{SOURCE14}
 -%define pesign_name_0 redhatsecureboot302
 -%endif
--
++Source10: openela-root-ca.der
++Source12: openela-signing.der
+ 
 -%ifarch ppc64le
+-%define secureboot_ca_0 %{SOURCE16}
 -%define secureboot_key_0 %{SOURCE15}
 -%define pesign_name_0 redhatsecureboot701
 -%endif
+-%endif
++%define secureboot_ca_0  %{SOURCE10}
++%define secureboot_key_0 %{SOURCE12}
 +%define pesign_name_0 openelabootsigningcert
  
  Source17: mod-blacklist.sh
  Source18: mod-sign.sh
-@@ -503,8 +481,8 @@ Source43: generate_bls_conf.sh
+@@ -506,8 +481,8 @@ Source43: generate_bls_conf.sh
  
  Source44: mod-internal.list
  
@@ -186,7 +191,7 @@ index 9f1c152..a54450d 100644
  
  %if %{with_kabichk}
  Source200: check-kabi
-@@ -541,14 +519,15 @@ Source4001: rpminspect.yaml
+@@ -544,14 +519,15 @@ Source4001: rpminspect.yaml
  
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -204,7 +209,7 @@ index 9f1c152..a54450d 100644
  compatibility of a set of approved symbols, however it is heavily modified with
  backports and fixes pulled from newer upstream Linux %{name} releases. This means
  this is not a %{version} kernel anymore: it includes several components which come
-@@ -556,7 +535,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
+@@ -559,7 +535,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
  core. Some of the components/backports that may be pulled in are: changes like
  updates to the core kernel (eg.: scheduler, cgroups, memory management, security
  fixes and features), updates to block layer, supported filesystems, major driver
@@ -213,7 +218,7 @@ index 9f1c152..a54450d 100644
  enterprise customers, etc.
  
  #
-@@ -800,14 +779,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+@@ -807,14 +783,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
  %endif
  
  %package -n %{name}-abi-stablelists
@@ -231,7 +236,7 @@ index 9f1c152..a54450d 100644
  external Linux kernel modules, and a yum plugin to aid enforcement.
  
  %if %{with_kabidw_base}
-@@ -816,8 +795,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -823,8 +799,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -242,7 +247,7 @@ index 9f1c152..a54450d 100644
  %endif
  
  #
-@@ -891,7 +870,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
+@@ -898,7 +874,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -251,7 +256,7 @@ index 9f1c152..a54450d 100644
  %{nil}
  
  #
-@@ -1094,6 +1073,7 @@ mv linux-%{rpmversion}-%{pkgrelease} linux-%{KVERREL}
+@@ -1101,6 +1077,7 @@ mv linux-%{rpmversion}-%{pkgrelease} linux-%{KVERREL}
  cd linux-%{KVERREL}
  
  ApplyOptionalPatch linux-kernel-test.patch
@@ -259,15 +264,15 @@ index 9f1c152..a54450d 100644
  
  # END OF PATCH APPLICATIONS
  
-@@ -1743,7 +1723,7 @@ BuildKernel() {
+@@ -1750,7 +1727,7 @@ BuildKernel() {
      # build a BLS config for this kernel
      %{SOURCE43} "$KernelVer" "$RPM_BUILD_ROOT" "%{?variant}"
  
 -    # Red Hat UEFI Secure Boot CA cert, which can be used to authenticate the kernel
 +    # OpenELA UEFI Secure Boot CA cert, which can be used to authenticate the kernel
      mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer
-     %ifarch x86_64 aarch64
-         install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca-20200609.cer
+     install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
+     %ifarch s390x ppc64le
 -- 
 2.39.3 (Apple Git-145)
 
