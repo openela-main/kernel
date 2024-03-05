@@ -1,6 +1,6 @@
-From 138325a517504c90e785672285d8f0334ff35d27 Mon Sep 17 00:00:00 2001
-From: Mustafa Gezen <mustafa@ctrliq.com>
-Date: Wed, 15 Nov 2023 15:54:08 +0100
+From 0a6a65b6401889037f0507f9d25023ea85768c38 Mon Sep 17 00:00:00 2001
+From: Alex Burmashev <alexander.burmashev@oracle.com>
+Date: Tue, 5 Mar 2024 16:23:47 +0000
 Subject: [PATCH] Debrand for OpenELA 8
 
 ---
@@ -134,7 +134,7 @@ index e9a23b4..a0838b6 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index d630c1f..dea75e3 100644
+index e3afa14..adb71bf 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -447,37 +447,12 @@ Source9: x509.genkey
@@ -226,7 +226,7 @@ index d630c1f..dea75e3 100644
 +Summary: The OpenELA kernel ABI symbol stablelists
  Group: System Environment/Kernel
  AutoReqProv: no
- Obsoletes: %{name}-abi-whitelists < %{rpmversion}-%{pkg_release}
+ Obsoletes: %{name}-abi-whitelists < %{specversion}-%{pkg_release}
  Provides: %{name}-abi-whitelists
  %description -n %{name}-abi-stablelists
 -The kABI package contains information pertaining to the Red Hat Enterprise
@@ -256,7 +256,7 @@ index d630c1f..dea75e3 100644
  %{nil}
  
  #
-@@ -1101,6 +1077,7 @@ mv linux-%{rpmversion}-%{pkgrelease} linux-%{KVERREL}
+@@ -1101,6 +1077,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
  cd linux-%{KVERREL}
  
  ApplyOptionalPatch linux-kernel-test.patch
@@ -274,5 +274,5 @@ index d630c1f..dea75e3 100644
      install -m 0644 %{secureboot_ca_0} $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/kernel-signing-ca.cer
      %ifarch s390x ppc64le
 -- 
-2.39.3 (Apple Git-145)
+2.39.3
 
