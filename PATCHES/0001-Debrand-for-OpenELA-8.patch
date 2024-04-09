@@ -1,8 +1,9 @@
-From 0a6a65b6401889037f0507f9d25023ea85768c38 Mon Sep 17 00:00:00 2001
+From ca617627bc3459951849257ad1e061446ffc03b1 Mon Sep 17 00:00:00 2001
 From: Alex Burmashev <alexander.burmashev@oracle.com>
-Date: Tue, 5 Mar 2024 16:23:47 +0000
+Date: Tue, 9 Apr 2024 14:18:59 +0000
 Subject: [PATCH] Debrand for OpenELA 8
 
+Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
 ---
  SOURCES/kernel-aarch64-debug.config  |  2 +-
  SOURCES/kernel-aarch64.config        |  2 +-
@@ -134,10 +135,10 @@ index e9a23b4..a0838b6 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index e3afa14..adb71bf 100644
+index 88fc7ed..ee78098 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -447,37 +447,12 @@ Source9: x509.genkey
+@@ -448,37 +448,12 @@ Source9: x509.genkey
  %define signing_key_filename kernel-signing-s390.cer
  %endif
  
@@ -180,7 +181,7 @@ index e3afa14..adb71bf 100644
  
  Source17: mod-blacklist.sh
  Source18: mod-sign.sh
-@@ -506,8 +481,8 @@ Source43: generate_bls_conf.sh
+@@ -507,8 +482,8 @@ Source43: generate_bls_conf.sh
  
  Source44: mod-internal.list
  
@@ -191,7 +192,7 @@ index e3afa14..adb71bf 100644
  
  %if %{with_kabichk}
  Source200: check-kabi
-@@ -544,14 +519,15 @@ Source4001: rpminspect.yaml
+@@ -545,14 +520,15 @@ Source4001: rpminspect.yaml
  
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -209,7 +210,7 @@ index e3afa14..adb71bf 100644
  compatibility of a set of approved symbols, however it is heavily modified with
  backports and fixes pulled from newer upstream Linux %{name} releases. This means
  this is not a %{version} kernel anymore: it includes several components which come
-@@ -559,7 +535,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
+@@ -560,7 +536,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
  core. Some of the components/backports that may be pulled in are: changes like
  updates to the core kernel (eg.: scheduler, cgroups, memory management, security
  fixes and features), updates to block layer, supported filesystems, major driver
@@ -218,7 +219,7 @@ index e3afa14..adb71bf 100644
  enterprise customers, etc.
  
  #
-@@ -807,14 +783,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+@@ -808,14 +784,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
  %endif
  
  %package -n %{name}-abi-stablelists
@@ -236,7 +237,7 @@ index e3afa14..adb71bf 100644
  external Linux kernel modules, and a yum plugin to aid enforcement.
  
  %if %{with_kabidw_base}
-@@ -823,8 +799,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -824,8 +800,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -247,7 +248,7 @@ index e3afa14..adb71bf 100644
  %endif
  
  #
-@@ -898,7 +874,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
+@@ -899,7 +875,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -256,7 +257,7 @@ index e3afa14..adb71bf 100644
  %{nil}
  
  #
-@@ -1101,6 +1077,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
+@@ -1102,6 +1078,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
  cd linux-%{KVERREL}
  
  ApplyOptionalPatch linux-kernel-test.patch
@@ -264,7 +265,7 @@ index e3afa14..adb71bf 100644
  
  # END OF PATCH APPLICATIONS
  
-@@ -1750,7 +1727,7 @@ BuildKernel() {
+@@ -1751,7 +1728,7 @@ BuildKernel() {
      # build a BLS config for this kernel
      %{SOURCE43} "$KernelVer" "$RPM_BUILD_ROOT" "%{?variant}"
  
