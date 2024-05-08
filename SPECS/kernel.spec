@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.13.1
+%define pkgrelease 427.16.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.13.1.el9_4
+%define tarfile_release 5.14.0-427.16.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.13.1%{?buildid}%{?dist}
+%define specrelease 427.16.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.13.1.el9_4
+%define kabiversion 5.14.0-427.16.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3725,8 +3725,45 @@ fi
 #
 #
 %changelog
-* Tue Apr 30 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Wed May 08 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Fri Apr 26 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.16.1.el9_4]
+- memory: tegra: Skip SID programming if SID registers aren't set (Robert Foss) [RHEL-32675 RHEL-23656]
+- memory: tegra: Add SID override programming for MC clients (Robert Foss) [RHEL-32675 RHEL-23656]
+- iommu: Don't reserve 0-length IOVA region (Robert Foss) [RHEL-32675 RHEL-23656]
+
+* Fri Apr 19 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.15.1.el9_4]
+- ice: fold ice_ptp_read_time into ice_ptp_gettimex64 (Michal Schmidt) [RHEL-30110 RHEL-19000]
+- ice: avoid the PTP hardware semaphore in gettimex64 path (Michal Schmidt) [RHEL-30110 RHEL-19000]
+- ice: add ice_adapter for shared data across PFs on the same NIC (Michal Schmidt) [RHEL-30110 RHEL-19000]
+- crypto: iaa - mark tech preview (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- crypto: iaa - Fix nr_cpus < nr_iaa case (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- crypto: iaa - fix the missing CRYPTO_ALG_ASYNC in cra_flags (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- crypto: iaa - Fix comp/decomp delay statistics (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- crypto: iaa - Fix async_disable descriptor leak (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- crypto: iaa - Remove unnecessary debugfs_create_dir() error check in iaa_crypto_debugfs_init() (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- crypto: iaa - Remove header table code (Vladis Dronov) [RHEL-32242 RHEL-29685]
+- cgroup: cgroup-v1: do not exclude cgrp_dfl_root (Laurent Vivier) [RHEL-32716 RHEL-31381]
+- x86/sev: Harden #VC instruction emulation somewhat (Vitaly Kuznetsov) [RHEL-30030 RHEL-30031] {CVE-2024-25743 CVE-2024-25742}
+
+* Fri Apr 12 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.14.1.el9_4]
+- crypto: dh - implement FIPS PCT (Vladis Dronov) [RHEL-27009 RHEL-25845]
+- crypto: tcrypt - add ffdhe2048(dh) test (Vladis Dronov) [RHEL-27009 RHEL-25845]
+- crypto: dh - Make public key test FIPS-only (Vladis Dronov) [RHEL-27009 RHEL-25845]
+- printk: allow disabling printk per-console device kthreads at boot (Luis Claudio R. Goncalves) [RHEL-30678 RHEL-17709]
+- mm, vmscan: remove ISOLATE_UNMAPPED (Nico Pache) [RHEL-29235 RHEL-28667]
+- trace-vmscan-postprocess: sync with tracepoints updates (Nico Pache) [RHEL-29235 RHEL-28667]
+- tracing: incorrect isolate_mote_t cast in mm_vmscan_lru_isolate (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm/mglru: skip special VMAs in lru_gen_look_around() (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm/mglru: reclaim offlined memcgs harder (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm/mglru: try to stop at high watermarks (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm/mglru: fix underprotected page cache (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm: multi-gen LRU: reuse some legacy trace events (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm: multi-gen LRU: improve design doc (Nico Pache) [RHEL-29235 RHEL-28667]
+- mm: multi-gen LRU: clean up sysfs code (Nico Pache) [RHEL-29235 RHEL-28667]
+- cpu/hotplug: Do not bail-out in DYING/STARTING sections (David Arcari) [RHEL-29673 RHEL-19514]
+- crypto: akcipher - Disable signing and decryption (Herbert Xu) [RHEL-29079 RHEL-17113] {CVE-2023-6240}
 
 * Wed Apr 10 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.13.1.el9_4]
 - ice: fix enabling RX VLAN filtering (Petr Oros) [RHEL-28837]
