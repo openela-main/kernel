@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.16.1
+%define pkgrelease 427.18.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.16.1.el9_4
+%define tarfile_release 5.14.0-427.18.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.16.1%{?buildid}%{?dist}
+%define specrelease 427.18.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.16.1.el9_4
+%define kabiversion 5.14.0-427.18.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3725,8 +3725,57 @@ fi
 #
 #
 %changelog
-* Wed May 08 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Thu May 23 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Mon May 13 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.18.1.el9_4]
+- netfilter: nf_tables: disallow anonymous set with timeout flag (Phil Sutter) [RHEL-32971 RHEL-30082] {CVE-2024-26642}
+- netfilter: nf_tables: mark set as dead when unbinding anonymous set with timeout (Phil Sutter) [RHEL-33070 RHEL-30078] {CVE-2024-26643}
+- netfilter: nft_ct: fix l3num expectations with inet pseudo family (Phil Sutter) [RHEL-32963 RHEL-31345] {CVE-2024-26673}
+- netfilter: nft_ct: sanitize layer 3 and 4 protocol number in custom expectations (Phil Sutter) [RHEL-32963 RHEL-31345] {CVE-2024-26673}
+- arm64: tlb: Fix TLBI RANGE operand (Shaoqin Huang) [RHEL-33412 RHEL-26259]
+- arm64/mm: Modify range-based tlbi to decrement scale (Shaoqin Huang) [RHEL-33412 RHEL-26259]
+- rh_messages.h: mark mlx5 on Bluefield-3 as unmaintained (Scott Weaver) [RHEL-35878 RHEL-33061]
+- net: ip_tunnel: prevent perpetual headroom growth (Guillaume Nault) [RHEL-33934 RHEL-31816] {CVE-2024-26804}
+- gitlab-ci: use zstream builder container image (Michael Hofmann)
+- selftests: net: gro fwd: update vxlan GRO test expectations (Antoine Tenart) [RHEL-30910 RHEL-19729]
+- udp: prevent local UDP tunnel packets from being GROed (Antoine Tenart) [RHEL-30910 RHEL-19729]
+- udp: do not transition UDP GRO fraglist partial checksums to unnecessary (Antoine Tenart) [RHEL-30910 RHEL-19729]
+- gro: fix ownership transfer (Antoine Tenart) [RHEL-30910 RHEL-19729]
+- udp: do not accept non-tunnel GSO skbs landing in a tunnel (Antoine Tenart) [RHEL-30910 RHEL-19729]
+- bpf, tcx: Get rid of tcx_link_const (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Add additional mprog query test coverage (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Make seen_tc* variable tests more robust (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Test query on empty mprog and pass revision into attach (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Adapt assert_mprog_count to always expect 0 count (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Test bpf_mprog query API via libbpf and raw syscall (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftest/bpf: Add various selftests for program limits (Felix Maurer) [RHEL-33062 RHEL-28590]
+- bpf: Refuse unused attributes in bpf_prog_{attach,detach} (Felix Maurer) [RHEL-33062 RHEL-28590]
+- bpf: Handle bpf_mprog_query with NULL entry (Felix Maurer) [RHEL-33062 RHEL-28590]
+- net: Fix skb consume leak in sch_handle_egress (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Add various more tcx test cases (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Add test for detachment on empty mprog entry (Felix Maurer) [RHEL-33062 RHEL-28590]
+- tcx: Fix splat during dev unregister (Felix Maurer) [RHEL-33062 RHEL-28590]
+- tcx: Fix splat in ingress_destroy upon tcx_entry_free (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Add mprog API tests for BPF tcx links (Felix Maurer) [RHEL-33062 RHEL-28590]
+- selftests/bpf: Add mprog API tests for BPF tcx opts (Felix Maurer) [RHEL-33062 RHEL-28590]
+- bpf: Add fd-based tcx multi-prog infra with link support (Felix Maurer) [RHEL-33062 RHEL-28590]
+- bpftool: Implement link show support for tcx (Artem Savkov) [RHEL-33062 RHEL-23643]
+- bpftool: Extend net dump with tcx progs (Artem Savkov) [RHEL-33062 RHEL-23643]
+- bpf: fix precision backtracking instruction iteration (Jay Shin) [RHEL-35230 RHEL-23643]
+
+* Tue May 07 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.17.1.el9_4]
+- ceph: switch to use cap_delay_lock for the unlink delay list (Jay Shin) [RHEL-33003 RHEL-32997]
+- ceph: remove useless session parameter for check_caps() (Xiubo Li) [RHEL-33003 RHEL-19813]
+- ceph: flush the dirty caps immediatelly when quota is approaching (Xiubo Li) [RHEL-33003 RHEL-19813]
+- vhost: Add smp_rmb() in vhost_enable_notify() (Gavin Shan) [RHEL-31839 RHEL-26104]
+- vhost: Add smp_rmb() in vhost_vq_avail_empty() (Gavin Shan) [RHEL-31839 RHEL-26104]
+- iommu/vt-d: Support enforce_cache_coherency only for empty domains (Jerry Snitselaar) [RHEL-32793 RHEL-31083]
+- iommu/vt-d: Add MTL to quirk list to skip TE disabling (Jerry Snitselaar) [RHEL-32793 RHEL-31083]
+- iommu/vt-d: Make context clearing consistent with context mapping (Jerry Snitselaar) [RHEL-32793 RHEL-31083]
+- iommu/vt-d: Disable PCI ATS in legacy passthrough mode (Jerry Snitselaar) [RHEL-32793 RHEL-31083]
+- iommu/vt-d: Omit devTLB invalidation requests when TES=0 (Jerry Snitselaar) [RHEL-32793 RHEL-31083]
+- PCI/MSI: Prevent MSI hardware interrupt number truncation (Myron Stowe) [RHEL-33656 RHEL-21453]
 
 * Fri Apr 26 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.16.1.el9_4]
 - memory: tegra: Skip SID programming if SID registers aren't set (Robert Foss) [RHEL-32675 RHEL-23656]
