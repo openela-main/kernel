@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.el8
+%define pkgrelease 553.5.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553%{?dist}
+%define specrelease 553.5.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -53,6 +53,7 @@
 # architecture allows it. All should default to 1 (enabled) and be flipped to
 # 0 (disabled) by later arch-specific checks.
 
+%define _with_kabidupchk 1
 # The following build options are enabled by default.
 # Use either --without <opt> in your rpmbuild command or force values
 # to 0 in here to disable them.
@@ -2672,8 +2673,172 @@ fi
 #
 #
 %changelog
-* Fri May 10 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.el8]
-- cpuhotplug: Fix kABI breakage caused by CPUHP_AP_HYPERV_ONLINE (Vitaly Kuznetsov) [RHEL-35784]
+* Mon May 20 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.5.1.el8_10]
+- tools/power/turbostat: Fix uncore frequency file string (David Arcari) [RHEL-29238]
+- tools/power turbostat: Expand probe_intel_uncore_frequency() (David Arcari) [RHEL-29238]
+- uio: Fix use-after-free in uio_open (Ricardo Robaina) [RHEL-26232] {CVE-2023-52439}
+- net:emac/emac-mac: Fix a use after free in emac_mac_tx_buf_send (Ken Cox) [RHEL-27316] {CVE-2021-47013}
+- keys: Fix linking a duplicate key to a keyring's assoc_array (David Howells) [RHEL-30772]
+- keys: Hoist locking out of __key_link_begin() (David Howells) [RHEL-30772]
+- keys: Break bits out of key_unlink() (David Howells) [RHEL-30772]
+- keys: Change keyring_serialise_link_sem to a mutex (David Howells) [RHEL-30772]
+- wifi: brcm80211: handle pmk_op allocation failure (Jose Ignacio Tornos Martinez) [RHEL-35150] {CVE-2024-27048}
+- wifi: rtl8xxxu: add cancel_work_sync() for c2hcmd_work (Jose Ignacio Tornos Martinez) [RHEL-35140] {CVE-2024-27052}
+- wifi: iwlwifi: mvm: ensure offloading TID queue exists (Jose Ignacio Tornos Martinez) [RHEL-35130] {CVE-2024-27056}
+- wifi: mt76: mt7921e: fix use-after-free in free_irq() (Jose Ignacio Tornos Martinez) [RHEL-34866] {CVE-2024-26892}
+- wifi: ath9k: delay all of ath9k_wmi_event_tasklet() until init is complete (Jose Ignacio Tornos Martinez) [RHEL-34189] {CVE-2024-26897}
+- wifi: iwlwifi: mvm: fix a crash when we run out of stations (Jose Ignacio Tornos Martinez) [RHEL-31547] {CVE-2024-26693}
+- wifi: iwlwifi: fix double-free bug (Jose Ignacio Tornos Martinez) [RHEL-31543] {CVE-2024-26694}
+- wifi: ath9k: Fix potential array-index-out-of-bounds read in ath9k_htc_txstatus() (Jose Ignacio Tornos Martinez) [RHEL-29089] {CVE-2023-52594}
+- wifi: rt2x00: restart beacon queue when hardware reset (Jose Ignacio Tornos Martinez) [RHEL-29093] {CVE-2023-52595}
+- wifi: iwlwifi: fix a memory corruption (Jose Ignacio Tornos Martinez) [RHEL-28903] {CVE-2024-26610}
+
+* Wed May 15 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.4.1.el8_10]
+- cpuhotplug: Fix kABI breakage caused by CPUHP_AP_HYPERV_ONLINE (Vitaly Kuznetsov) [RHEL-36117]
+- net/mlx5e: Prevent deadlock while disabling aRFS (Kamal Heib) [RHEL-35041] {CVE-2024-27014}
+- x86/tsc: Defer marking TSC unstable to a worker (Wander Lairson Costa) [RHEL-32676]
+- x86/smpboot: Make TSC synchronization function call based (Wander Lairson Costa) [RHEL-32676]
+- net: usb: fix possible use-after-free in smsc75xx_bind (Jose Ignacio Tornos Martinez) [RHEL-30311] {CVE-2021-47171}
+- net: usb: fix memory leak in smsc75xx_bind (Jose Ignacio Tornos Martinez) [RHEL-30311] {CVE-2021-47171}
+
+* Sat May 11 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-552.3.1.el8_10]
+- netfilter: nf_tables: mark set as dead when unbinding anonymous set with timeout (Phil Sutter) [RHEL-30076] {CVE-2024-26643}
+- netfilter: nf_tables: disallow anonymous set with timeout flag (Phil Sutter) [RHEL-30080] {CVE-2024-26642}
+- selftests/bpf: Fix pyperf180 compilation failure with clang18 (Artem Savkov) [RHEL-35576]
+- md/raid5: fix atomicity violation in raid5_cache_count (Nigel Croxon) [RHEL-27930] {CVE-2024-23307}
+- usb: ulpi: Fix debugfs directory leak (Desnes Nunes) [RHEL-33287] {CVE-2024-26919}
+- powerpc/pseries: Fix potential memleak in papr_get_attr() (Mamatha Inamdar) [RHEL-35213] {CVE-2022-48669}
+- USB: usb-storage: Prevent divide-by-0 error in isd200_ata_command (Desnes Nunes) [RHEL-35122] {CVE-2024-27059}
+- NFSv4: fairly test all delegations on a SEQ4_ revocation (Benjamin Coddington) [RHEL-34912]
+- USB: core: Fix deadlock in usb_deauthorize_interface() (Desnes Nunes) [RHEL-35002] {CVE-2024-26934}
+- usb: xhci: Add error handling in xhci_map_urb_for_dma (Desnes Nunes) [RHEL-34958] {CVE-2024-26964}
+- fs: sysfs: Fix reference leak in sysfs_break_active_protection() (Ewan D. Milne) [RHEL-35076] {CVE-2024-26993}
+- xhci: handle isoc Babble and Buffer Overrun events properly (Desnes Nunes) [RHEL-31297] {CVE-2024-26659}
+- xhci: process isoc TD properly when there was a transaction error mid TD. (Desnes Nunes) [RHEL-31297] {CVE-2024-26659}
+- USB: core: Fix deadlock in port "disable" sysfs attribute (Desnes Nunes) [RHEL-35006] {CVE-2024-26933}
+- USB: core: Add hub_get() and hub_put() routines (Desnes Nunes) [RHEL-35006] {CVE-2024-26933}
+- netfilter: ipset: Missing gc cancellations fixed (Phil Sutter) [RHEL-30521]
+- netfilter: ipset: fix performance regression in swap operation (Phil Sutter) [RHEL-30521]
+- netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports (Phil Sutter) [RHEL-30521]
+- netfilter: ipset: fix race condition between swap/destroy and kernel side add/del/test (Phil Sutter) [RHEL-30521]
+- x86/apic/x2apic: Fix a NULL pointer deref when handling a dying cpu (David Arcari) [RHEL-32516]
+- x86/coco: Disable 32-bit emulation by default on TDX and SEV (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+- x86: Make IA32_EMULATION boot time configurable (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+- x86/entry: Make IA32 syscalls' availability depend on ia32_enabled() (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+- x86/elf: Make loading of 32bit processes depend on ia32_enabled() (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+- x86/entry: Rename ignore_sysret() (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+- x86/cpu: Don't write CSTAR MSR on Intel CPUs (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+- x86: Introduce ia32_enabled() (Vitaly Kuznetsov) [RHEL-25087] {CVE-2024-25744}
+
+* Mon May 06 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-552.2.1.el8_10]
+- s390/ptrace: handle setting of fpc register correctly (Tobias Huschle) [RHEL-29106] {CVE-2023-52598}
+- net/smc: fix illegal rmb_desc access in SMC-D connection dump (Tobias Huschle) [RHEL-27746] {CVE-2024-26615}
+- wifi: mac80211: fix race condition on enabling fast-xmit (Jose Ignacio Tornos Martinez) [RHEL-31664] {CVE-2024-26779}
+- powerpc/fadump: make is_kdump_kernel() return false when fadump is active (Mamatha Inamdar) [RHEL-24401]
+- vmcore: remove dependency with is_kdump_kernel() for exporting vmcore (Mamatha Inamdar) [RHEL-24401]
+- mtd: require write permissions for locking and badblock ioctls (Prarit Bhargava) [RHEL-27585] {CVE-2021-47055}
+- mtd: properly check all write ioctls for permissions (Prarit Bhargava) [RHEL-27585] {CVE-2021-47055}
+- pid: take a reference when initializing `cad_pid` (Waiman Long) [RHEL-29420] {CVE-2021-47118}
+- i2c: i801: Don't generate an interrupt on bus reset (Prarit Bhargava) [RHEL-30325] {CVE-2021-47153}
+- RDMA/srpt: Do not register event handler until srpt device is fully setup (Kamal Heib) [RHEL-33224] {CVE-2024-26872}
+- ceph: switch to corrected encoding of max_xattr_size in mdsmap (Xiubo Li) [RHEL-26723]
+- ceph: switch to use cap_delay_lock for the unlink delay list (Xiubo Li) [RHEL-32870]
+- ceph: pass ino# instead of old_dentry if it's disconnected (Xiubo Li) [RHEL-32870]
+- fat: fix uninitialized field in nostale filehandles (Andrey Albershteyn) [RHEL-33186 RHEL-35108] {CVE-2024-26973}
+- do_sys_name_to_handle(): use kzalloc() to fix kernel-infoleak (Andrey Albershteyn) [RHEL-33186] {CVE-2024-26901}
+- idpf: limit the support to GCP only (Michal Schmidt) [RHEL-15652]
+- redhat/configs: enable CONFIG_IDPF (Michal Schmidt) [RHEL-15652]
+- idpf: remove the use of ETHTOOL_RING_USE_TCP_DATA_SPLIT (Michal Schmidt) [RHEL-15652]
+- idpf: workaround for unavailable skb page recycling (Michal Schmidt) [RHEL-15652]
+- idpf: always allocate a full page (Michal Schmidt) [RHEL-15652]
+- idpf: remove page pool stats code (Michal Schmidt) [RHEL-15652]
+- idpf: add minimal macros for __free(kfree) to work (Michal Schmidt) [RHEL-15652]
+- idpf: fixup include paths for RHEL 8 (Michal Schmidt) [RHEL-15652]
+- idpf: fix kernel panic on unknown packet types (Michal Schmidt) [RHEL-15652]
+- idpf: disable local BH when scheduling napi for marker packets (Michal Schmidt) [RHEL-15652]
+- idpf: remove dealloc vector msg err in idpf_intr_rel (Michal Schmidt) [RHEL-15652]
+- idpf: fix minor controlq issues (Michal Schmidt) [RHEL-15652]
+- idpf: prevent deinit uninitialized virtchnl core (Michal Schmidt) [RHEL-15652]
+- idpf: cleanup virtchnl cruft (Michal Schmidt) [RHEL-15652]
+- idpf: refactor idpf_recv_mb_msg (Michal Schmidt) [RHEL-15652]
+- idpf: add async_handler for MAC filter messages (Michal Schmidt) [RHEL-15652]
+- idpf: refactor remaining virtchnl messages (Michal Schmidt) [RHEL-15652]
+- idpf: refactor queue related virtchnl messages (Michal Schmidt) [RHEL-15652]
+- idpf: refactor vport virtchnl messages (Michal Schmidt) [RHEL-15652]
+- idpf: implement virtchnl transaction manager (Michal Schmidt) [RHEL-15652]
+- idpf: add idpf_virtchnl.h (Michal Schmidt) [RHEL-15652]
+- idpf: avoid compiler padding in virtchnl2_ptype struct (Michal Schmidt) [RHEL-15652]
+- idpf: distinguish vports by the dev_port attribute (Michal Schmidt) [RHEL-15652]
+- idpf: avoid compiler introduced padding in virtchnl2_rss_key struct (Michal Schmidt) [RHEL-15652]
+- idpf: fix corrupted frames and skb leaks in singleq mode (Michal Schmidt) [RHEL-15652]
+- idpf: refactor some missing field get/prep conversions (Michal Schmidt) [RHEL-15652]
+- idpf: add get/set for Ethtool's header split ringparam (Michal Schmidt) [RHEL-15652]
+- idpf: fix potential use-after-free in idpf_tso() (Michal Schmidt) [RHEL-15652]
+- idpf: cancel mailbox work in error path (Michal Schmidt) [RHEL-15652]
+- idpf: set scheduling mode for completion queue (Michal Schmidt) [RHEL-15652]
+- idpf: add SRIOV support and other ndo_ops (Michal Schmidt) [RHEL-15652]
+- idpf: add ethtool callbacks (Michal Schmidt) [RHEL-15652]
+- idpf: add singleq start_xmit and napi poll (Michal Schmidt) [RHEL-15652]
+- idpf: add RX splitq napi poll support (Michal Schmidt) [RHEL-15652]
+- idpf: add TX splitq napi poll support (Michal Schmidt) [RHEL-15652]
+- idpf: add splitq start_xmit (Michal Schmidt) [RHEL-15652]
+- idpf: initialize interrupts and enable vport (Michal Schmidt) [RHEL-15652]
+- idpf: configure resources for RX queues (Michal Schmidt) [RHEL-15652]
+- idpf: configure resources for TX queues (Michal Schmidt) [RHEL-15652]
+- idpf: add ptypes and MAC filter support (Michal Schmidt) [RHEL-15652]
+- idpf: add create vport and netdev configuration (Michal Schmidt) [RHEL-15652]
+- idpf: add core init and interrupt request (Michal Schmidt) [RHEL-15652]
+- idpf: add controlq init and reset checks (Michal Schmidt) [RHEL-15652]
+- idpf: add module register and probe functionality (Michal Schmidt) [RHEL-15652]
+- virtchnl: add virtchnl version 2 ops (Michal Schmidt) [RHEL-15652]
+- net: netdev_queue: netdev_txq_completed_mb(): fix wake condition (Michal Schmidt) [RHEL-15652]
+- net: piggy back on the memory barrier in bql when waking queues (Michal Schmidt) [RHEL-15652]
+- net: provide macros for commonly copied lockless queue stop/wake code (Michal Schmidt) [RHEL-15652]
+
+* Fri Apr 26 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-552.1.1.el8_10]
+- redhat: set DIST to el8_10 and ZSTREAM to yes for 8.10 (Denys Vlasenko)
+- tty: tty_buffer: Fix the softlockup issue in flush_to_ldisc (Prarit Bhargava) [RHEL-32590] {CVE-2021-47185}
+- net: mana: Fix Rx DMA datasize and skb_over_panic (Cathy Avery) [RHEL-32579]
+- RDMA/srpt: Support specifying the srpt_service_guid parameter (Kamal Heib) [RHEL-31710] {CVE-2024-26744}
+- RDMA/qedr: Fix qedr_create_user_qp error flow (Kamal Heib) [RHEL-31714] {CVE-2024-26743}
+- hwmon: (coretemp) Fix out-of-bounds memory access (David Arcari) [RHEL-31305] {CVE-2024-26664}
+- RDMA/irdma: Fix KASAN issue with tasklet (Kamal Heib) [RHEL-15776]
+- net: bridge: use DEV_STATS_INC() (Ivan Vecera) [RHEL-27989] {CVE-2023-52578}
+- net: Fix unwanted sign extension in netdev_stats_to_stats64() (Ivan Vecera) [RHEL-27989] {CVE-2023-52578}
+- net: add atomic_long_t to net_device_stats fields (Ivan Vecera) [RHEL-27989] {CVE-2023-52578}
+- net/sched: act_ct: fix skb leak and crash on ooo frags (Xin Long) [RHEL-29467] {CVE-2023-52610}
+- net: usb: smsc75xx: Fix uninit-value access in __smsc75xx_read_reg (Jose Ignacio Tornos Martinez) [RHEL-28015] {CVE-2023-52528}
+- RDMA/core: Fix uninit-value access in ib_get_eth_speed() (Kamal Heib) [RHEL-30130]
+- RDMA/core: Get IB width and speed from netdev (Kamal Heib) [RHEL-30130]
+- cpufreq: intel_pstate: Add Emerald Rapids support in no-HWP mode (Prarit Bhargava) [RHEL-29444]
+- powerpc/mm: Fix null-pointer dereference in pgtable_cache_add (Mamatha Inamdar) [RHEL-29118] {CVE-2023-52607}
+- powerpc/lib: Validate size for vector operations (Mamatha Inamdar) [RHEL-29114] {CVE-2023-52606}
+- usb: hub: Guard against accesses to uninitialized BOS descriptors (Desnes Nunes) [RHEL-28986] {CVE-2023-52477}
+- media: uvcvideo: Fix OOB read (Desnes Nunes) [RHEL-27940] {CVE-2023-52565}
+- media: pvrusb2: fix use after free on context disconnection (Desnes Nunes) [RHEL-26498] {CVE-2023-52445}
+- i2c: i801: Fix block process call transactions (Prarit Bhargava) [RHEL-26478] {CVE-2024-26593}
+- overlay: disable EVM (Coiby Xu) [RHEL-19863]
+- evm: add support to disable EVM on unsupported filesystems (Coiby Xu) [RHEL-19863]
+- evm: don't copy up 'security.evm' xattr (Coiby Xu) [RHEL-19863]
+- net: ena: Remove ena_select_queue (Kamal Heib) [RHEL-14286]
+- media: dvbdev: Fix memory leak in dvb_media_device_free() (Prarit Bhargava) [RHEL-27254] {CVE-2020-36777}
+- gfs2: Fix invalid metadata access in punch_hole (Andrew Price) [RHEL-28784]
+- i2c: Fix a potential use after free (Prarit Bhargava) [RHEL-26849] {CVE-2019-25162}
+- i2c: validate user data in compat ioctl (Prarit Bhargava) [RHEL-27022] {CVE-2021-46934}
+- platform/x86: think-lmi: Fix reference leak (Prarit Bhargava) [RHEL-28030] {CVE-2023-52520}
+- vhost: use kzalloc() instead of kmalloc() followed by memset() (Jon Maloy) [RHEL-21505] {CVE-2024-0340}
+- RDMA/siw: Fix connection failure handling (Kamal Heib) [RHEL-28042] {CVE-2023-52513}
+- vt: fix memory overlapping when deleting chars in the buffer (Waiman Long) [RHEL-27778 RHEL-27779] {CVE-2022-48627}
+- x86/fpu: Stop relying on userspace for info to fault in xsave buffer (Steve Best) [RHEL-26669] {CVE-2024-26603}
+- mptcp: fix double-free on socket dismantle (Davide Caratti) [RHEL-22773] {CVE-2024-26782}
+- crypto: akcipher - Disable signing and decryption (Herbert Xu) [RHEL-17114] {CVE-2023-6240}
+- crypto: akcipher - default implementations for request callbacks (Herbert Xu) [RHEL-17114] {CVE-2023-6240}
+- crypto: testmgr - split akcipher tests by a key type (Herbert Xu) [RHEL-17114] {CVE-2023-6240}
+- workqueue: Warn when a rescuer could not be created (Waiman Long) [RHEL-22136]
+- RDMA/cma: Avoid GID lookups on iWARP devices (Benjamin Coddington) [RHEL-12456]
+- RDMA/cma: Deduplicate error flow in cma_validate_port() (Benjamin Coddington) [RHEL-12456]
+- RDMA/core: Set gid_attr.ndev for iWARP devices (Benjamin Coddington) [RHEL-12456]
+- RDMA/siw: Fabricate a GID on tun and loopback devices (Benjamin Coddington) [RHEL-12456]
 
 * Sun Apr 07 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-552.el8]
 - i40e: Enforce software interrupt during busy-poll exit (Ivan Vecera) [RHEL-26248]
