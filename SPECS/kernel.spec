@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.18.1
+%define pkgrelease 427.20.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.18.1.el9_4
+%define tarfile_release 5.14.0-427.20.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.18.1%{?buildid}%{?dist}
+%define specrelease 427.20.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.18.1.el9_4
+%define kabiversion 5.14.0-427.20.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3725,8 +3725,21 @@ fi
 #
 #
 %changelog
-* Thu May 23 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Wed Jun 05 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Thu May 23 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.20.1.el9_4]
+- ipv6: sr: fix possible use-after-free and null-ptr-deref (Hangbin Liu) [RHEL-33968 RHEL-31732] {CVE-2024-26735}
+- idpf: fix kernel panic on unknown packet types (Michal Schmidt) [RHEL-36145 RHEL-29035]
+- idpf: refactor some missing field get/prep conversions (Michal Schmidt) [RHEL-36145 RHEL-29035]
+- PCI: Fix pci_rh_check_status() call semantics (Luiz Capitulino) [RHEL-36541 RHEL-35032]
+- cxgb4: Properly lock TX queue for the selftest. (John B. Wyatt IV) [RHEL-36530 RHEL-31990 RHEL-9354]
+
+* Mon May 20 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.19.1.el9_4]
+- x86/mce: Cleanup mce_usable_address() (Prarit Bhargava) [RHEL-33810 RHEL-25415]
+- x86/mce: Define amd_mce_usable_address() (Prarit Bhargava) [RHEL-33810 RHEL-25415]
+- x86/MCE/AMD: Split amd_mce_is_memory_error() (Prarit Bhargava) [RHEL-33810 RHEL-25415]
+- fs: sysfs: Fix reference leak in sysfs_break_active_protection() (Ewan D. Milne) [RHEL-35302 RHEL-35078] {CVE-2024-26993}
 
 * Mon May 13 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.18.1.el9_4]
 - netfilter: nf_tables: disallow anonymous set with timeout flag (Phil Sutter) [RHEL-32971 RHEL-30082] {CVE-2024-26642}
