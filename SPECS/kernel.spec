@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.20.1
+%define pkgrelease 427.22.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.20.1.el9_4
+%define tarfile_release 5.14.0-427.22.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.20.1%{?buildid}%{?dist}
+%define specrelease 427.22.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.20.1.el9_4
+%define kabiversion 5.14.0-427.22.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3725,8 +3725,60 @@ fi
 #
 #
 %changelog
-* Wed Jun 05 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Wed Jun 19 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Mon Jun 10 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.22.1.el9_4]
+- dpll: fix dpll_pin_on_pin_register() for multiple parent pins (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: indent DPLL option type by a tab (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: fix dpll_xa_ref_*_del() for multiple registrations (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: spec: use proper enum for pin capabilities attribute (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: move all dpll<>netdev helpers to dpll code (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: fix build failure due to rcu_dereference_check() on unknown type (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: rely on rcu for netdev_dpll_pin() (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: fix possible deadlock during netlink dump operation (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: check that pin is registered in __dpll_pin_unregister() (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: move xa_erase() call in to match dpll_pin_alloc() error path order (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: expose fractional frequency offset value to user (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: allocate pin ids in cycle (Petr Oros) [RHEL-36572 RHEL-32098]
+- dpll: remove leftover mode_supported() op and use mode_get() instead (Petr Oros) [RHEL-36572 RHEL-32098]
+- Documentation: dpll: wrap DPLL_CMD_PIN_GET output in a code block (Petr Oros) [RHEL-36572 RHEL-32098]
+- Documentation: dpll: Fix code blocks (Petr Oros) [RHEL-36572 RHEL-32098]
+- MAINTAINERS: adjust header file entry in DPLL SUBSYSTEM (Petr Oros) [RHEL-36572 RHEL-32098]
+- netdev: Remove unneeded semicolon (Petr Oros) [RHEL-36572 RHEL-32098]
+- netlink: add variable-length / auto integers (Petr Oros) [RHEL-36572 RHEL-30145]
+- netlink: allow be16 and be32 types in all uint policy checks (Ivan Vecera) [RHEL-36572 RHEL-30656]
+- net: netlink: recommend policy range validation (Ivan Vecera) [RHEL-36572 RHEL-30344]
+- netlink: add nla be16/32 types to minlen array (Ivan Vecera) [RHEL-36572 RHEL-30344]
+- netlink: introduce bigendian integer types (Michal Schmidt) [RHEL-36572 RHEL-30344]
+- netlink: introduce NLA_POLICY_MAX_BE (Ivan Vecera) [RHEL-36572 RHEL-30344]
+- ice: use irq_update_affinity_hint() (Michal Schmidt) [RHEL-38512 RHEL-35293]
+- x86/tsc: Defer marking TSC unstable to a worker (Wander Lairson Costa) [RHEL-9296 RHEL-19514]
+- x86/smpboot: Make TSC synchronization function call based (David Arcari) [RHEL-9296 RHEL-19514]
+- Bluetooth: hci_core: Remove le_restart_scan work (David Marlin) [RHEL-38524 RHEL-30099]
+- hwmon: (coretemp) Enlarge per package core count limit (David Arcari) [RHEL-35447 RHEL-22705]
+- hwmon: (coretemp) Fix bogus core_id to attr name mapping (David Arcari) [RHEL-35447 RHEL-22705]
+- hwmon: (coretemp) Fix out-of-bounds memory access (David Arcari) [RHEL-35447 RHEL-22705]
+- perf: arm_cspmu: Reject events meant for other PMUs (Michael Petlan) [RHEL-34991 RHEL-25824]
+- smb: client: refresh referral without acquiring refpath_lock (Jay Shin) [RHEL-38904 RHEL-7986]
+- smb: client: guarantee refcounted children from parent session (Jay Shin) [RHEL-38904 RHEL-7986]
+- smb3: show beginning time for per share stats (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: fix mount when dns_resolver key is not available (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: get rid of dfs code dep in namespace.c (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: get rid of dfs naming in automount code (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: rename cifs_dfs_ref.c to namespace.c (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: ensure to try all targets when finding nested links (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: introduce DFS_CACHE_TGT_LIST() (Jay Shin) [RHEL-38904 RHEL-31245]
+- smb: client: remove redundant pointer 'server' (Jay Shin) [RHEL-38904 RHEL-28739]
+- smb: client: fix parsing of source mount option (Jay Shin) [RHEL-38904 RHEL-28739]
+- integrity: eliminate unnecessary "Problem loading X.509 certificate" msg (Coiby Xu) [RHEL-39933 RHEL-12346]
+
+* Mon Jun 03 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.21.1.el9_4]
+- drm/i915/display: Increase number of fast wake precharge pulses (Mika Penttilä) [RHEL-36534 RHEL-20439]
+- drm/i915/psr: Improve fast and IO wake lines calculation (Mika Penttilä) [RHEL-36534 RHEL-20439]
+- drm/i915/display: Make intel_dp_aux_fw_sync_len available for PSR code (Mika Penttilä) [RHEL-36534 RHEL-20439]
+- smb: client: improve DFS mount check (Jay Shin) [RHEL-36743 RHEL-28739]
+- net: mana: Fix Rx DMA datasize and skb_over_panic (Cathy Avery) [RHEL-37622 RHEL-9872]
 
 * Thu May 23 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.20.1.el9_4]
 - ipv6: sr: fix possible use-after-free and null-ptr-deref (Hangbin Liu) [RHEL-33968 RHEL-31732] {CVE-2024-26735}
