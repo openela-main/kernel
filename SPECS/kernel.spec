@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.5.1.el8_10
+%define pkgrelease 553.8.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.5.1%{?dist}
+%define specrelease 553.8.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,120 @@ fi
 #
 #
 %changelog
+* Fri Jun 14 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.8.1.el8_10]
+- udf: Fix NULL pointer dereference in udf_symlink function (Pavel Reichl) [RHEL-37769] {CVE-2021-47353}
+- net: ti: fix UAF in tlan_remove_one (Jose Ignacio Tornos Martinez) [RHEL-38940] {CVE-2021-47310}
+- ARM: footbridge: fix PCI interrupt mapping (Myron Stowe) [RHEL-26971] {CVE-2021-46909}
+- i40e: Do not use WQ_MEM_RECLAIM flag for workqueue (Kamal Heib) [RHEL-37454] {CVE-2024-36004}
+- net/mlx5e: Fix mlx5e_priv_init() cleanup flow (Kamal Heib) [RHEL-37424] {CVE-2024-35959}
+- net/mlx5: Properly link new fs rules into the tree (Kamal Heib) [RHEL-37420] {CVE-2024-35960}
+- net/mlx5e: fix a potential double-free in fs_any_create_groups (Kamal Heib) [RHEL-37091] {CVE-2023-52667}
+- net: ena: Fix incorrect descriptor free behavior (Kamal Heib) [RHEL-37428] {CVE-2024-35958}
+- mISDN: hfcpci: Fix use-after-free bug in hfcpci_softirq (Jose Ignacio Tornos Martinez) [RHEL-37763] {CVE-2021-47356}
+- mISDN: fix possible use-after-free in HFC_cleanup() (Jose Ignacio Tornos Martinez) [RHEL-37763] {CVE-2021-47356}
+- crypto: qat - Fix ADF_DEV_RESET_SYNC memory leak (Vladis Dronov) [RHEL-35106] {CVE-2024-26974}
+- crypto: qat - implement dh fallback for primes > 4K (Vladis Dronov) [RHEL-35106]
+- crypto: qat - avoid division by zero (Vladis Dronov) [RHEL-35106]
+- crypto: qat - resolve race condition during AER recovery (Vladis Dronov) [RHEL-35106] {CVE-2024-26974}
+- crypto: qat - use kcalloc_node() instead of kzalloc_node() (Vladis Dronov) [RHEL-35106]
+- [rt] Enable CONFIG_DRM_MGAG200_DISABLE_WRITECOMBINE (Jocelyn Falempe) [RHEL-36172]
+- drm/mgag200: Add an option to disable Write-Combine (Jocelyn Falempe) [RHEL-36172]
+- drm/mgag200: Fix caching setup for remapped video memory (Jocelyn Falempe) [RHEL-36172]
+- Revert "drm/mgag200: Add a workaround for low-latency" (Jocelyn Falempe) [RHEL-36172]
+- mptcp: fix data re-injection from stale subflow (Davide Caratti) [RHEL-33133] {CVE-2024-26826}
+- ipv6: sr: fix incorrect unregister order (Hangbin Liu) [RHEL-31730]
+- ipv6: sr: fix possible use-after-free and null-ptr-deref (Hangbin Liu) [RHEL-31730] {CVE-2024-26735}
+- net/bnx2x: Prevent access to a freed page in page_pool (Michal Schmidt) [RHEL-14195 RHEL-33243] {CVE-2024-26859}
+- bnx2x: new flag for track HW resource allocation (Michal Schmidt) [RHEL-14195 RHEL-33243]
+- bnx2x: fix page fault following EEH recovery (Michal Schmidt) [RHEL-14195 RHEL-33243]
+- x86: KVM: SVM: always update the x2avic msr interception (Maxim Levitsky) [RHEL-15495] {CVE-2023-5090}
+- EDAC/thunderx: Fix possible out-of-bounds string access (Aristeu Rozanski) [RHEL-26573] {CVE-2023-52464}
+
+* Thu Jun 06 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.7.1.el8_10]
+- net: qcom/emac: fix UAF in emac_remove (Ken Cox) [RHEL-37834] {CVE-2021-47311}
+- perf/core: Bail out early if the request AUX area is out of bound (Michael Petlan) [RHEL-38268] {CVE-2023-52835}
+- crypto: pcrypt - Fix hungtask for PADATA_RESET (Herbert Xu) [RHEL-38171] {CVE-2023-52813}
+- drm/amdgpu: fix use-after-free bug (Jocelyn Falempe) [RHEL-31240] {CVE-2024-26656}
+- mlxsw: spectrum_acl_tcam: Fix possible use-after-free during rehash (Ivan Vecera) [RHEL-37008] {CVE-2024-35854}
+- mlxsw: spectrum_acl_tcam: Fix possible use-after-free during activity update (Ivan Vecera) [RHEL-37004] {CVE-2024-35855}
+- mlxsw: spectrum_acl_tcam: Fix memory leak during rehash (Ivan Vecera) [RHEL-37012] {CVE-2024-35853}
+- mlxsw: spectrum_acl_tcam: Fix memory leak when canceling rehash work (Ivan Vecera) [RHEL-37016] {CVE-2024-35852}
+- mlxsw: spectrum_acl_tcam: Fix warning during rehash (Ivan Vecera) [RHEL-37480] {CVE-2024-36007}
+- can: peak_pci: peak_pci_remove(): fix UAF (Jose Ignacio Tornos Martinez) [RHEL-38419] {CVE-2021-47456}
+- usbnet: fix error return code in usbnet_probe() (Jose Ignacio Tornos Martinez) [RHEL-38440] {CVE-2021-47495}
+- usbnet: sanity check for maxpacket (Jose Ignacio Tornos Martinez) [RHEL-38440] {CVE-2021-47495}
+- net/mlx5e: fix a double-free in arfs_create_groups (Kamal Heib) [RHEL-36920] {CVE-2024-35835}
+- can: dev: can_put_echo_skb(): don't crash kernel if can_priv::echo_skb is accessed out of bounds (Jose Ignacio Tornos Martinez) [RHEL-38220] {CVE-2023-52878}
+- net: cdc_eem: fix tx fixup skb leak (Jose Ignacio Tornos Martinez) [RHEL-38080] {CVE-2021-47236}
+- net/usb: kalmia: Don't pass act_len in usb_bulk_msg error path (Jose Ignacio Tornos Martinez) [RHEL-38113] {CVE-2023-52703}
+- usb: typec: tcpm: Fix NULL pointer dereference in tcpm_pd_svdm() (Desnes Nunes) [RHEL-38248] {CVE-2023-52877}
+- usb: config: fix iteration issue in 'usb_get_bos_descriptor()' (Desnes Nunes) [RHEL-38240] {CVE-2023-52781}
+- gro: fix ownership transfer (Xin Long) [RHEL-37226] {CVE-2024-35890}
+- tipc: fix kernel warning when sending SYN message (Xin Long) [RHEL-38109] {CVE-2023-52700}
+- erspan: make sure erspan_base_hdr is present in skb->head (Xin Long) [RHEL-37230] {CVE-2024-35888}
+- scsi: mpi3mr: Use proper format specifier in mpi3mr_sas_port_add() (Bryan Gurney) [RHEL-17366]
+- scsi: mpi3mr: Sanitise num_phys (Bryan Gurney) [RHEL-17366]
+- netfilter: nf_tables: use timestamp to check for set element timeout (Phil Sutter) [RHEL-38023] {CVE-2024-27397}
+- net/ipv6: SKB symmetric hash should incorporate transport ports (Sabrina Dubroca) [RHEL-32061]
+- crypto: s390/aes - Fix buffer overread in CTR mode (Herbert Xu) [RHEL-37089] {CVE-2023-52669}
+- net: Save and restore msg_namelen in sock_sendmsg (Jamie Bainbridge) [RHEL-35893]
+- net: prevent address rewrite in kernel_bind() (Jamie Bainbridge) [RHEL-35893]
+- net: prevent rewrite of msg_name in sock_sendmsg() (Jamie Bainbridge) [RHEL-35893]
+- net: replace calls to sock->ops->connect() with kernel_connect() (Jamie Bainbridge) [RHEL-35893]
+- net: Avoid address overwrite in kernel_connect (Jamie Bainbridge) [RHEL-35893]
+- wifi: iwlwifi: dbg-tlv: ensure NUL termination (Jose Ignacio Tornos Martinez) [RHEL-37026] {CVE-2024-35845}
+- wifi: mac80211: fix potential sta-link leak (Jose Ignacio Tornos Martinez) [RHEL-36916] {CVE-2024-35838}
+- wifi: nl80211: reject iftype change with mesh ID change (Jose Ignacio Tornos Martinez) [RHEL-36884] {CVE-2024-27410}
+- wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes (Jose Ignacio Tornos Martinez) [RHEL-36807] {CVE-2024-35789}
+- Bluetooth: Avoid potential use-after-free in hci_error_reset (David Marlin) [RHEL-31826] {CVE-2024-26801}
+- tls: disable async encrypt/decrypt (Sabrina Dubroca) [RHEL-26362 RHEL-26409 RHEL-26420] {CVE-2024-26584 CVE-2024-26583 CVE-2024-26585}
+- Squashfs: check the inode number is not the invalid value of zero (Phillip Lougher) [RHEL-35096] {CVE-2024-26982}
+- ipc/mqueue, msg, sem: avoid relying on a stack reference past its expiry (Rafael Aquini) [RHEL-27782] {CVE-2021-47069}
+- ipc/msg.c: update and document memory barriers (Rafael Aquini) [RHEL-27782] {CVE-2021-47069}
+- ipc/sem.c: document and update memory barriers (Rafael Aquini) [RHEL-27782] {CVE-2021-47069}
+- ipc/mqueue.c: update/document memory barriers (Rafael Aquini) [RHEL-27782] {CVE-2021-47069}
+- ipc/mqueue.c: remove duplicated code (Rafael Aquini) [RHEL-27782] {CVE-2021-47069}
+- net/mlx5e: Fix operation precedence bug in port timestamping napi_poll context (Kamal Heib) [RHEL-30582] {CVE-2023-52626}
+- Revert "ACPI: bus: Rework system-level device notification handling" (Prarit Bhargava) [RHEL-21486]
+- hwrng: core - Fix page fault dead lock on mmap-ed hwrng (Prarit Bhargava) [RHEL-29485] {CVE-2023-52615}
+
+* Wed May 29 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.6.1.el8_10]
+- powerpc/powernv: Add a null pointer check in opal_event_init() (Mamatha Inamdar) [RHEL-37058] {CVE-2023-52686}
+- crypto: rsa - add a check for allocation failure (Vladis Dronov) [RHEL-35361]
+- crypto: rsa - allow only odd e and restrict value in FIPS mode (Vladis Dronov) [RHEL-35361]
+- KEYS: use kfree_sensitive with key (Vladis Dronov) [RHEL-35361]
+- lib/mpi: Extend the MPI library (only mpi_*_bit() part) (Vladis Dronov) [RHEL-35361]
+- net: ip_tunnel: prevent perpetual headroom growth (Felix Maurer) [RHEL-31814] {CVE-2024-26804}
+- s390/cpum_cf: make crypto counters upward compatible across machine types (Tobias Huschle) [RHEL-36048]
+- RDMA/mlx5: Fix fortify source warning while accessing Eth segment (Kamal Heib) [RHEL-33162] {CVE-2024-26907}
+- ovl: fix leaked dentry (Miklos Szeredi) [RHEL-27306] {CVE-2021-46972}
+- x86/mm: Disallow vsyscall page read for copy_from_kernel_nofault() (Rafael Aquini) [RHEL-33166] {CVE-2024-26906}
+- x86/mm: Move is_vsyscall_vaddr() into asm/vsyscall.h (Rafael Aquini) [RHEL-33166] {CVE-2024-26906}
+- x86/mm/vsyscall: Consider vsyscall page part of user address space (Rafael Aquini) [RHEL-33166] {CVE-2024-26906}
+- x86/mm: Add vsyscall address helper (Rafael Aquini) [RHEL-33166] {CVE-2024-26906}
+- mm/swap: fix race when skipping swapcache (Rafael Aquini) [RHEL-31644] {CVE-2024-26759}
+- swap: fix do_swap_page() race with swapoff (Rafael Aquini) [RHEL-31644] {CVE-2024-26759}
+- mm/swapfile: use percpu_ref to serialize against concurrent swapoff (Rafael Aquini) [RHEL-31644] {CVE-2024-26759}
+- mm/damon/vaddr-test: fix memory leak in damon_do_test_apply_three_regions() (Rafael Aquini) [RHEL-29294] {CVE-2023-52560}
+- ipv6: fix race condition between ipv6_get_ifaddr and ipv6_del_addr (Jiri Benc) [RHEL-29783]
+- block: null_blk: Fix handling of fake timeout request (Ming Lei) [RHEL-8130]
+- null_blk: fix poll request timeout handling (Ming Lei) [RHEL-8130]
+- block: null_blk: end timed out poll request (Ming Lei) [RHEL-8130]
+- block: null_blk: only set set->nr_maps as 3 if active poll_queues is > 0 (Ming Lei) [RHEL-8130]
+- null_blk: allow zero poll queues (Ming Lei) [RHEL-8130]
+- null_blk: Fix handling of submit_queues and poll_queues attributes (Ming Lei) [RHEL-8130]
+- null_blk: poll queue support (Ming Lei) [RHEL-8130]
+- null_blk: fix command timeout completion handling (Ming Lei) [RHEL-8130]
+- platform/x86: dell-smbios-wmi: Fix oops on rmmod dell_smbios (Prarit Bhargava) [RHEL-27790] {CVE-2021-47073}
+- Bluetooth: avoid memcmp() out of bounds warning (David Marlin) [RHEL-3017] {CVE-2020-26555}
+- Bluetooth: hci_event: Fix coding style (David Marlin) [RHEL-3017] {CVE-2020-26555}
+- Bluetooth: hci_event: Fix using memcmp when comparing keys (David Marlin) [RHEL-3017] {CVE-2020-26555}
+- Bluetooth: Reject connection with the device which has same BD_ADDR (David Marlin) [RHEL-3017] {CVE-2020-26555}
+- Bluetooth: hci_event: Ignore NULL link key (David Marlin) [RHEL-3017] {CVE-2020-26555}
+- ppp_async: limit MRU to 64K (Guillaume Nault) [RHEL-31353] {CVE-2024-26675}
+- powerpc/imc-pmu: Add a null pointer check in update_events_in_group() (Mamatha Inamdar) [RHEL-37078] {CVE-2023-52675}
+- tcp: do not accept ACK of bytes we never sent (Xin Long) [RHEL-21952]
+
 * Mon May 20 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.5.1.el8_10]
 - tools/power/turbostat: Fix uncore frequency file string (David Arcari) [RHEL-29238]
 - tools/power turbostat: Expand probe_intel_uncore_frequency() (David Arcari) [RHEL-29238]
