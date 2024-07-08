@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.22.1
+%define pkgrelease 427.24.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.22.1.el9_4
+%define tarfile_release 5.14.0-427.24.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.22.1%{?buildid}%{?dist}
+%define specrelease 427.24.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.22.1.el9_4
+%define kabiversion 5.14.0-427.24.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3725,8 +3725,112 @@ fi
 #
 #
 %changelog
-* Wed Jun 19 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Mon Jul 08 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Sun Jun 23 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.24.1.el9_4]
+- net/bnx2x: Prevent access to a freed page in page_pool (Michal Schmidt) [RHEL-43272 RHEL-23117]
+- bnx2x: new flag for track HW resource allocation (Michal Schmidt) [RHEL-43272 RHEL-23117]
+- bnx2x: fix page fault following EEH recovery (Michal Schmidt) [RHEL-43272 RHEL-23117]
+- bnx2x: fix pci device refcount leak in bnx2x_vf_is_pcie_pending() (Michal Schmidt) [RHEL-43272 RHEL-23117]
+- bnx2x: fix potential memory leak in bnx2x_tpa_stop() (Michal Schmidt) [RHEL-43272 RHEL-23117]
+- xen-netfront: Add missing skb_mark_for_recycle (Vitaly Kuznetsov) [RHEL-37626 RHEL-36573] {CVE-2024-27393}
+- tools/power/turbostat: Fix uncore frequency file string (David Arcari) [RHEL-34953 RHEL-29239]
+- tools/power turbostat: Expand probe_intel_uncore_frequency() (David Arcari) [RHEL-34953 RHEL-29239]
+- net/mlx5e: fix a potential double-free in fs_any_create_groups (Kamal Heib) [RHEL-38972 RHEL-37093] {CVE-2023-52667}
+- crypto: qat - Fix typo (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - Fix ADF_DEV_RESET_SYNC memory leak (Vladis Dronov) [RHEL-38546 RHEL-35816] {CVE-2024-26974}
+- crypto: qat - specify firmware files for 402xx (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - validate slices count returned by FW (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - improve error logging to be consistent across features (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - improve error message in adf_get_arbiter_mapping() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - implement dh fallback for primes > 4K (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - Fix spelling mistake "Invalide" -> "Invalid" (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - Avoid -Wflex-array-member-not-at-end warnings (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - implement interface for live migration (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add interface for live migration (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add bank save and restore flows (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - expand CSR operations for QAT GEN4 devices (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - rename get_sla_arr_of_type() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - relocate CSR access code (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - move PFVF compat checker to a function (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - relocate and rename 4xxx PF2VM definitions (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - adf_get_etr_base() helper (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- redhat/configs: Add CONFIG_CRYPTO_DEV_QAT_420XX (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - make ring to service map common for QAT GEN4 (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - fix ring to service map for dcc in 420xx (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - fix ring to service map for dcc in 4xxx (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - fix comment structure (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - remove unnecessary description from comment (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - remove double initialization of value (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - avoid division by zero (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - removed unused macro in adf_cnv_dbgfs.c (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - remove unused macros in qat_comp_alg.c (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - uninitialized variable in adf_hb_error_inject_write() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- Documentation: qat: fix auto_reset section (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - resolve race condition during AER recovery (Vladis Dronov) [RHEL-38546 RHEL-35816] {CVE-2024-26974}
+- crypto: qat - change SLAs cleanup flow at shutdown (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - improve aer error reset handling (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - limit heartbeat notifications (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add auto reset on error (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add fatal error notification (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - re-enable sriov after pf reset (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - update PFVF protocol for recovery (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - disable arbitration before reset (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add fatal error notify method (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add heartbeat error simulator (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - use kcalloc_node() instead of kzalloc_node() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - avoid memcpy() overflow warning (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - fix arbiter mapping generation algorithm for QAT 402xx (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - generate dynamically arbiter mappings (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add support for ring pair level telemetry (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add support for device telemetry (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add admin msgs for telemetry (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - include pci.h for GET_DEV() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - add support for 420xx devices (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - move fw config related structures (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - relocate portions of qat_4xxx code (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - change signature of uof_get_num_objs() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- crypto: qat - relocate and rename get_service_enabled() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- seq_file: add helper macro to define attribute for rw file (Vladis Dronov) [RHEL-38546 RHEL-35816]
+- minmax: Introduce {min,max}_array() (Vladis Dronov) [RHEL-38546 RHEL-35816]
+
+* Fri Jun 14 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.23.1.el9_4]
+- net/mlx5e: Fix operation precedence bug in port timestamping napi_poll context (Kamal Heib) [RHEL-34050 RHEL-30492] {CVE-2023-52626}
+- blk-mq: add helper for checking if one CPU is mapped to specified hctx (Ming Lei) [RHEL-38595 RHEL-36684]
+- net/sched: flower: Add lock protection when remove filter handle (Petr Oros) [RHEL-35672 RHEL-33379]
+- Bluetooth: Avoid potential use-after-free in hci_error_reset (David Marlin) [RHEL-33913 RHEL-31828] {CVE-2024-26801}
+- net: hns3: do not allow call hns3_nic_net_open repeatedly (Jose Ignacio Tornos Martinez) [RHEL-38933 RHEL-37707] {CVE-2021-47400}
+- tmpfs: fix Documentation of noswap and huge mount options (Nico Pache) [RHEL-38252 RHEL-31975]
+- shmem: add support to ignore swap (Chris von Recklinghausen) [RHEL-38252 RHEL-31975]
+- shmem: update documentation (Chris von Recklinghausen) [RHEL-38252 RHEL-31975]
+- shmem: skip page split if we're not reclaiming (Chris von Recklinghausen) [RHEL-38252 RHEL-31975]
+- shmem: move reclaim check early on writepages() (Chris von Recklinghausen) [RHEL-38252 RHEL-31975]
+- shmem: set shmem_writepage() variables early (Chris von Recklinghausen) [RHEL-38252 RHEL-31975]
+- shmem: remove check for folio lock on writepage() (Chris von Recklinghausen) [RHEL-38252 RHEL-31975]
+- ice: Add automatic VF reset on Tx MDD events (Petr Oros) [RHEL-39083 RHEL-36317]
+- net/ipv6: SKB symmetric hash should incorporate transport ports (Ivan Vecera) [RHEL-37641 RHEL-36218]
+- ipv6: sr: fix memleak in seg6_hmac_init_algo (Hangbin Liu) [RHEL-37669 RHEL-37511]
+- ipv6: sr: fix missing sk_buff release in seg6_input_core (Hangbin Liu) [RHEL-37669 RHEL-37511]
+- ipv6: sr: fix invalid unregister error path (Hangbin Liu) [RHEL-37669 RHEL-37511]
+- ipv6: sr: fix incorrect unregister order (Hangbin Liu) [RHEL-37669 RHEL-37511]
+- ipv6: sr: add missing seg6_local_exit (Hangbin Liu) [RHEL-37669 RHEL-37511]
+- block: fix q->blkg_list corruption during disk rebind (Ming Lei) [RHEL-36687 RHEL-33577]
+- ice: fix uninitialized dplls mutex usage (Petr Oros) [RHEL-36716 RHEL-36283]
+- ice: fix pin phase adjust updates on PF reset (Petr Oros) [RHEL-36716 RHEL-36283]
+- ice: fix dpll periodic work data updates on PF reset (Petr Oros) [RHEL-36716 RHEL-36283]
+- ice: fix dpll and dpll_pin data access on PF reset (Petr Oros) [RHEL-36716 RHEL-36283]
+- ice: fix dpll input pin phase_adjust value updates (Petr Oros) [RHEL-36716 RHEL-36283]
+- ice: fix connection state of DPLL and out pin (Petr Oros) [RHEL-36716 RHEL-36283]
+- redhat: remove the merge subtrees script (Derek Barbosa)
+- redhat: rhdocs: delete .get_maintainer.conf (Derek Barbosa)
+- redhat: rhdocs: Remove the rhdocs directory (Derek Barbosa)
+- net/mlx5: Properly link new fs rules into the tree (Kamal Heib) [RHEL-38954 RHEL-37422] {CVE-2024-35960}
+- smb: client: fix UAF in smb2_reconnect_server() (Jay Shin) [RHEL-28943 RHEL-40177 RHEL-37273 RHEL-7986] {CVE-2024-35870}
+- smb: client: remove extra @chan_count check in __cifs_put_smb_ses() (Jay Shin) [RHEL-28943 RHEL-31245]
+- RHEL: enable CONFIG_AMD_ATL (Aristeu Rozanski) [RHEL-36220 RHEL-26704]
+- EDAC/amd64: Use new AMD Address Translation Library (Aristeu Rozanski) [RHEL-36220 RHEL-26704]
+- RAS: Introduce AMD Address Translation Library (Aristeu Rozanski) [RHEL-36220 RHEL-26704]
 
 * Mon Jun 10 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.22.1.el9_4]
 - dpll: fix dpll_pin_on_pin_register() for multiple parent pins (Petr Oros) [RHEL-36572 RHEL-32098]
