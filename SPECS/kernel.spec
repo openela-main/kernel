@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.24.1
+%define pkgrelease 427.26.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.24.1.el9_4
+%define tarfile_release 5.14.0-427.26.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.24.1%{?buildid}%{?dist}
+%define specrelease 427.26.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.24.1.el9_4
+%define kabiversion 5.14.0-427.26.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -2197,12 +2197,12 @@ BuildKernel() {
     cp --parents tools/build/Build $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     cp --parents tools/build/fixdep.c $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     cp --parents tools/objtool/sync-check.sh $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
-    cp -a --parents tools/bpf/resolve_btfids/main.c $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
-    cp -a --parents tools/bpf/resolve_btfids/Build $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
+    cp -a --parents tools/bpf/resolve_btfids $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
 
     cp --parents security/selinux/include/policycap_names.h $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     cp --parents security/selinux/include/policycap.h $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
 
+    cp -a --parents tools/include/asm $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     cp -a --parents tools/include/asm-generic $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     cp -a --parents tools/include/linux $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     cp -a --parents tools/include/uapi/asm $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
@@ -2239,6 +2239,9 @@ BuildKernel() {
 %endif
     if [ -d arch/%{asmarch}/include ]; then
       cp -a --parents arch/%{asmarch}/include $RPM_BUILD_ROOT/lib/modules/$KernelVer/build/
+    fi
+    if [ -d tools/arch/%{asmarch}/include ]; then
+      cp -a --parents tools/arch/%{asmarch}/include $RPM_BUILD_ROOT/lib/modules/$KernelVer/build
     fi
 %ifarch aarch64
     # arch/arm64/include/asm/xen references arch/arm
@@ -2525,6 +2528,7 @@ BuildKernel() {
 
 %if %{with_cross}
     make -C $RPM_BUILD_ROOT/lib/modules/$KernelVer/build M=scripts clean
+    make -C $RPM_BUILD_ROOT/lib/modules/$KernelVer/build/tools/bpf/resolve_btfids clean
     sed -i 's/REBUILD_SCRIPTS_FOR_CROSS:=0/REBUILD_SCRIPTS_FOR_CROSS:=1/' $RPM_BUILD_ROOT/lib/modules/$KernelVer/build/Makefile
 %endif
 
@@ -3178,7 +3182,7 @@ then\
     )\
 fi\
 %if %{with_cross}\
-    echo "Building scripts"\
+    echo "Building scripts and resolve_btfids"\
     env --unset=ARCH make -C /usr/src/kernels/%{KVERREL}%{?1:+%{1}} prepare_after_cross\
 %endif\
 %{nil}
@@ -3725,8 +3729,49 @@ fi
 #
 #
 %changelog
-* Mon Jul 08 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Wed Jul 17 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Fri Jul 05 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.26.1.el9_4]
+- net: ena: Fix incorrect descriptor free behavior (Kamal Heib) [RHEL-39217 RHEL-37430] {CVE-2024-35958}
+- tcp: Use refcount_inc_not_zero() in tcp_twsk_unique(). (Guillaume Nault) [RHEL-41749 RHEL-39837] {CVE-2024-36904}
+- mm/mglru: Revert "don't sync disk for each aging cycle" (Waiman Long) [RHEL-44418]
+- tipc: fix UAF in error path (Xin Long) [RHEL-34848 RHEL-34280] {CVE-2024-36886}
+- selftest/cgroup: Update test_cpuset_prs.sh to match changes (Waiman Long) [RHEL-45139]
+- cgroup/cpuset: Make cpuset.cpus.exclusive independent of cpuset.cpus (Waiman Long) [RHEL-45139]
+- cgroup/cpuset: Delay setting of CS_CPU_EXCLUSIVE until valid partition (Waiman Long) [RHEL-45139]
+- selftest/cgroup: Fix test_cpuset_prs.sh problems reported by test robot (Waiman Long) [RHEL-45139]
+- cgroup/cpuset: Fix remote root partition creation problem (Waiman Long) [RHEL-45139]
+- cgroup/cpuset: Optimize isolated partition only generate_sched_domains() calls (Waiman Long) [RHEL-45139]
+- cgroup/cpuset: Fix retval in update_cpumask() (Waiman Long) [RHEL-45139]
+- cgroup/cpuset: Fix a memory leak in update_exclusive_cpumask() (Waiman Long) [RHEL-45139]
+- ice: implement AQ download pkg retry (Petr Oros) [RHEL-38907 RHEL-17318]
+- redhat: include resolve_btfids in kernel-devel (Viktor Malik) [RHEL-43426 RHEL-40707]
+- blk-cgroup: fix list corruption from resetting io stat (cki-backport-bot) [RHEL-44977] {CVE-2024-38663}
+- misc: rtsx: do clear express reg every SD_INT (David Arcari) [RHEL-39985 RHEL-33706]
+- misc: rtsx: Fix rts5264 driver status incorrect when card removed (David Arcari) [RHEL-39985 RHEL-33706]
+- netfilter: tproxy: bail out if IP has been disabled on the device (cki-backport-bot) [RHEL-44371] {CVE-2024-36270}
+- lib/test_hmm.c: handle src_pfns and dst_pfns allocation failure (cki-backport-bot) [RHEL-44263 RHEL-44261] {CVE-2024-38543}
+- r8169: Fix possible ring buffer corruption on fragmented Tx packets. (cki-backport-bot) [RHEL-44039] {CVE-2024-38586}
+- net: micrel: Fix receiving the timestamp in the frame for lan8841 (cki-backport-bot) [RHEL-43996] {CVE-2024-38593}
+- vt: fix memory overlapping when deleting chars in the buffer (Waiman Long) [RHEL-43379 RHEL-27780] {CVE-2022-48627}
+- net/mlx5e: Use a memory barrier to enforce PTP WQ xmit submission tracking occurs after populating the metadata_map (Kamal Heib) [RHEL-42728 RHEL-34192] {CVE-2024-26858}
+- locking/atomic: Make test_and_*_bit() ordered on failure (Paolo Bonzini) [RHEL-45896]
+- mm/vmscan: fix a bug calling wakeup_kswapd() with a wrong zone index (Rafael Aquini) [RHEL-42659 RHEL-31840] {CVE-2024-26783}
+- can: j1939: prevent deadlock by changing j1939_socks_lock to rwlock (Jose Ignacio Tornos Martinez) [RHEL-42379 RHEL-31530] {CVE-2023-52638}
+- ethernet: hisilicon: hns: hns_dsaf_misc: fix a possible array overflow in hns_dsaf_ge_srst_by_port() (Ken Cox) [RHEL-42226 RHEL-38715] {CVE-2021-47548}
+
+* Mon Jul 01 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.25.1.el9_4]
+- nvme: fix reconnection fail due to reserved tag allocation (Maurizio Lombardi) [RHEL-42896 RHEL-36896] {CVE-2024-27435}
+- net: hns3: fix use-after-free bug in hclgevf_send_mbx_msg (cki-backport-bot) [RHEL-43625] {CVE-2021-47596}
+- scsi: sg: Avoid race in error handling & drop bogus warn (Ewan D. Milne) [RHEL-36106 RHEL-35659]
+- scsi: sg: Avoid sg device teardown race (Ewan D. Milne) [RHEL-36106 RHEL-35659]
+- netfilter: nf_tables: use timestamp to check for set element timeout (Florian Westphal) [RHEL-38032 RHEL-33985] {CVE-2024-27397}
+- netfilter: nft_set_rbtree: Remove unused variable nft_net (Florian Westphal) [RHEL-38032 RHEL-33985]
+- netfilter: nft_set_rbtree: prefer sync gc to async worker (Florian Westphal) [RHEL-38032 RHEL-33985]
+- netfilter: nft_set_rbtree: rename gc deactivate+erase function (Florian Westphal) [RHEL-38032 RHEL-33985]
+- netfilter: nf_tables: de-constify set commit ops function argument (Florian Westphal) [RHEL-38032 RHEL-33985]
+- octeontx2-af: avoid off-by-one read from userspace (Kamal Heib) [RHEL-40486 RHEL-39873] {CVE-2024-36957}
 
 * Sun Jun 23 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.24.1.el9_4]
 - net/bnx2x: Prevent access to a freed page in page_pool (Michal Schmidt) [RHEL-43272 RHEL-23117]
