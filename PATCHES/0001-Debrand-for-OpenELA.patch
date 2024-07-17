@@ -1,6 +1,6 @@
-From 0d3123ac5151faf52e09940708a7ce674faa2679 Mon Sep 17 00:00:00 2001
+From 5005dd1b9d917987e566e840a6b8d64edc8ab52b Mon Sep 17 00:00:00 2001
 From: Alex Burmashev <alexander.burmashev@oracle.com>
-Date: Tue, 30 Apr 2024 12:13:25 +0000
+Date: Wed, 17 Jul 2024 13:33:50 +0000
 Subject: [PATCH] Update debranding for OpenELA 9.4
 
 Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
@@ -9,7 +9,7 @@ Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
  1 file changed, 26 insertions(+), 29 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index cc55976..d92fa3b 100644
+index 6efbce4..053c92e 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -910,19 +910,16 @@ Source84: mod-internal.list
@@ -120,7 +120,7 @@ index cc55976..d92fa3b 100644
  done
  %endif
  
-@@ -2433,14 +2432,17 @@ BuildKernel() {
+@@ -2436,14 +2435,17 @@ BuildKernel() {
  
          # RHEL/CentOS specific .SBAT entries
  %if 0%{?centos}
@@ -139,7 +139,7 @@ index cc55976..d92fa3b 100644
  	EOF
  	)
  
-@@ -2463,13 +2465,8 @@ BuildKernel() {
+@@ -2466,13 +2468,8 @@ BuildKernel() {
  
  %if %{signkernel}
  
@@ -156,5 +156,5 @@ index cc55976..d92fa3b 100644
          if [ ! -s $KernelUnifiedImage.signed ]; then
            echo "pesigning failed"
 -- 
-2.39.3
+2.43.5
 
