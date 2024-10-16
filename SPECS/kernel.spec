@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.37.1
+%define pkgrelease 427.40.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.37.1.el9_4
+%define tarfile_release 5.14.0-427.40.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.37.1%{?buildid}%{?dist}
+%define specrelease 427.40.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.37.1.el9_4
+%define kabiversion 5.14.0-427.40.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3729,8 +3729,60 @@ fi
 #
 #
 %changelog
-* Tue Sep 24 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Wed Oct 16 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Fri Oct 04 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.40.1.el9_4]
+- gfs2: Fix NULL pointer dereference in gfs2_log_flush (CKI Backport Bot) [RHEL-51561 RHEL-51559] {CVE-2024-42079}
+- net: stmmac: Separate C22 and C45 transactions for xgmac (CKI Backport Bot) [RHEL-60274 RHEL-6297]
+- dmaengine: idxd: Check for driver name match before sva user feature (Jerry Snitselaar) [RHEL-47239 RHEL-44836 RHEL-46619]
+- ceph: switch to corrected encoding of max_xattr_size in mdsmap (Xiubo Li) [RHEL-57609 RHEL-26722]
+- KVM: SVM: WARN on vNMI + NMI window iff NMIs are outright masked (CKI Backport Bot) [RHEL-46428] {CVE-2024-39483}
+- vfs: don't mod negative dentry count when on shrinker list (Brian Foster) [RHEL-60567 RHEL-46609]
+- fs/dcache: Re-use value stored to dentry->d_flags instead of re-reading (Brian Foster) [RHEL-60567 RHEL-46609]
+- x86/bugs: Reverse instruction order of CLEAR_CPU_BUFFERS (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- Revert "x86/bugs: Use fixed addressing for VERW operand" (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- KVM/x86: Export RFDS_NO and RFDS_CLEAR to guests (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- redhat/configs: Enable x86 CONFIG_MITIGATION_RFDS (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/rfds: Mitigate Register File Data Sampling (RFDS) (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- Documentation/hw-vuln: Add documentation for RFDS (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/mmio: Disable KVM mitigation when X86_FEATURE_CLEAR_CPU_BUF is set (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/bugs: Use fixed addressing for VERW operand (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- KVM/VMX: Move VERW closer to VMentry for MDS mitigation (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- KVM/VMX: Use BT+JNC, i.e. EFLAGS.CF to select VMRESUME vs. VMLAUNCH (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/bugs: Use ALTERNATIVE() instead of mds_user_clear static key (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/entry_32: Add VERW just before userspace transition (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/entry_64: Add VERW just before userspace transition (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- x86/entry: Harden return-to-user (Prarit Bhargava) [RHEL-48713 RHEL-25415]
+- x86/entry: Optimize common_interrupt_return() (Prarit Bhargava) [RHEL-48713 RHEL-25415]
+- x86/bugs: Add asm helpers for executing VERW (Waiman Long) [RHEL-48713 RHEL-31226] {CVE-2023-28746}
+- sched: act_ct: take care of padding in struct zones_ht_key (Xin Long) [RHEL-55112 RHEL-50682] {CVE-2024-42272}
+- sched: act_ct: add netns into the key of tcf_ct_flow_table (Xin Long) [RHEL-55112 RHEL-28816]
+- dmaengine: idxd: Fix oops during rmmod on single-CPU platforms (CKI Backport Bot) [RHEL-41361] {CVE-2024-35989}
+- hwmon: (w83792d) Fix NULL pointer dereference by removing unnecessary structure field (Steve Best) [RHEL-42115 RHEL-37721] {CVE-2021-47385}
+
+* Fri Sep 27 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.39.1.el9_4]
+- mptcp: ensure snd_nxt is properly initialized on connect (cki-backport-bot) [RHEL-52474 RHEL-39867] {CVE-2024-36889}
+- ping: fix address binding wrt vrf (Antoine Tenart) [RHEL-57563 RHEL-50920]
+- net/mlx5: Add a timeout to acquire the command queue semaphore (Benjamin Poirier) [RHEL-44227 RHEL-44225] {CVE-2024-38556}
+- xfrm6: check ip6_dst_idev() return value in xfrm6_get_saddr() (CKI Backport Bot) [RHEL-48142 RHEL-48140] {CVE-2024-40959}
+- ionic: fix use after netif_napi_del() (Michal Schmidt) [RHEL-47636 RHEL-47634] {CVE-2024-39502}
+- ionic: clean interrupt before enabling queue to avoid credit race (Michal Schmidt) [RHEL-47636 RHEL-36065]
+- Revert "net/mlx5: Block entering switchdev mode with ns inconsistency" (Benjamin Poirier) [RHEL-42391 RHEL-24466] {CVE-2023-52658}
+- tipc: Return non-zero value from tipc_udp_addr2str() on error (Xin Long) [RHEL-55075 RHEL-55074] {CVE-2024-42284}
+- x86: set FSRS automatically on AMD CPUs that have FSRM (Prarit Bhargava) [RHEL-56970 RHEL-25415]
+
+* Fri Sep 20 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.38.1.el9_4]
+- module: avoid allocation if module is already present and ready (Donald Dutile) [RHEL-52417]
+- module: move early sanity checks into a helper (Donald Dutile) [RHEL-52417]
+- module: extract patient module check into helper (Donald Dutile) [RHEL-52417]
+- null_blk: Fix return value of nullb_device_power_store() (Ming Lei) [RHEL-58636 RHEL-39662]
+- null_blk: fix null-ptr-dereference while configuring 'power' and 'submit_queues' (Ming Lei) [RHEL-58636 RHEL-39662]
+- net: sched: sch_multiq: fix possible OOB write in multiq_tune() (cki-backport-bot) [RHEL-43472] {CVE-2024-36978}
+- netfilter: nft_flow_offload: release dst in case direct xmit path is used (Florian Westphal) [RHEL-38520 RHEL-33469]
+- netfilter: nft_flow_offload: reset dst in route object after setting up flow (Florian Westphal) [RHEL-38520 RHEL-33469] {CVE-2024-27403}
+- netfilter: flowtable: simplify route logic (Florian Westphal) [RHEL-38520 RHEL-33469]
+- net: psample: fix uninitialized metadata. (Adrian Moreno) [RHEL-56909]
 
 * Fri Sep 13 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.37.1.el9_4]
 - ARM: 9359/1: flush: check if the folio is reserved for no-mapping addresses (CKI Backport Bot) [RHEL-42783] {CVE-2024-26947}
