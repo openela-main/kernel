@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 427.40.1
+%define pkgrelease 427.42.1
 %define kversion 5
-%define tarfile_release 5.14.0-427.40.1.el9_4
+%define tarfile_release 5.14.0-427.42.1.el9_4
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 427.40.1%{?buildid}%{?dist}
+%define specrelease 427.42.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-427.40.1.el9_4
+%define kabiversion 5.14.0-427.42.1.el9_4
 
 #
 # End of genspec.sh variables
@@ -3729,8 +3729,88 @@ fi
 #
 #
 %changelog
-* Wed Oct 16 2024 Release Engineering <releng@openela.org> - %{specversion}
+* Wed Oct 30 2024 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Fri Oct 18 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.42.1.el9_4]
+- redhat/configs: Add CONFIG_MITIGATION_SPECTRE_BHI (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Fix BHI retpoline check (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Replace CONFIG_SPECTRE_BHI_{ON,OFF} with CONFIG_MITIGATION_SPECTRE_BHI (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Remove CONFIG_BHI_MITIGATION_AUTO and spectre_bhi=auto (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Clarify that syscall hardening isn't a BHI mitigation (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Fix BHI handling of RRSBA (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Rename various 'ia32_cap' variables to 'x86_arch_cap_msr' (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Cache the value of MSR_IA32_ARCH_CAPABILITIES (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Fix BHI documentation (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Fix return type of spectre_bhi_state() (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Make CONFIG_SPECTRE_BHI_ON the default (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- KVM: x86: Add BHI_NO (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bhi: Mitigate KVM by default (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bhi: Add BHI mitigation knob (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bhi: Enumerate Branch History Injection (BHI) bug (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bhi: Define SPEC_CTRL_BHI_DIS_S (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bhi: Add support for clearing branch history at syscall entry (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- x86/bugs: Change commas to semicolons in 'spectre_v2' sysfs file (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- perf/x86/amd/lbr: Use freeze based on availability (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- Documentation/kernel-parameters: Add spec_rstack_overflow to mitigations=off (Waiman Long) [RHEL-45492 RHEL-28203] {CVE-2024-2201}
+- KVM: x86: Use a switch statement and macros in __feature_translate() (Maxim Levitsky) [RHEL-45492 RHEL-32430]
+- KVM: x86: Advertise CPUID.(EAX=7,ECX=2):EDX[5:0] to userspace (Maxim Levitsky) [RHEL-45492 RHEL-32430]
+- x86/entry/32: Convert do_fast_syscall_32() to bool return type (Prarit Bhargava) [RHEL-45492 RHEL-25415]
+- x86/entry: Add do_SYSENTER_32() prototype (Prarit Bhargava) [RHEL-45492 RHEL-25415]
+- x86/bugs: Reset speculation control settings on init (Prarit Bhargava) [RHEL-45492 RHEL-25415]
+- mpls: Reduce skb re-allocations due to skb_cow() (Guillaume Nault) [RHEL-61696 RHEL-55145]
+- scsi: core: Fix unremoved procfs host directory regression (Ewan D. Milne) [RHEL-39539 RHEL-39601 RHEL-33543 RHEL-35000] {CVE-2024-26935}
+- tty: Fix out-of-bound vmalloc access in imageblit (Andrew Halaney) [RHEL-42095 RHEL-24205] {CVE-2021-47383}
+- block: initialize integrity buffer to zero before writing it to media (Ming Lei) [RHEL-54769 RHEL-54768] {CVE-2024-43854}
+- block: cleanup bio_integrity_prep (Ming Lei) [RHEL-54769 RHEL-25988]
+- block: refactor to use helper (Ming Lei) [RHEL-54769 RHEL-25988]
+- ceph: fix cap ref leak via netfs init_request (Patrick Donnelly) [RHEL-62666 RHEL-61459]
+- redhat/configs: Enable CONFIG_OCTEON_EP_VF (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: add ethtool support (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: add Tx/Rx processing and interrupt support (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: add support for ndo ops (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: add Tx/Rx ring resource setup and cleanup (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: add VF-PF mailbox communication. (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: add hardware configuration APIs (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep_vf: Add driver framework and device initialization (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep: support firmware notifications for VFs (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep: control net framework to support VF offloads (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep: PF-VF mailbox version support (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- octeon_ep: add PF-VF mailbox communication (CKI Backport Bot) [RHEL-61744 RHEL-25860]
+- x86/mm/ident_map: Use gbpages only where full GB page should be mapped. (Chris von Recklinghausen) [RHEL-62209 RHEL-26268]
+- netfilter: nfnetlink_queue: un-break NF_REPEAT (Phil Sutter) [RHEL-62299]
+
+* Fri Oct 11 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.41.1.el9_4]
+- iommu/amd: Fix panic accessing amd_iommu_enable_faulting (Jerry Snitselaar) [RHEL-55507 RHEL-37320 RHEL-40344]
+- iommu/vt-d: Allocate DMAR fault interrupts locally (Jerry Snitselaar) [RHEL-55507 RHEL-28780]
+- netfilter: nft_inner: validate mandatory meta and payload (Phil Sutter) [RHEL-47488 RHEL-47486] {CVE-2024-39504}
+- netfilter: flowtable: initialise extack before use (CKI Backport Bot) [RHEL-58546 RHEL-58544] {CVE-2024-45018}
+- ext4: do not create EA inode under buffer lock (Carlos Maiolino) [RHEL-48285 RHEL-48282] {CVE-2024-40972}
+- ext4: fold quota accounting into ext4_xattr_inode_lookup_create() (Carlos Maiolino) [RHEL-48285 RHEL-48282] {CVE-2024-40972}
+- ext4: fix uninitialized ratelimit_state->lock access in __ext4_fill_super() (Carlos Maiolino) [RHEL-48519 RHEL-48517] {CVE-2024-40998}
+- ext4: turn quotas off if mount failed after enabling quotas (Carlos Maiolino) [RHEL-48519 RHEL-48517] {CVE-2024-40998}
+- mptcp: fix data re-injection from stale subflow (Davide Caratti) [RHEL-59920 RHEL-32669] {CVE-2024-26826}
+- xfs: add bounds checking to xlog_recover_process_data (CKI Backport Bot) [RHEL-50864 RHEL-50862] {CVE-2024-41014}
+- af_unix: Suppress false-positive lockdep splat for spin_lock() in __unix_gc(). (Davide Caratti) [RHEL-42771 RHEL-33410]
+- af_unix: Fix garbage collector racing against connect() (Davide Caratti) [RHEL-42771 RHEL-33410] {CVE-2024-26923}
+- af_unix: fix lockdep positive in sk_diag_dump_icons() (Davide Caratti) [RHEL-42771 RHEL-33410]
+- xfs: don't walk off the end of a directory data block (CKI Backport Bot) [RHEL-50887 RHEL-50885] {CVE-2024-41013}
+- ipv6: prevent possible NULL dereference in rt6_probe() (Hangbin Liu) [RHEL-48161 RHEL-45826] {CVE-2024-40960}
+- mac802154: fix llsec key resources release in mac802154_llsec_key_del (Steve Best) [RHEL-42795 RHEL-34969] {CVE-2024-26961}
+- mptcp: ensure snd_una is properly initialized on connect (Florian Westphal) [RHEL-47945 RHEL-47943] {CVE-2024-40931}
+- USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages (CKI Backport Bot) [RHEL-47560 RHEL-47558] {CVE-2024-40904}
+- nvme-multipath: fix io accounting on failover (John Meneghini) [RHEL-59646 RHEL-56635]
+- nvme: fix multipath batched completion accounting (John Meneghini) [RHEL-59646 RHEL-56635]
+- xfs: fix log recovery buffer allocation for the legacy h_size fixup (Bill O'Donnell) [RHEL-46481 RHEL-46479] {CVE-2024-39472}
+- tcp: add sanity checks to rx zerocopy (Paolo Abeni) [RHEL-58403 RHEL-29496] {CVE-2024-26640}
+- netpoll: Fix race condition in netpoll_owner_active (CKI Backport Bot) [RHEL-49373 RHEL-49371] {CVE-2024-41005}
+- wifi: mt76: mt7921s: fix potential hung tasks during chip recovery (CKI Backport Bot) [RHEL-48321 RHEL-48319] {CVE-2024-40977}
+- smb: client: fix hang in wait_for_response() for negproto (Jay Shin) [RHEL-61606 RHEL-57983]
+- NFSv4.1/pnfs: fix NFS with TLS in pnfs (Benjamin Coddington) [RHEL-61467 RHEL-34576]
+- ceph: remove the incorrect Fw reference check when dirtying pages (Xiubo Li) [RHEL-61415 RHEL-60255]
+- net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc() (Davide Caratti) [RHEL-48483 RHEL-44375] {CVE-2024-40995}
+- net/sched: taprio: extend minimum interval restriction to entire cycle too (Davide Caratti) [RHEL-44377 RHEL-44375] {CVE-2024-36244}
+- net/sched: taprio: make q->picos_per_byte available to fill_sched_entry() (Davide Caratti) [RHEL-44377 RHEL-44375] {CVE-2024-36244}
 
 * Fri Oct 04 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.40.1.el9_4]
 - gfs2: Fix NULL pointer dereference in gfs2_log_flush (CKI Backport Bot) [RHEL-51561 RHEL-51559] {CVE-2024-42079}
