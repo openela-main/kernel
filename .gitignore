@@ -1,3 +1,4 @@
-SOURCES/linux-5.14.0-427.42.1.el9_4.tar.xz
-SOURCES/kernel-abi-stablelists-5.14.0-427.42.1.el9_4.tar.bz2
-SOURCES/kernel-kabi-dw-5.14.0-427.42.1.el9_4.tar.bz2
+SOURCES/kernel-abi-stablelists-5.14.0-503.11.1.el9_5.tar.bz2
+SOURCES/kernel-kabi-dw-5.14.0-503.11.1.el9_5.tar.bz2
+SOURCES/kernel.changelog
+SOURCES/linux-5.14.0-503.11.1.el9_5.tar.xz
