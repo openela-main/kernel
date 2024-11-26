@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.27.1.el8_10
+%define pkgrelease 553.30.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.27.1%{?dist}
+%define specrelease 553.30.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,37 @@ fi
 #
 #
 %changelog
+* Fri Nov 15 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.30.1.el8_10]
+- media: edia: dvbdev: fix a use-after-free (Kate Hsuan) [RHEL-35763] {CVE-2024-27043}
+- blk-mq: fix missing blk_account_io_done() in error path (Ming Lei) [RHEL-61200]
+- rbd: don't assume rbd_is_lock_owner() for exclusive mappings (Ilya Dryomov) [RHEL-52684]
+- rbd: don't assume RBD_LOCK_STATE_LOCKED for exclusive mappings (Ilya Dryomov) [RHEL-52684]
+- rbd: rename RBD_LOCK_STATE_RELEASING and releasing_wait (Ilya Dryomov) [RHEL-52684]
+- smb: client: use actual path when queryfs (Paulo Alcantara) [RHEL-60363]
+- cifs: Fix uninitialized memory reads for oparms.mode (Paulo Alcantara) [RHEL-60363]
+- cifs: Fix uninitialized memory read for smb311 posix symlink create (Paulo Alcantara) [RHEL-60363]
+- cifs: convert the path to utf16 in smb2_query_info_compound (Paulo Alcantara) [RHEL-60363]
+- autofs: fix thinko in validate_dev_ioctl() (Ian Kent) [RHEL-62168]
+- autofs: add per dentry expire timeout (Ian Kent) [RHEL-62168]
+- bpf: Add BPF_PROG_TYPE_CGROUP_SKB attach type enforcement in BPF_LINK_CREATE (Viktor Malik) [RHEL-44167] {CVE-2024-38564}
+
+* Thu Nov 07 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.29.1.el8_10]
+- Bluetooth: l2cap: fix null-ptr-deref in l2cap_chan_timeout (cki-backport-bot) [RHEL-36372] {CVE-2024-27399}
+- mptcp: pm: Fix uaf in __timer_delete_sync (Guillaume Nault) [RHEL-60614] {CVE-2024-46858}
+- cifs: fix dfs link failover in cifs_tree_connect() (Paulo Alcantara) [RHEL-8002]
+
+* Thu Oct 31 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.28.1.el8_10]
+- s390/mm: Add cond_resched() to cmm_alloc/free_pages() (Mete Durlu) [RHEL-61702]
+- smb: client: fix deadlock in smb2_find_smb_tcon() (Paulo Alcantara) [RHEL-61400]
+- smb: client: fix potential deadlock when releasing mids (Paulo Alcantara) [RHEL-61400]
+- cifs: remove useless DeleteMidQEntry() (Paulo Alcantara) [RHEL-61400]
+- Bluetooth: af_bluetooth: Fix deadlock (CKI Backport Bot) [RHEL-58991]
+- gitlab-ci: provide consistent kcidb_tree_name (Michael Hofmann)
+- x86/mm/ident_map: Use gbpages only where full GB page should be mapped. (Nico Pache) [RHEL-26709]
+- audit: Send netlink ACK before setting connection in auditd_set (Richard Guy Briggs) [RHEL-14004]
+- KVM: selftests: x86: Fix test failure on arch lbr capable platforms (Maxim Levitsky) [RHEL-23999]
+- raid1: fix use-after-free for original bio in raid1_write_request() (Nigel Croxon) [RHEL-55263]
+
 * Thu Oct 17 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.27.1.el8_10]
 - lib/generic-radix-tree.c: Fix rare race in __genradix_ptr_alloc() (Waiman Long) [RHEL-62139] {CVE-2024-47668}
 - bonding: fix xfrm real_dev null pointer dereference (Hangbin Liu) [RHEL-57239] {CVE-2024-44989}
