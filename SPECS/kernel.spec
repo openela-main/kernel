@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.30.1.el8_10
+%define pkgrelease 553.32.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.30.1%{?dist}
+%define specrelease 553.32.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,49 @@ fi
 #
 #
 %changelog
+* Fri Nov 29 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.32.1.el8_10]
+- irqchip/gic-v4: Correctly deal with set_affinity on lazily-mapped VPEs (Charles Mirabile) [RHEL-66965] {CVE-2024-50192}
+- irqchip/gic-v4: Don't allow a VMOVP on a dying VPE (Charles Mirabile) [RHEL-66965] {CVE-2024-50192}
+- blk-rq-qos: fix crash on rq_qos_wait vs. rq_qos_wake_function race (Ming Lei) [RHEL-65158] {CVE-2024-50082}
+- gfs2: fix double destroy_workqueue error (Andreas Gruenbacher) [RHEL-62869]
+- Revert "GFS2: Don't add all glocks to the lru" (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Use list_move_tail instead of list_del/list_add_tail (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Revise glock reference counting model (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Switch to a per-filesystem glock workqueue (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Report when glocks cannot be freed for a long time (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: gfs2_glock_get cleanup (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Invert the GLF_INITIAL flag (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Rename handle_callback to request_demote (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Rename GLF_FROZEN to GLF_HAVE_FROZEN_REPLY (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Rename GLF_REPLY_PENDING to GLF_HAVE_REPLY (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Rename GLF_FREEING to GLF_UNLOCKED (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Remove useless return statement in run_queue (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Remove unnecessary function prototype (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: finish_xmote cleanup (Andreas Gruenbacher) [RHEL-62869]
+- gfs2: Replace gfs2_glock_queue_put with gfs2_glock_put_async (Andreas Gruenbacher) [RHEL-62869]
+- KVM: selftests: memslot_perf_test: increase guest sync timeout (Maxim Levitsky) [RHEL-19080]
+- vsock/virtio: Initialization of the dangling pointer occurring in vsk->trans (Jon Maloy) [RHEL-68025] {CVE-2024-50264}
+- md/raid5: Wait sync io to finish before changing group cnt (Nigel Croxon) [RHEL-58585]
+
+* Fri Nov 22 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.31.1.el8_10]
+- xfrm: fix one more kernel-infoleak in algo dumping (Sabrina Dubroca) [RHEL-65955] {CVE-2024-50110}
+- netfilter: nf_reject_ipv6: fix potential crash in nf_send_reset6() (Florian Westphal) [RHEL-66862] {CVE-2024-50256}
+- netfilter: nf_reject: Fix build warning when CONFIG_BRIDGE_NETFILTER=n (Florian Westphal) [RHEL-66862]
+- netfilter: nf_reject_ipv6: fix nf_reject_ip6_tcphdr_put() (Florian Westphal) [RHEL-66862]
+- cifs: fix return of uninitialized rc in dfs_cache_update_tgthint() (Paulo Alcantara) [RHEL-7988]
+- cifs: handle cache lookup errors different than -ENOENT (Paulo Alcantara) [RHEL-7988]
+- cifs: don't take exclusive lock for updating target hints (Paulo Alcantara) [RHEL-7988]
+- cifs: avoid re-lookups in dfs_cache_find() (Paulo Alcantara) [RHEL-7988]
+- cifs: fix potential deadlock in cache_refresh_path() (Paulo Alcantara) [RHEL-7988]
+- cifs: don't refresh cached referrals from unactive mounts (Paulo Alcantara) [RHEL-7988]
+- cifs: return ENOENT for DFS lookup_cache_entry() (Paulo Alcantara) [RHEL-7988]
+- selinux,smack: don't bypass permissions check in inode_setsecctx hook (Ondrej Mosnacek) [RHEL-66104] {CVE-2024-46695}
+- gfs2: Prevent inode creation race (Andreas Gruenbacher) [RHEL-67823]
+- gfs2: Only defer deletes when we have an iopen glock (Andreas Gruenbacher) [RHEL-67823]
+- arm64: probes: Remove broken LDR (literal) uprobe support (Mark Salter) [RHEL-66042] {CVE-2024-50099}
+- net: avoid potential underflow in qdisc_pkt_len_init() with UFO (Davide Caratti) [RHEL-65399] {CVE-2024-49949}
+- xfrm: validate new SA's prefixlen using SA family when sel.family is unset (Sabrina Dubroca) [RHEL-66457] {CVE-2024-50142}
+
 * Fri Nov 15 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.30.1.el8_10]
 - media: edia: dvbdev: fix a use-after-free (Kate Hsuan) [RHEL-35763] {CVE-2024-27043}
 - blk-mq: fix missing blk_account_io_done() in error path (Ming Lei) [RHEL-61200]
