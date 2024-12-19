@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.32.1.el8_10
+%define pkgrelease 553.33.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.32.1%{?dist}
+%define specrelease 553.33.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,11 @@ fi
 #
 #
 %changelog
+* Fri Dec 06 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.33.1.el8_10]
+- Revert "scsi: lpfc: Fix mbuf pool resource detected as busy at driver unload" This patch is dependent on the mbox refactor patch that was not added to rh8. (Dick Kennedy) [RHEL-64073]
+- drm/i915: Fix HPD polling, reenabling the output poll work as needed (Lyude Paul) [RHEL-62796]
+- drm: Add an HPD poll helper to reschedule the poll work (Lyude Paul) [RHEL-62796]
+
 * Fri Nov 29 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.32.1.el8_10]
 - irqchip/gic-v4: Correctly deal with set_affinity on lazily-mapped VPEs (Charles Mirabile) [RHEL-66965] {CVE-2024-50192}
 - irqchip/gic-v4: Don't allow a VMOVP on a dying VPE (Charles Mirabile) [RHEL-66965] {CVE-2024-50192}
