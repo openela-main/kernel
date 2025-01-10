@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.33.1.el8_10
+%define pkgrelease 553.34.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.33.1%{?dist}
+%define specrelease 553.34.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,16 @@ fi
 #
 #
 %changelog
+* Thu Dec 12 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.34.1.el8_10]
+- mptcp: cope racing subflow creation in mptcp_rcv_space_adjust (Davide Caratti) [RHEL-69667] {CVE-2024-53122}
+- NFS: nfs_async_write_reschedule_io must not recurse into the writeback code (Benjamin Coddington) [RHEL-68647]
+- xfs: fix sparse inode limits on runt AG (Pavel Reichl) [RHEL-62924]
+- KVM: SVM: Get source vCPUs from source VM for SEV-ES intrahost migration (Maxim Levitsky) [RHEL-67974]
+- x86/cpu/intel: Detect TME keyid bits before setting MTRR mask registers (Vitaly Kuznetsov) [RHEL-65362]
+- dlm: fix recovery of middle conversions (Alexander Aring) [RHEL-64860]
+- i40e: fix race condition by adding filter's intermediate sync state (Michal Schmidt) [RHEL-68271] {CVE-2024-53088}
+- i40e: fix i40e_count_filters() to count only active/new filters (Michal Schmidt) [RHEL-68271] {CVE-2024-53088}
+
 * Fri Dec 06 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.33.1.el8_10]
 - Revert "scsi: lpfc: Fix mbuf pool resource detected as busy at driver unload" This patch is dependent on the mbox refactor patch that was not added to rh8. (Dick Kennedy) [RHEL-64073]
 - drm/i915: Fix HPD polling, reenabling the output poll work as needed (Lyude Paul) [RHEL-62796]
