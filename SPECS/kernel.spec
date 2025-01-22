@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.34.1.el8_10
+%define pkgrelease 553.36.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.34.1%{?dist}
+%define specrelease 553.36.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,19 @@ fi
 #
 #
 %changelog
+* Thu Jan 09 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.36.1.el8_10]
+- cpufreq: intel_pstate: Support Emerald Rapids OOB mode (David Arcari) [RHEL-59649]
+- scsi: st: New session only when Unit Attention for new tape (John Meneghini) [RHEL-28790]
+- scsi: st: Add MTIOCGET and MTLOAD to ioctls allowed after device reset (John Meneghini) [RHEL-28790]
+- scsi: st: Don't modify unknown block number in MTIOCGET (John Meneghini) [RHEL-28790]
+- Reapply "scsi: st: Add third party poweron reset handling" (John Meneghini) [RHEL-28790]
+
+* Thu Jan 02 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.35.1.el8_10]
+- samples: pktgen: allow to specify destination port (Hangbin Liu) [RHEL-56480]
+- samples: pktgen: add some helper functions for port parsing (Hangbin Liu) [RHEL-56480]
+- scsi: storvsc: Do not flag MAINTENANCE_IN return of SRB_STATUS_DATA_OVERRUN as an error (Cathy Avery) [RHEL-71396]
+- scsi: storvsc: Handle additional SRB status values (Cathy Avery) [RHEL-71396]
+
 * Thu Dec 12 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.34.1.el8_10]
 - mptcp: cope racing subflow creation in mptcp_rcv_space_adjust (Davide Caratti) [RHEL-69667] {CVE-2024-53122}
 - NFS: nfs_async_write_reschedule_io must not recurse into the writeback code (Benjamin Coddington) [RHEL-68647]
