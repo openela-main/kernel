@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.36.1.el8_10
+%define pkgrelease 553.37.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.36.1%{?dist}
+%define specrelease 553.37.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,13 @@ fi
 #
 #
 %changelog
+* Fri Jan 17 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.37.1.el8_10]
+- arm64/sve: Discard stale CPU state when handling SVE traps (Mark Salter) [RHEL-71535] {CVE-2024-50275}
+- scsi: core: Handle devices which return an unusually large VPD page count (Ewan D. Milne) [RHEL-34275]
+- scsi: core: Fix unremoved procfs host directory regression (Ewan D. Milne) [RHEL-34275]
+- scsi: core: Consult supported VPD page list prior to fetching page (Ewan D. Milne) [RHEL-34275]
+- NFSv4: Fix dropped lock for racing OPEN and delegation return (Benjamin Coddington) [RHEL-73889]
+
 * Thu Jan 09 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.36.1.el8_10]
 - cpufreq: intel_pstate: Support Emerald Rapids OOB mode (David Arcari) [RHEL-59649]
 - scsi: st: New session only when Unit Attention for new tape (John Meneghini) [RHEL-28790]
