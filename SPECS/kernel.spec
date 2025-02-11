@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.37.1.el8_10
+%define pkgrelease 553.40.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.37.1%{?dist}
+%define specrelease 553.40.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,23 @@ fi
 #
 #
 %changelog
+* Thu Feb 06 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.40.1.el8_10]
+- media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format (Desnes Nunes) [RHEL-69571] {CVE-2024-53104}
+
+* Fri Jan 31 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.39.1.el8_10]
+- gfs2: Truncate address space when flipping GFS2_DIF_JDATA flag (Andreas Gruenbacher) [RHEL-73915]
+
+* Thu Jan 23 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.38.1.el8_10]
+- net: usb: lan78xx: add Allied Telesis AT29M2-AF (Jose Ignacio Tornos Martinez) [RHEL-70891]
+- s390/pci: Allow allocation of more than 1 MSI interrupt (Mete Durlu) [RHEL-74385]
+- s390/pci: Refactor arch_setup_msi_irqs() (Mete Durlu) [RHEL-74385]
+- s390/pci: Fix leak of struct zpci_dev when zpci_add_device() fails (Mete Durlu) [RHEL-71451]
+- s390/pci: Ignore RID for isolated VFs (Mete Durlu) [RHEL-71451]
+- s390/pci: Use topology ID for multi-function devices (Mete Durlu) [RHEL-71451]
+- s390/pci: Sort PCI functions prior to creating virtual busses (Mete Durlu) [RHEL-71451]
+- s390/iucv: MSG_PEEK causes memory leak in iucv_sock_destruct() (Mete Durlu) [RHEL-74387]
+- s390/pci: Handle PCI error codes other than 0x3a (Mete Durlu) [RHEL-74383]
+
 * Fri Jan 17 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.37.1.el8_10]
 - arm64/sve: Discard stale CPU state when handling SVE traps (Mark Salter) [RHEL-71535] {CVE-2024-50275}
 - scsi: core: Handle devices which return an unusually large VPD page count (Ewan D. Milne) [RHEL-34275]
