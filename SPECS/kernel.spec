@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.40.1.el8_10
+%define pkgrelease 553.42.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.40.1%{?dist}
+%define specrelease 553.42.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,18 @@ fi
 #
 #
 %changelog
+* Thu Feb 20 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.42.1.el8_10]
+- net: skb: exclude the single page frag cache for too small alloc (Paolo Abeni) [RHEL-66261]
+- NFSD: Reset cb_seq_status after NFS4ERR_DELAY (Olga Kornievskaia) [RHEL-79458]
+- mm: vmscan: account for free pages to prevent infinite Loop in throttle_direct_reclaim() (Seiji Nishikawa) [RHEL-64950]
+- scsi: st: Don't set pos_unknown just after device recognition (John Meneghini) [RHEL-78415]
+- ovl: fix use inode directly in rcu-walk mode (Miklos Szeredi) [RHEL-76161]
+- RDMA/cxgb4: Fix RDMA_CM_EVENT_UNREACHABLE error for iWARP (Kamal Heib) [RHEL-75826]
+
+* Fri Feb 14 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.41.1.el8_10]
+- virtio-net: correctly enable callback during start_xmit (Laurent Vivier) [RHEL-72886]
+- dm snapshot: fix lockup in dm_exception_table_exit (Benjamin Marzinski) [RHEL-76230 RHEL-34599]
+
 * Thu Feb 06 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.40.1.el8_10]
 - media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format (Desnes Nunes) [RHEL-69571] {CVE-2024-53104}
 
