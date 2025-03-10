@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.42.1.el8_10
+%define pkgrelease 553.44.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.42.1%{?dist}
+%define specrelease 553.44.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,28 @@ fi
 #
 #
 %changelog
+* Wed Mar 05 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.44.1.el8_10]
+- HID: core: zero-initialize the report buffer (CKI Backport Bot) [RHEL-81825] {CVE-2024-50302}
+- ALSA: usb-audio: Fix a DMA to stack memory bug (Jaroslav Kysela) [RHEL-81786]
+- ALSA: usb-audio: Fix for sampling rates support for Mbox3 (Jaroslav Kysela) [RHEL-81786]
+- ALSA: usb-audio: Fix potential out-of-bound accesses for Extigy and Mbox devices (Jaroslav Kysela) [RHEL-81786] {CVE-2024-53197}
+- ALSA: usb-audio: Add sampling rates support for Mbox3 (Jaroslav Kysela) [RHEL-81786]
+
+* Thu Feb 27 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.43.1.el8_10]
+- s390/module: fix loading modules with a lot of relocations (Mete Durlu) [RHEL-78999]
+- s390/module: Use s390_kernel_write() for late relocations (Mete Durlu) [RHEL-78999]
+- locking/atomic: Make test_and_*_bit() ordered on failure (Herton R. Krzesinski) [RHEL-69894]
+- pps: Fix a use-after-free (Michal Schmidt) [RHEL-77971]
+- KVM: s390: Change virtual to physical address access in diag 0x258 handler (Thomas Huth) [RHEL-68323 RHEL-65229]
+- KVM: s390: gaccess: Check if guest address is in memslot (Thomas Huth) [RHEL-68323 RHEL-65229]
+- KVM: s390: Fix SORTL and DFLTCC instruction format error in __insn32_query (Thomas Huth) [RHEL-68323 RHEL-65229]
+- s390/uv: Panic for set and remove shared access UVC errors (Thomas Huth) [RHEL-68323 RHEL-65229]
+- KVM: s390: vsie: Use virt_to_phys for crypto control block (Thomas Huth) [RHEL-68323 RHEL-65229]
+- KVM: s390: vsie: Use virt_to_phys for facility control block (Thomas Huth) [RHEL-68323 RHEL-65229]
+- scsi: megaraid_sas: Fix for a potential deadlock (Tomas Henzl) [RHEL-21984] {CVE-2024-57807}
+- net/mlx5: Reload auxiliary devices in pci error handlers (Benjamin Poirier) [RHEL-78756]
+- net/mlx5: Suspend auxiliary devices only in case of PCI device suspend (Benjamin Poirier) [RHEL-78756]
+
 * Thu Feb 20 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.42.1.el8_10]
 - net: skb: exclude the single page frag cache for too small alloc (Paolo Abeni) [RHEL-66261]
 - NFSD: Reset cb_seq_status after NFS4ERR_DELAY (Olga Kornievskaia) [RHEL-79458]
