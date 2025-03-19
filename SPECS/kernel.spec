@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.44.1.el8_10
+%define pkgrelease 553.45.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.44.1%{?dist}
+%define specrelease 553.45.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,21 @@ fi
 #
 #
 %changelog
+* Thu Mar 06 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.45.1.el8_10]
+- gve: trigger RX NAPI instead of TX NAPI in gve_xsk_wakeup (Joshua Washington) [RHEL-73269]
+- gve: process XSK TX descriptors as part of RX NAPI (Joshua Washington) [RHEL-73269]
+- gve: guard XSK operations on the existence of queues (Joshua Washington) [RHEL-73269]
+- gve: guard XDP xmit NDO on existence of xdp queues (Joshua Washington) [RHEL-73269]
+- gve: Fix an edge case for TSO skb validity check (Joshua Washington) [RHEL-73269]
+- gve: Fix XDP TX completion handling when counters overflow (Joshua Washington) [RHEL-73269]
+- gve: Clear napi->skb before dev_kfree_skb_any() (Joshua Washington) [RHEL-73269] {CVE-2024-40937}
+- gve: ignore nonrelevant GSO type bits when processing TSO headers (Joshua Washington) [RHEL-73269]
+- can: bcm: Fix UAF in bcm_proc_show() (CKI Backport Bot) [RHEL-80733] {CVE-2023-52922}
+- gfs2: glock holder GL_NOPID fix (Andreas Gruenbacher) [RHEL-80694]
+- gfs2: Decode missing glock flags in tracepoints (Andreas Gruenbacher) [RHEL-80694]
+- net/smc: support ipv4 mapped ipv6 addr client for smc-r v2 (Mete Durlu) [RHEL-79810]
+- net: smc: fix spurious error message from __sock_release() (Mete Durlu) [RHEL-79812]
+
 * Wed Mar 05 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.44.1.el8_10]
 - HID: core: zero-initialize the report buffer (CKI Backport Bot) [RHEL-81825] {CVE-2024-50302}
 - ALSA: usb-audio: Fix a DMA to stack memory bug (Jaroslav Kysela) [RHEL-81786]
