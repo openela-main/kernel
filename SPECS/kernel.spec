@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.45.1.el8_10
+%define pkgrelease 553.46.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.45.1%{?dist}
+%define specrelease 553.46.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,14 @@ fi
 #
 #
 %changelog
+* Thu Mar 13 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.46.1.el8_10]
+- s390/pci: Fix handling of isolated VFs (Mete Durlu) [RHEL-81934]
+- s390/pci: Pull search for parent PF out of zpci_iov_setup_virtfn() (Mete Durlu) [RHEL-81934]
+- s390/pci: Fix SR-IOV for PFs initially in standby (Mete Durlu) [RHEL-81934]
+- x86/mm: Fix VDSO and VVAR placement on 5-level paging machines (Herton R. Krzesinski) [RHEL-62832]
+- arm64: cacheinfo: Avoid out-of-bounds write to cacheinfo array (CKI Backport Bot) [RHEL-82720] {CVE-2025-21785}
+- nouveau/fence: handle cross device fences properly (Dave Airlie) [RHEL-80085]
+
 * Thu Mar 06 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.45.1.el8_10]
 - gve: trigger RX NAPI instead of TX NAPI in gve_xsk_wakeup (Joshua Washington) [RHEL-73269]
 - gve: process XSK TX descriptors as part of RX NAPI (Joshua Washington) [RHEL-73269]
