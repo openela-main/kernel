@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.46.1.el8_10
+%define pkgrelease 553.47.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.46.1%{?dist}
+%define specrelease 553.47.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,11 @@ fi
 #
 #
 %changelog
+* Thu Mar 20 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.47.1.el8_10]
+- nfs: don't invalidate dentries on transient errors (Scott Mayhew) [RHEL-78136]
+- ethtool: runtime-resume netdev parent before ethtool ioctl ops (John J Coleman) [RHEL-78156]
+- bpf: Use raw_spinlock_t in ringbuf (Viktor Malik) [RHEL-79911] {CVE-2024-50138}
+
 * Thu Mar 13 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.46.1.el8_10]
 - s390/pci: Fix handling of isolated VFs (Mete Durlu) [RHEL-81934]
 - s390/pci: Pull search for parent PF out of zpci_iov_setup_virtfn() (Mete Durlu) [RHEL-81934]
