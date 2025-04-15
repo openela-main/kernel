@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.47.1.el8_10
+%define pkgrelease 553.50.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.47.1%{?dist}
+%define specrelease 553.50.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,47 @@ fi
 #
 #
 %changelog
+* Thu Apr 10 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.50.1.el8_10]
+- perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option() (Michael Petlan) [RHEL-82119]
+- ALSA: usb-audio: Fix out of bounds reads when finding clock sources (Jarod Wilson) [RHEL-86737] {CVE-2024-53150}
+- scsi: storvsc: Set correct data length for sending SCSI command without payload (Cathy Avery) [RHEL-83052]
+- ice: fold ice_ptp_read_time into ice_ptp_gettimex64 (Michal Schmidt) [RHEL-85852]
+- ice: avoid the PTP hardware semaphore in gettimex64 path (Michal Schmidt) [RHEL-85852]
+- ice: add ice_adapter for shared data across PFs on the same NIC (Michal Schmidt) [RHEL-85852]
+
+* Thu Apr 03 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.49.1.el8_10]
+- net/mlx5: Fix error path in multi-packet WQE transmit (CKI Backport Bot) [RHEL-84244]
+- redhat: drop Y issues from changelog (Jan Stancek)
+- md/md-bitmap: fix writing non bitmap changes local to RHEL (Nigel Croxon) [RHEL-80673]
+- md/md-bitmap: fix writing non bitmap pages (Nigel Croxon) [RHEL-80673]
+- md-bitmap: use %%pD to print the file name in md_bitmap_file_kick (Nigel Croxon) [RHEL-80673]
+- md-bitmap: initialize variables at declaration time in md_bitmap_file_unmap (Nigel Croxon) [RHEL-80673]
+- md-bitmap: set BITMAP_WRITE_ERROR in write_sb_page (Nigel Croxon) [RHEL-80673]
+- raid1: update discard granularity when adding new disk (Nigel Croxon) [RHEL-71499]
+- x86/xen: remove hypercall page (Vitaly Kuznetsov) [RHEL-70666] {CVE-2024-53241}
+- x86/xen: use new hypercall functions instead of hypercall page (Vitaly Kuznetsov) [RHEL-70666] {CVE-2024-53241}
+
+* Thu Mar 27 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.48.1.el8_10]
+- rhel-8.10: gate kernel on kernel-qe tests results not cki ones (Bruno Goncalves)
+- gfs2: skip if we cannot defer delete (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: remove redundant warnings (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: minor evict fix (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Prevent inode creation race (2) (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Fix additional unlikely request cancelation race (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Fix request cancelation bug (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Check for empty queue in run_queue (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Remove more dead code in add_to_queue (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: remove dead code in add_to_queue (Su Hui) [RHEL-76208]
+- gfs2: Remove LM_FLAG_PRIORITY flag (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Replace GIF_DEFER_DELETE with GLF_DEFER_DELETE (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Add GLF_PENDING_REPLY flag (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Remove and replace gfs2_glock_queue_work (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: do_xmote fixes (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Clear flags when withdraw prevents xmote (Bob Peterson) [RHEL-76208]
+- gfs2: fix a deadlock on withdraw-during-mount (Bob Peterson) [RHEL-76208]
+- gfs2: gfs2_evict_inode clarification (Andreas Gruenbacher) [RHEL-76208]
+- gfs2: Remove misleading comments in gfs2_evict_inode (Andreas Gruenbacher) [RHEL-76208]
+
 * Thu Mar 20 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.47.1.el8_10]
 - nfs: don't invalidate dentries on transient errors (Scott Mayhew) [RHEL-78136]
 - ethtool: runtime-resume netdev parent before ethtool ioctl ops (John J Coleman) [RHEL-78156]
