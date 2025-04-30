@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.50.1.el8_10
+%define pkgrelease 553.51.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.50.1%{?dist}
+%define specrelease 553.51.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,10 @@ fi
 #
 #
 %changelog
+* Thu Apr 24 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.51.1.el8_10]
+- x86/xen: use the whole RCX when picking the right hypercall function (Vitaly Kuznetsov) [RHEL-87072]
+- Revert "usb: xhci: prevent potential failure in handle_tx_event() for Transfer events without TRB" (Desnes Nunes) [RHEL-87280]
+
 * Thu Apr 10 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.50.1.el8_10]
 - perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option() (Michael Petlan) [RHEL-82119]
 - ALSA: usb-audio: Fix out of bounds reads when finding clock sources (Jarod Wilson) [RHEL-86737] {CVE-2024-53150}
