@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.51.1.el8_10
+%define pkgrelease 553.52.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.51.1%{?dist}
+%define specrelease 553.52.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -551,7 +551,7 @@ Provides: kernel-drm-nouveau = 16\
 Provides: %{name}-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
 Requires(pre): %{kernel_prereq}\
 Requires(pre): %{initrd_prereq}\
-Requires(pre): linux-firmware >= 20200619-99.git3890db36\
+Requires(pre): linux-firmware >= 20220713-109.gitdfa29317\
 %ifnarch s390x\
 Requires(pre): ((grub2 >= 2.02-99) if grub2)\
 Requires(pre): ((grub2-efi >= 2.02-99) if grub2-efi)\
@@ -2673,6 +2673,22 @@ fi
 #
 #
 %changelog
+* Thu May 01 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.52.1.el8_10.gfd1b]
+- netfilter: ipset: add missing range check in bitmap_ip_uadt (Florian Westphal) [RHEL-70268] {CVE-2024-53141}
+- NFS: Extend rdirplus mount option with "force|none" (Benjamin Coddington) [RHEL-16285]
+- idpf: trigger SW interrupt when exiting wb_on_itr mode (Michal Schmidt) [RHEL-73266]
+- idpf: add support for SW triggered interrupts (Michal Schmidt) [RHEL-73266]
+- idpf: fix VF dynamic interrupt ctl register initialization (Michal Schmidt) [RHEL-73266]
+- idpf: enable WB_ON_ITR (Michal Schmidt) [RHEL-73266]
+- redhat: require recent enough linux-firmware for qed (Denys Vlasenko) [RHEL-6342]
+- gfs2: deallocate inodes in gfs2_create_inode (Andreas Gruenbacher) [RHEL-7875]
+- gfs2: Move GIF_ALLOC_FAILED check out of gfs2_ea_dealloc (Andreas Gruenbacher) [RHEL-7875]
+- gfs2: Move gfs2_dinode_dealloc (Andreas Gruenbacher) [RHEL-7875]
+- gfs2: Don't reread inodes unnecessarily (Andreas Gruenbacher) [RHEL-7875]
+- gfs2: gfs2_create_inode error handling fix (Andreas Gruenbacher) [RHEL-7875]
+- gfs2: No longer use 'extern' in function declarations (Andreas Gruenbacher) [RHEL-7875]
+- hwmon: (coretemp) fix pci device refcount leak in nv1a_ram_new() (CKI Backport Bot) [RHEL-63668] {CVE-2022-49011}
+
 * Thu Apr 24 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.51.1.el8_10]
 - x86/xen: use the whole RCX when picking the right hypercall function (Vitaly Kuznetsov) [RHEL-87072]
 - Revert "usb: xhci: prevent potential failure in handle_tx_event() for Transfer events without TRB" (Desnes Nunes) [RHEL-87280]
