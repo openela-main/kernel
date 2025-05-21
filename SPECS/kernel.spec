@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.52.1.el8_10
+%define pkgrelease 553.53.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.52.1%{?dist}
+%define specrelease 553.53.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,25 @@ fi
 #
 #
 %changelog
+* Fri May 09 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.53.1.el8_10]
+- net/mlx5: Always stop health timer during driver removal (Michal Schmidt) [RHEL-47712] {CVE-2024-40906}
+- net/mlx5: Split function_setup() to enable and open functions (Michal Schmidt) [RHEL-47712]
+- net/mlx5e: SHAMPO, Fix invalid WQ linked list unlink (Michal Schmidt) [RHEL-57117] {CVE-2024-44970}
+- net/mlx5e: SHAMPO, Fix incorrect page release (Michal Schmidt) [RHEL-57117] {CVE-2024-46717}
+- s390/pci: Fix zpci_bus_is_isolated_vf() for non-VFs (Mete Durlu) [RHEL-88819]
+- platform/x86: dell-wmi-sysman: Make init_bios_attributes() ACPI object parsing more robust (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Cleanup create_attributes_level_sysfs_files() (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Make sysman_init() return -ENODEV of the interfaces are not found (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Cleanup sysman_init() error-exit handling (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Fix release_attributes_data() getting called twice on init_bios_attributes() failure (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Make it safe to call exit_foo_attributes() multiple times (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Fix possible NULL pointer deref on exit (Jay Shin) [RHEL-88714]
+- platform/x86: dell-wmi-sysman: Fix crash caused by calling kset_unregister twice (Jay Shin) [RHEL-88714]
+- x86/kexec: Add EFI config table identity mapping for kexec kernel (Herton R. Krzesinski) [RHEL-71793]
+- vsock: Orphan socket after transport release (Jay Shin) [RHEL-89099] {CVE-2025-21756}
+- vsock: Keep the binding until socket destruction (Jay Shin) [RHEL-89099] {CVE-2025-21756}
+- bpf, vsock: Invoke proto::close on close() (Jay Shin) [RHEL-89099] {CVE-2025-21756}
+
 * Thu May 01 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.52.1.el8_10.gfd1b]
 - netfilter: ipset: add missing range check in bitmap_ip_uadt (Florian Westphal) [RHEL-70268] {CVE-2024-53141}
 - NFS: Extend rdirplus mount option with "force|none" (Benjamin Coddington) [RHEL-16285]
