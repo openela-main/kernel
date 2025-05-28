@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.53.1.el8_10
+%define pkgrelease 553.54.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.53.1%{?dist}
+%define specrelease 553.54.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,11 @@ fi
 #
 #
 %changelog
+* Thu May 15 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.54.1.el8_10]
+- ice: fix stats being updated by way too large values (CKI Backport Bot) [RHEL-70834]
+- wifi: rtw89: Fix array index mistake in rtw89_sta_info_get_iter() (CKI Backport Bot) [RHEL-54802] {CVE-2024-43842}
+- sched/rt: Fix race in push_rt_task (Phil Auld) [RHEL-84963]
+
 * Fri May 09 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.53.1.el8_10]
 - net/mlx5: Always stop health timer during driver removal (Michal Schmidt) [RHEL-47712] {CVE-2024-40906}
 - net/mlx5: Split function_setup() to enable and open functions (Michal Schmidt) [RHEL-47712]
