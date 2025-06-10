@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.54.1.el8_10
+%define pkgrelease 553.56.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.54.1%{?dist}
+%define specrelease 553.56.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,13 @@ fi
 #
 #
 %changelog
+* Sun Jun 01 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.56.1.el8_10]
+- tools/power/x86_energy_perf_policy: Read energy_perf_bias from sysfs (David Arcari) [RHEL-86963]
+- um: Fix out-of-bounds read in LDT setup (CKI Backport Bot) [RHEL-90261] {CVE-2022-49395}
+
+* Fri May 23 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.55.1.el8_10]
+- sched/fair: Fix CPU bandwidth limit bypass during CPU hotplug (Phil Auld) [RHEL-85171]
+
 * Thu May 15 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.54.1.el8_10]
 - ice: fix stats being updated by way too large values (CKI Backport Bot) [RHEL-70834]
 - wifi: rtw89: Fix array index mistake in rtw89_sta_info_get_iter() (CKI Backport Bot) [RHEL-54802] {CVE-2024-43842}
