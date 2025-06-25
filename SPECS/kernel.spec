@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.56.1.el8_10
+%define pkgrelease 553.58.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.56.1%{?dist}
+%define specrelease 553.58.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,63 @@ fi
 #
 #
 %changelog
+* Thu Jun 12 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.58.1.el8_10]
+- ndisc: use RCU protection in ndisc_alloc_skb() (Xin Long) [RHEL-89535] {CVE-2025-21764}
+- ipv6: use RCU protection in ip6_default_advmss() (Xin Long) [RHEL-89535] {CVE-2025-21765}
+- net: add dev_net_rcu() helper (Xin Long) [RHEL-89535] {CVE-2025-21765}
+- net: treat possible_net_t net pointer as an RCU one and add read_pnet_rcu() (Xin Long) [RHEL-89535]
+- idpf: check error for register_netdev() on init (Michal Schmidt) [RHEL-71182] {CVE-2025-22116}
+- idpf: avoid mailbox timeout delays during reset (Michal Schmidt) [RHEL-71182]
+- idpf: fix a race in txq wakeup (Michal Schmidt) [RHEL-71182]
+- idpf: fix idpf_vport_splitq_napi_poll() (Michal Schmidt) [RHEL-71182]
+- idpf: fix null-ptr-deref in idpf_features_check (Michal Schmidt) [RHEL-71182]
+- idpf: protect shutdown from reset (Michal Schmidt) [RHEL-71182]
+- idpf: fix potential memory leak on kcalloc() failure (Michal Schmidt) [RHEL-71182]
+- idpf: fix offloads support for encapsulated packets (Michal Schmidt) [RHEL-71182]
+- idpf: fix adapter NULL pointer dereference on reboot (Michal Schmidt) [RHEL-71182] {CVE-2025-22065}
+- idpf: fix checksums set in idpf_rx_rsc() (Michal Schmidt) [RHEL-71182] {CVE-2025-21890}
+- idpf: fix handling rsc packet with a single segment (Michal Schmidt) [RHEL-71182]
+- idpf: add more info during virtchnl transaction timeout/salt mismatch (Michal Schmidt) [RHEL-71182]
+- idpf: convert workqueues to unbound (Michal Schmidt) [RHEL-71182] {CVE-2024-58057}
+- idpf: Acquire the lock before accessing the xn->salt (Michal Schmidt) [RHEL-71182]
+- idpf: fix transaction timeouts on reset (Michal Schmidt) [RHEL-71182]
+- idpf: add read memory barrier when checking descriptor done bit (Michal Schmidt) [RHEL-71182]
+- idpf: deinit virtchnl transaction manager after vport and vectors (Michal Schmidt) [RHEL-71182]
+- idpf: use actual mbx receive payload length (Michal Schmidt) [RHEL-71182]
+- idpf: call set_real_num_queues in idpf_open (Michal Schmidt) [RHEL-71182 RHEL-90849]
+- idpf: fix idpf_vc_core_init error path (Michal Schmidt) [RHEL-68233 RHEL-71182 RHEL-90846] {CVE-2024-53064}
+- idpf: avoid vport access in idpf_get_link_ksettings (Michal Schmidt) [RHEL-71182 RHEL-90846] {CVE-2024-50274}
+- idpf: fix netdev Tx queue stop/wake (Michal Schmidt) [RHEL-71182]
+- idpf: fix UAFs when destroying the queues (Michal Schmidt) [RHEL-71182] {CVE-2024-44932}
+- idpf: fix memleak in vport interrupt configuration (Michal Schmidt) [RHEL-71182]
+- idpf: fix memory leaks and crashes while performing a soft reset (Michal Schmidt) [RHEL-71182] {CVE-2024-44964}
+- idpf: compile singleq code only under default-n CONFIG_IDPF_SINGLEQ (Michal Schmidt) [RHEL-71182]
+- redhat/configs: set CONFIG_IDPF_SINGLEQ as disabled (Michal Schmidt) [RHEL-71182]
+- idpf: merge singleq and splitq &net_device_ops (Michal Schmidt) [RHEL-71182]
+- idpf: avoid bloating &idpf_q_vector with big %%NR_CPUS (Michal Schmidt) [RHEL-71182]
+- idpf: split &idpf_queue into 4 strictly-typed queue structures (Michal Schmidt) [RHEL-71182]
+- idpf: remove legacy Page Pool Ethtool stats (Michal Schmidt) [RHEL-71182]
+- net: remove gfp_mask from napi_alloc_skb() [idpf] (Michal Schmidt) [RHEL-71182]
+- idpf: stop using macros for accessing queue descriptors (Michal Schmidt) [RHEL-71182]
+- idpf: don't enable NAPI and interrupts prior to allocating Rx buffers (Michal Schmidt) [RHEL-71182]
+- idpf: Interpret .set_channels() input differently (Michal Schmidt) [RHEL-71182]
+- idpf: make virtchnl2.h self-contained (Michal Schmidt) [RHEL-71182]
+- s390/pci: Serialize device addition and removal (Mete Durlu) [RHEL-95783]
+- s390/pci: Allow re-add of a reserved but not yet removed device (Mete Durlu) [RHEL-95783]
+- s390/pci: Prevent self deletion in disable_slot() (Mete Durlu) [RHEL-95783]
+- s390/pci: Remove redundant bus removal and disable from zpci_release_device() (Mete Durlu) [RHEL-95783]
+- s390/pci: Fix duplicate pci_dev_put() in disable_slot() when PF has child VFs (Mete Durlu) [RHEL-95783]
+- s390/pci: Fix missing check for zpci_create_device() error return (Mete Durlu) [RHEL-95783]
+- s390/pci: Fix potential double remove of hotplug slot (Mete Durlu) [RHEL-95783]
+- s390/pci: remove hotplug slot when releasing the device (Mete Durlu) [RHEL-95783]
+- s390/pci: introduce lock to synchronize state of zpci_dev's (Mete Durlu) [RHEL-95783]
+- s390/pci: rename lock member in struct zpci_dev (Mete Durlu) [RHEL-95783]
+
+* Thu Jun 05 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.57.1.el8_10]
+- smb: client: fix warning in cifs_smb3_do_mount() (Paulo Alcantara) [RHEL-55825]
+- cifs: fix double free race when mount fails in cifs_get_root() (Paulo Alcantara) [RHEL-55825] {CVE-2022-48919}
+- security/keys: fix slab-out-of-bounds in key_task_permission (CKI Backport Bot) [RHEL-68090] {CVE-2024-50301}
+
 * Sun Jun 01 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.56.1.el8_10]
 - tools/power/x86_energy_perf_policy: Read energy_perf_bias from sysfs (David Arcari) [RHEL-86963]
 - um: Fix out-of-bounds read in LDT setup (CKI Backport Bot) [RHEL-90261] {CVE-2022-49395}
