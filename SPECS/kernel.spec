@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.58.1.el8_10
+%define pkgrelease 553.60.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.58.1%{?dist}
+%define specrelease 553.60.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,27 @@ fi
 #
 #
 %changelog
+* Thu Jun 26 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.60.1.el8_10]
+- xfs: don't allocate COW extents when unsharing a hole (Brian Foster) [RHEL-83037]
+- xfs: don't allocate into the data fork for an unshare request (Brian Foster) [RHEL-83037]
+- s390/ism: add release function for struct device (Mete Durlu) [RHEL-97192]
+- udf: Fix a slab-out-of-bounds write bug in udf_find_entry() (CKI Backport Bot) [RHEL-99113] {CVE-2022-49846}
+
+* Thu Jun 19 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.59.1.el8_10]
+- SUNRPC: Fix Oops in xs_tcp_send_request() when transport is disconnected (Olga Kornievskaia) [RHEL-83291]
+- SUNRPC: Set TCP_CORK until the transmit queue is empty (Olga Kornievskaia) [RHEL-83291]
+- tcp: add tcp_sock_set_cork (Olga Kornievskaia) [RHEL-83291]
+- xfs: xfs_ail_push_all_sync() stalls when racing with updates (Brian Foster) [RHEL-88132]
+- Bluetooth: Fix use after free in hci_send_acl (CKI Backport Bot) [RHEL-90428] {CVE-2022-49111}
+- Bluetooth: MGMT: Fix failing to MGMT_OP_ADD_UUID/MGMT_OP_REMOVE_UUID (David Marlin) [RHEL-90468] {CVE-2022-49136}
+- Bluetooth: hci_sync: add lock to protect HCI_UNREGISTER (David Marlin) [RHEL-90468] {CVE-2022-49136}
+- Bluetooth: hci_sync: Only allow hci_cmd_sync_queue if running (David Marlin) [RHEL-90468] {CVE-2022-49136}
+- Bluetooth: Cancel sync command before suspend and power off (David Marlin) [RHEL-90468] {CVE-2022-49136}
+- Bluetooth: hci_sync: Fix queuing commands when HCI_UNREGISTER is set (CKI Backport Bot) [RHEL-90468] {CVE-2022-49136}
+- fix backport of "filelock: Remove locks reliably when fcntl/close race is detected" (Scott Mayhew) [RHEL-89709]
+- NFSv4: Allow FREE_STATEID to clean up delegations (Benjamin Coddington) [RHEL-86932]
+- NFSv4.1: constify the stateid argument in nfs41_test_stateid() (Trond Myklebust) [RHEL-86932]
+
 * Thu Jun 12 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.58.1.el8_10]
 - ndisc: use RCU protection in ndisc_alloc_skb() (Xin Long) [RHEL-89535] {CVE-2025-21764}
 - ipv6: use RCU protection in ip6_default_advmss() (Xin Long) [RHEL-89535] {CVE-2025-21765}
