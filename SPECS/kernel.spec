@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.60.1.el8_10
+%define pkgrelease 553.62.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.60.1%{?dist}
+%define specrelease 553.62.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2673,6 +2673,46 @@ fi
 #
 #
 %changelog
+* Thu Jul 10 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.62.1.el8_10]
+- s390/virtio_ccw: Don't allocate/assign airqs for non-existing queues (David Hildenbrand) [RHEL-87557]
+- mm/slab: make __free(kfree) accept error pointers (Mark Langsdorf) [RHEL-84410]
+- driver core: fix potential NULL pointer dereference in dev_uevent() (Mark Langsdorf) [RHEL-84410]
+- driver core: introduce device_set_driver() helper (Mark Langsdorf) [RHEL-84410]
+- Revert "drivers: core: synchronize really_probe() and dev_uevent()" (Mark Langsdorf) [RHEL-84410]
+- cleanup: Add conditional guard helper (Mark Langsdorf) [RHEL-84410]
+- cleanup: Adjust scoped_guard() macros to avoid potential warning (Mark Langsdorf) [RHEL-84410]
+- cleanup: Remove address space of returned pointer (Mark Langsdorf) [RHEL-84410]
+- cleanup: Add usage and style documentation (Mark Langsdorf) [RHEL-84410]
+- file: add take_fd() cleanup helper (Mark Langsdorf) [RHEL-84410]
+- cleanup: Standardize the header guard define's name (Mark Langsdorf) [RHEL-84410]
+- cleanup: Add conditional guard support (Mark Langsdorf) [RHEL-84410]
+- cleanup: Make no_free_ptr() __must_check (Mark Langsdorf) [RHEL-84410]
+- locking: Introduce __cleanup() based infrastructure (Mark Langsdorf) [RHEL-84410]
+- misc/vmw_vmci: fix an infoleak in vmci_host_do_receive_datagram() (CKI Backport Bot) [RHEL-100343] {CVE-2022-49788}
+- media: uvcvideo: Announce the user our deprecation intentions (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Allow changing noparam on the fly (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Invert default value for nodrop module param (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Propagate buf->error to userspace (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Flush the control cache when we get an event (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Annotate lock requirements for uvc_ctrl_set (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Remove dangling pointers (Desnes Nunes) [RHEL-98760] {CVE-2024-58002}
+- media: uvcvideo: Remove redundant NULL assignment (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Only save async fh if success (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Refactor iterators (Desnes Nunes) [RHEL-98760]
+- media: uvcvideo: Fix double free in error path (CKI Backport Bot) [RHEL-98788] {CVE-2024-57980}
+- cifs: potential buffer overflow in handling symlinks (Paulo Alcantara) [RHEL-97074] {CVE-2022-49058}
+- Race between reading mdstat and stopping an md device (Nigel Croxon) [RHEL-95723]
+- fs/dcache: Control # of dentries in list_lru_node (Waiman Long) [RHEL-8578]
+- fs/dcache: Add sysctl parameter dentry-fs-klimit to control # of dentries in filesystem (Waiman Long) [RHEL-8578]
+- mm/list_lru: Make list_lru_add() return # if items in affected list_lru_node (Waiman Long) [RHEL-8578]
+
+* Thu Jul 03 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.61.1.el8_10]
+- s390: Add z17 elf platform (Christoph Schlameuss) [RHEL-100409]
+- ext4: ignore xattrs past end (CKI Backport Bot) [RHEL-100375] {CVE-2025-37738}
+- ext4: fix off-by-one error in do_split (CKI Backport Bot) [RHEL-100361] {CVE-2025-23150}
+- net: atm: fix use after free in lec_send() (CKI Backport Bot) [RHEL-93119] {CVE-2025-22004}
+- x86/microcode/AMD: Fix out-of-bounds on systems with CPU-less NUMA nodes (CKI Backport Bot) [RHEL-98980] {CVE-2025-21991}
+
 * Thu Jun 26 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.60.1.el8_10]
 - xfs: don't allocate COW extents when unsharing a hole (Brian Foster) [RHEL-83037]
 - xfs: don't allocate into the data fork for an unshare request (Brian Foster) [RHEL-83037]
