@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.62.1.el8_10
+%define pkgrelease 553.63.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.62.1%{?dist}
+%define specrelease 553.63.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -496,6 +496,11 @@ Source210: Module.kabi_dup_aarch64
 Source211: Module.kabi_dup_ppc64le
 Source212: Module.kabi_dup_s390x
 Source213: Module.kabi_dup_x86_64
+
+Source221: standalone-aarch64.c
+Source222: standalone-ppc64le.c
+Source223: standalone-s390x.c
+Source224: standalone-x86_64.c
 
 Source300: kernel-abi-stablelists-%{specversion}-%{distro_build}.tar.bz2
 Source301: kernel-kabi-dw-%{specversion}-%{distro_build}.tar.bz2
@@ -1405,6 +1410,10 @@ BuildKernel() {
         rm $RPM_BUILD_ROOT/Module.kabi
     else
         echo "**** NOTE: Cannot find reference Module.kabi file. ****"
+    fi
+
+    if [ -e $RPM_SOURCE_DIR/standalone-%{_target_cpu}$Flavour.c ]; then
+        gcc -I./include/ -c $RPM_SOURCE_DIR/standalone-%{_target_cpu}$Flavour.c
     fi
 %endif
 
@@ -2673,6 +2682,17 @@ fi
 #
 #
 %changelog
+* Thu Jul 17 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.63.1.el8_10]
+- tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink(). (Guillaume Nault) [RHEL-66324] {CVE-2024-50154}
+- net: ch9200: fix uninitialised access during mii_nway_restart (CKI Backport Bot) [RHEL-101200] {CVE-2025-38086}
+- mm/swapfile: add cond_resched() in get_swap_pages() (Nico Pache) [RHEL-80401] {CVE-2023-52932}
+- dlm: fix possible lkb_resource null dereference (Alexander Aring) [RHEL-64452]
+- fs: dlm: handle -EINVAL as log_error() (Alexander Aring) [RHEL-64452]
+- redhat/configs: enable CONFIG_RH_KABI_STABLE_ASM_OFFSETS (Čestmír Kalina) [RHEL-90099]
+- kabi: freeze stablelist and stackprotector-related constants (Čestmír Kalina) [RHEL-90099]
+- kabi: add redhat/kabi/asm-offsets (Čestmír Kalina) [RHEL-90099]
+- kabi: add RH_KABI_ASSERT_EQ_CONST{,EXPR} (Čestmír Kalina) [RHEL-90099]
+
 * Thu Jul 10 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.62.1.el8_10]
 - s390/virtio_ccw: Don't allocate/assign airqs for non-existing queues (David Hildenbrand) [RHEL-87557]
 - mm/slab: make __free(kfree) accept error pointers (Mark Langsdorf) [RHEL-84410]
