@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.63.1.el8_10
+%define pkgrelease 553.64.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.63.1%{?dist}
+%define specrelease 553.64.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,16 @@ fi
 #
 #
 %changelog
+* Wed Jul 23 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.64.1.el8_10]
+- sched/fair: Fix potential memory corruption in child_cfs_rq_on_list (CKI Backport Bot) [RHEL-100387] {CVE-2025-21919}
+- NFSv4/pNFS: Fix a race to wake on NFS_LAYOUT_DRAIN (Benjamin Coddington) [RHEL-86256]
+- ftrace: Fix NULL pointer dereference in is_ftrace_trampoline when ftrace is dead (CKI Backport Bot) [RHEL-102133] {CVE-2022-49977}
+- wifi: iwlwifi: limit printed string from FW file (CKI Backport Bot) [RHEL-99367] {CVE-2025-21905}
+- workqueue: Disable printk_deferred_{enter,exit} in RT kernel (Waiman Long) [RHEL-80292]
+- workqueue: Make show_pwq() use run-length encoding (Waiman Long) [RHEL-80292]
+- workqueue: Introduce show_one_worker_pool and show_one_workqueue. (Waiman Long) [RHEL-80292]
+- workqueue: fix state-dump console deadlock (Waiman Long) [RHEL-80292]
+
 * Thu Jul 17 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.63.1.el8_10]
 - tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink(). (Guillaume Nault) [RHEL-66324] {CVE-2024-50154}
 - net: ch9200: fix uninitialised access during mii_nway_restart (CKI Backport Bot) [RHEL-101200] {CVE-2025-38086}
