@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.64.1.el8_10
+%define pkgrelease 553.66.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.64.1%{?dist}
+%define specrelease 553.66.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,27 @@ fi
 #
 #
 %changelog
+* Mon Jul 28 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.66.1.el8_10]
+- net_sched: hfsc: Address reentrant enqueue adding class to eltree twice (Xin Long) [RHEL-105415] {CVE-2025-38001}
+- sch_hfsc: Fix qlen accounting bug when using peek in hfsc_enqueue() (Xin Long) [RHEL-105415] {CVE-2025-38000}
+- net_sched: hfsc: Fix a UAF vulnerability in class with netem as child qdisc (CKI Backport Bot) [RHEL-105415] {CVE-2025-37890}
+- sch_hfsc: make hfsc_qlen_notify() idempotent (Xin Long) [RHEL-105415]
+- crypto: algif_hash - fix double free in hash_accept (CKI Backport Bot) [RHEL-102223] {CVE-2025-38079}
+- Revert "smb: client: fix TCP timers deadlock after rmmod" (Paulo Alcantara) [RHEL-100698] {CVE-2025-22077}
+- Revert "smb: client: Fix netns refcount imbalance causing leaks and use-after-free" (Paulo Alcantara) [RHEL-100698]
+- smb: client: Fix netns refcount imbalance causing leaks and use-after-free (Paulo Alcantara) [RHEL-100698]
+- smb: client: fix TCP timers deadlock after rmmod (Paulo Alcantara) [RHEL-100698] {CVE-2024-54680}
+- smb: client: Fix use-after-free of network namespace. (Paulo Alcantara) [RHEL-100698] {CVE-2024-53095}
+- smb: client: fix warning in generic_ip_connect() (Paulo Alcantara) [RHEL-100698]
+- net: tipc: fix refcount warning in tipc_aead_encrypt (Xin Long) [RHEL-103079]
+- net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done (CKI Backport Bot) [RHEL-103079] {CVE-2025-38052}
+- memstick: rtsx_usb_ms: Fix slab-use-after-free in rtsx_usb_ms_drv_remove (CKI Backport Bot) [RHEL-99013] {CVE-2025-22020}
+- HID: intel-ish-hid: Fix use-after-free issue in ishtp_hid_remove() (CKI Backport Bot) [RHEL-98837] {CVE-2025-21928}
+
+* Thu Jul 24 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.65.1.el8_10]
+- x86/alternatives: avoid mapping FIX_TEXT_POKE1 page when it is not required (Rafael Aquini) [RHEL-95422]
+- ext4: avoid resizing to a partial cluster size (CKI Backport Bot) [RHEL-101423] {CVE-2022-50020}
+
 * Wed Jul 23 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.64.1.el8_10]
 - sched/fair: Fix potential memory corruption in child_cfs_rq_on_list (CKI Backport Bot) [RHEL-100387] {CVE-2025-21919}
 - NFSv4/pNFS: Fix a race to wake on NFS_LAYOUT_DRAIN (Benjamin Coddington) [RHEL-86256]
