@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.77.1.el8_10
+%define pkgrelease 553.78.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.77.1%{?dist}
+%define specrelease 553.78.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,11 @@ fi
 #
 #
 %changelog
+* Thu Sep 25 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.78.1.el8_10]
+- mm/migrate: set swap entry values of THP tail pages properly. (Luiz Capitulino) [RHEL-101302]
+- smb: client: fix use-after-free in cifs_oplock_break (Paulo Alcantara) [RHEL-111190] {CVE-2025-38527}
+- NFS: Fix filehandle bounds checking in nfs_fh_to_dentry() (CKI Backport Bot) [RHEL-113603] {CVE-2025-39730}
+
 * Thu Sep 18 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.77.1.el8_10]
 - net_sched: hfsc: Fix a potential UAF in hfsc_dequeue() too (CKI Backport Bot) [RHEL-109847] {CVE-2025-37797}
 - net_sched: hfsc: Fix a UAF vulnerability in class handling (CKI Backport Bot) [RHEL-109847] {CVE-2025-37797}
