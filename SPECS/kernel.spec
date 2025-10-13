@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.78.1.el8_10
+%define pkgrelease 553.79.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.78.1%{?dist}
+%define specrelease 553.79.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,10 @@ fi
 #
 #
 %changelog
+* Thu Oct 02 2025 Alexandra Hájková <ahajkova@redhat.com> [4.18.0-553.79.1.el8_10]
+- Bluetooth: L2CAP: Fix use-after-free (CKI Backport Bot) [RHEL-116277] {CVE-2023-53305}
+- KVM: SVM: Don't BUG if userspace injects an interrupt with GIF=0 (CKI Backport Bot) [RHEL-109748] {CVE-2022-50228}
+
 * Thu Sep 25 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.78.1.el8_10]
 - mm/migrate: set swap entry values of THP tail pages properly. (Luiz Capitulino) [RHEL-101302]
 - smb: client: fix use-after-free in cifs_oplock_break (Paulo Alcantara) [RHEL-111190] {CVE-2025-38527}
