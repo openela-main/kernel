@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 611.5.1
+%define pkgrelease 611.7.1
 %define kversion 5
-%define tarfile_release 5.14.0-611.5.1.el9_7
+%define tarfile_release 5.14.0-611.7.1.el9_7
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 611.5.1%{?buildid}%{?dist}
+%define specrelease 611.7.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-611.5.1.el9_7
+%define kabiversion 5.14.0-611.7.1.el9_7
 
 #
 # End of genspec.sh variables
@@ -3686,8 +3686,74 @@ fi
 #
 #
 %changelog
-* Tue Nov 11 2025 Release Engineering <releng@openela.org> - %{specversion}
+* Wed Nov 12 2025 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Thu Oct 30 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.7.1.el9_7]
+- The rpminspect.yaml emptyrpm list needs to be expanded (Alexandra Hájková)
+- crypto: xts - Handle EBUSY correctly (Vladis Dronov) [RHEL-119236] {CVE-2023-53494}
+- ice: fix NULL access of tx->in_use in ice_ll_ts_intr (Petr Oros) [RHEL-112874]
+- ice: fix NULL access of tx->in_use in ice_ptp_ts_irq (Petr Oros) [RHEL-112874]
+- ice: fix Rx page leak on multi-buffer frames (Petr Oros) [RHEL-116540]
+- xfs: do not propagate ENODATA disk errors into xattr code (Carlos Maiolino) [RHEL-115730]
+- ipv6: sr: Fix MAC comparison to be constant-time (CKI Backport Bot) [RHEL-116383] {CVE-2025-39702}
+- s390/hypfs: Enable limited access during lockdown (CKI Backport Bot) [RHEL-114434]
+- s390/hypfs: Avoid unnecessary ioctl registration in debugfs (CKI Backport Bot) [RHEL-114434]
+- vsock/virtio: Validate length in packet header before skb_put() (Jon Maloy) [RHEL-114298] {CVE-2025-39718}
+
+* Thu Oct 23 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.6.1.el9_7]
+- pstore/ram: Check start of empty przs during init (CKI Backport Bot) [RHEL-122068] {CVE-2023-53331}
+- ixgbe: fix ixgbe_orom_civd_info struct layout (Michal Schmidt) [RHEL-119074]
+- scsi: lpfc: Fix buffer free/clear order in deferred receive path (CKI Backport Bot) [RHEL-119130] {CVE-2025-39841}
+- efivarfs: Fix slab-out-of-bounds in efivarfs_d_compare (CKI Backport Bot) [RHEL-118257] {CVE-2025-39817}
+- SUNRPC: call xs_sock_process_cmsg for all cmsg (Olga Kornievskaia) [RHEL-110810]
+- sunrpc: fix client side handling of tls alerts (Olga Kornievskaia) [RHEL-110810] {CVE-2025-38571}
+- smb: client: fix wrong index reference in smb2_compound_op() (Paulo Alcantara) [RHEL-117880]
+- smb: client: handle unlink(2) of files open by different clients (Paulo Alcantara) [RHEL-117880]
+- smb: client: fix file open check in __cifs_unlink() (Paulo Alcantara) [RHEL-117880]
+- smb: client: fix filename matching of deferred files (Paulo Alcantara) [RHEL-117880]
+- smb: client: fix data loss due to broken rename(2) (Paulo Alcantara) [RHEL-117880]
+- smb: client: fix compound alignment with encryption (Paulo Alcantara) [RHEL-117880]
+- fs/smb: Fix inconsistent refcnt update (Paulo Alcantara) [RHEL-117880] {CVE-2025-39819}
+- sunrpc: fix handling of server side tls alerts (Steve Dickson) [RHEL-111069] {CVE-2025-38566}
+- wifi: cfg80211: sme: cap SSID length in __cfg80211_connect_result() (CKI Backport Bot) [RHEL-117580] {CVE-2025-39849}
+- crypto: seqiv - Handle EBUSY correctly (CKI Backport Bot) [RHEL-117235] {CVE-2023-53373}
+- ibmvnic: Increase max subcrq indirect entries with fallback (Mamatha Inamdar) [RHEL-116187]
+- fs: fix UAF/GPF bug in nilfs_mdt_destroy (CKI Backport Bot) [RHEL-116662] {CVE-2022-50367}
+- firmware: arm_scpi: Ensure scpi_info is not assigned if the probe fails (Charles Mirabile) [RHEL-113837] {CVE-2022-50087}
+- hv_netvsc: Fix panic during namespace deletion with VF (Maxim Levitsky) [RHEL-115070]
+- RDMA/mana_ib: Fix DSCP value in modify QP (Maxim Levitsky) [RHEL-115070]
+- net: mana: Handle Reset Request from MANA NIC (Maxim Levitsky) [RHEL-115070]
+- net: mana: Set tx_packets to post gso processing packet count (Maxim Levitsky) [RHEL-115070]
+- net: mana: Handle unsupported HWC commands (Maxim Levitsky) [RHEL-115070]
+- net: mana: Add handler for hardware servicing events (Maxim Levitsky) [RHEL-115070]
+- RDMA/mana_ib: Add device statistics support (Maxim Levitsky) [RHEL-115070]
+- net: mana: Expose additional hardware counters for drop and TC via ethtool. (Maxim Levitsky) [RHEL-115070]
+- net: mana: Fix warnings for missing export.h header inclusion (Maxim Levitsky) [RHEL-115070]
+- net: mana: Record doorbell physical address in PF mode (Maxim Levitsky) [RHEL-115070]
+- s390/pci: Do not try re-enabling load/store if device is disabled (CKI Backport Bot) [RHEL-114451]
+- s390/pci: Fix stale function handles in error handling (CKI Backport Bot) [RHEL-114451]
+- redhat: enable TDX host config (Paolo Bonzini) [RHEL-27146]
+- KVM: TDX: Explicitly do WBINVD when no more TDX SEAMCALLs (Paolo Bonzini) [RHEL-27146]
+- x86/virt/tdx: Update the kexec section in the TDX documentation (Paolo Bonzini) [RHEL-27146]
+- x86/virt/tdx: Remove the !KEXEC_CORE dependency (Paolo Bonzini) [RHEL-27146]
+- x86/kexec: Disable kexec/kdump on platforms with TDX partial write erratum (Paolo Bonzini) [RHEL-27146]
+- x86/virt/tdx: Mark memory cache state incoherent when making SEAMCALL (Paolo Bonzini) [RHEL-27146]
+- x86/sme: Use percpu boolean to control WBINVD during kexec (Paolo Bonzini) [RHEL-27146]
+- x86/virt/tdx: Avoid indirect calls to TDX assembly functions (Paolo Bonzini) [RHEL-27146]
+- ibmvnic: Use ndo_get_stats64 to fix inaccurate SAR reporting (Mamatha Inamdar) [RHEL-114437]
+- ibmvnic: Fix hardcoded NUM_RX_STATS/NUM_TX_STATS with dynamic sizeof (Mamatha Inamdar) [RHEL-114437]
+- ibmvnic: Add stat for tx direct vs tx batched (Mamatha Inamdar) [RHEL-114437]
+- redhat/configs: Enable CONFIG_MITIGATION_VMSCAPE for x86 (Waiman Long) [RHEL-114272]
+- x86/vmscape: Add old Intel CPUs to affected list (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- x86/vmscape: Warn when STIBP is disabled with SMT (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- x86/bugs: Move cpu_bugs_smt_update() down (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- x86/vmscape: Enable the mitigation (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- x86/vmscape: Add conditional IBPB mitigation (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- x86/vmscape: Enumerate VMSCAPE bug (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- Documentation/hw-vuln: Add VMSCAPE documentation (Waiman Long) [RHEL-114272] {CVE-2025-40300}
+- randomize_kstack: Remove non-functional per-arch entropy filtering (Waiman Long) [RHEL-114272]
+- tunnels: reset the GSO metadata before reusing the skb (Antoine Tenart) [RHEL-113917]
 
 * Fri Oct 17 2025 Augusto Caringi <acaringi@redhat.com> [5.14.0-611.5.1.el9_7]
 - redhat: revert to using redhatsecureboot504 for RHEL UKI (Vitaly Kuznetsov) [RHEL-122230]
