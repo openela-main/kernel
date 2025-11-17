@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.83.1.el8_10
+%define pkgrelease 553.84.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.83.1%{?dist}
+%define specrelease 553.84.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,11 @@ fi
 #
 #
 %changelog
+* Thu Nov 06 2025 Alexandra Hájková <ahajkova@redhat.com> [4.18.0-553.84.1.el8_10]
+- cgroup: don't put ERR_PTR() into fc->root (CKI Backport Bot) [RHEL-123775]
+- vsock/virtio: Validate length in packet header before skb_put() (Jon Maloy) [RHEL-114296] {CVE-2025-39718}
+- NFS: remove revoked delegation from server's delegation list (Benjamin Coddington) [RHEL-123005]
+
 * Thu Oct 30 2025 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.83.1.el8_10]
 - fs: fix UAF/GPF bug in nilfs_mdt_destroy (Abhi Das) [RHEL-116658] {CVE-2022-50367}
 - redhat/configs: Enable CONFIG_MITIGATION_VMSCAPE for x86_64 (Waiman Long) [RHEL-114285]
