@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 611.7.1
+%define pkgrelease 611.8.1
 %define kversion 5
-%define tarfile_release 5.14.0-611.7.1.el9_7
+%define tarfile_release 5.14.0-611.8.1.el9_7
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 611.7.1%{?buildid}%{?dist}
+%define specrelease 611.8.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-611.7.1.el9_7
+%define kabiversion 5.14.0-611.8.1.el9_7
 
 #
 # End of genspec.sh variables
@@ -2429,7 +2429,7 @@ BuildKernel() {
         mv $KernelUnifiedImage.signed $KernelUnifiedImage
 
       for addon in "$KernelAddonsDirOut"/*; do
-        %pesign -s -i $addon -o $addon.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n %{pesign_name_0}
+        %pesign -s -i $addon -o $addon.signed -a %{secureboot_ca_0} -c $UKI_secureboot_cert -n $UKI_secureboot_name
         rm -f $addon
         mv $addon.signed $addon
       done
@@ -3686,8 +3686,39 @@ fi
 #
 #
 %changelog
-* Wed Nov 12 2025 Release Engineering <releng@openela.org> - %{specversion}
+* Mon Nov 17 2025 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Thu Nov 13 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.8.1.el9_7]
+- NFSD: Fix callback decoder status codes (Jay Shin) [RHEL-127193]
+- NFSD: Fix CB_GETATTR status fix (Jay Shin) [RHEL-127193]
+- NFSD: fix decoding in nfs4_xdr_dec_cb_getattr (Jay Shin) [RHEL-127193]
+- kernfs: Fix UAF in polling when open file is released (Pavel Reichl) [RHEL-122087] {CVE-2025-39881}
+- gitlab-ci: disable automotive pipelines (Scott Weaver)
+- NFS: Fix wakeup of __nfs_lookup_revalidate() in unblock_revalidate() (Benjamin Coddington) [RHEL-122154]
+- sched: Add wait/wake interface for variable updated under a lock. (Benjamin Coddington) [RHEL-122154]
+- sched: Add test_and_clear_wake_up_bit() and atomic_dec_and_wake_up() (Benjamin Coddington) [RHEL-122154]
+- sched: Document wait_var_event() family of functions and wake_up_var() (Benjamin Coddington) [RHEL-122154]
+- sched: Improve documentation for wake_up_bit/wait_on_bit family of functions (Benjamin Coddington) [RHEL-122154]
+- sched: change wake_up_bit() and related function to expect unsigned long * (Benjamin Coddington) [RHEL-122154]
+- bpf: Fix metadata_dst leak __bpf_redirect_neigh_v{4,6} [rhel-9.7.z] (Xin Long) [RHEL-125513]
+- redhat: use the same cert as UKI's to sign addons (Li Tian) [RHEL-125317]
+- i40e: add mask to apply valid bits for itr_idx (Michal Schmidt) [RHEL-123808]
+- i40e: add max boundary check for VF filters (Michal Schmidt) [RHEL-123808] {CVE-2025-39968}
+- i40e: fix validation of VF state in get resources (Michal Schmidt) [RHEL-123808] {CVE-2025-39969}
+- i40e: fix input validation logic for action_meta (Michal Schmidt) [RHEL-123808] {CVE-2025-39970}
+- i40e: fix idx validation in config queues msg (Michal Schmidt) [RHEL-123808] {CVE-2025-39971}
+- i40e: fix idx validation in i40e_validate_queue_map (Michal Schmidt) [RHEL-123808] {CVE-2025-39972}
+- i40e: add validation for ring_len param (Michal Schmidt) [RHEL-123808] {CVE-2025-39973}
+- io_uring/waitid: always prune wait queue entry in io_waitid_wait() (CKI Backport Bot) [RHEL-124971] {CVE-2025-40047}
+- Bluetooth: hci_event: Fix UAF in hci_conn_tx_dequeue (CKI Backport Bot) [RHEL-124129] {CVE-2025-39983}
+- Bluetooth: hci_event: Fix UAF in hci_acl_create_conn_sync (CKI Backport Bot) [RHEL-123821] {CVE-2025-39982}
+- use uniform permission checks for all mount propagation changes (Ian Kent) [RHEL-121704] {CVE-2025-38498}
+- do_change_type(): refuse to operate on unmounted/not ours mounts (Ian Kent) [RHEL-121704] {CVE-2025-38498}
+- KVM: x86/hyper-v: Skip non-canonical addresses during PV TLB flush (Jon Maloy) [RHEL-117136] {CVE-2025-38351}
+- ibmveth: Add multi buffers rx replenishment hcall support (Mamatha Inamdar) [RHEL-117438]
+- net: ibmveth: Reset the adapter when unexpected states are detected (Mamatha Inamdar) [RHEL-117438]
+- NFS: Fix a race when updating an existing write (CKI Backport Bot) [RHEL-113855] {CVE-2025-39697}
 
 * Thu Oct 30 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.7.1.el9_7]
 - The rpminspect.yaml emptyrpm list needs to be expanded (Alexandra Hájková)
