@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 611.8.1
+%define pkgrelease 611.9.1
 %define kversion 5
-%define tarfile_release 5.14.0-611.8.1.el9_7
+%define tarfile_release 5.14.0-611.9.1.el9_7
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 611.8.1%{?buildid}%{?dist}
+%define specrelease 611.9.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-611.8.1.el9_7
+%define kabiversion 5.14.0-611.9.1.el9_7
 
 #
 # End of genspec.sh variables
@@ -3686,8 +3686,15 @@ fi
 #
 #
 %changelog
-* Mon Nov 17 2025 Release Engineering <releng@openela.org> - %{specversion}
+* Mon Nov 24 2025 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Sat Nov 15 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.9.1.el9_7]
+- NFSv4: handle ERR_GRACE on delegation recalls (Olga Kornievskaia) [RHEL-124651]
+- nfsd: nfserr_jukebox in nlm_fopen should lead to a retry (Olga Kornievskaia) [RHEL-124651]
+- mm: slub: avoid wake up kswapd in set_track_prepare (Audra Mitchell) [RHEL-125521] {CVE-2025-39843}
+- slub: Reflow ___slab_alloc() (Audra Mitchell) [RHEL-125521] {CVE-2025-39843}
+- nvme-multipath: Skip nr_active increments in RETRY disposition (Ewan D. Milne) [RHEL-123686]
 
 * Thu Nov 13 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.8.1.el9_7]
 - NFSD: Fix callback decoder status codes (Jay Shin) [RHEL-127193]
