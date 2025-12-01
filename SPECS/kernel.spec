@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.85.1.el8_10
+%define pkgrelease 553.87.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.85.1%{?dist}
+%define specrelease 553.87.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,25 @@ fi
 #
 #
 %changelog
+* Tue Nov 25 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.87.1.el8_10]
+- tcp: Don't call reqsk_fastopen_remove() in tcp_conn_request(). (Antoine Tenart) [RHEL-120664]
+- tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect(). (Antoine Tenart) [RHEL-120664] {CVE-2025-39955}
+- mm/memory-failure: fix VM_BUG_ON_PAGE(PagePoisoned(page)) when unpoison memory (Audra Mitchell) [RHEL-117059] {CVE-2025-39883}
+
+* Thu Nov 20 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.86.1.el8_10]
+- smb: client: fix race with concurrent opens in rename(2) (Paulo Alcantara) [RHEL-118237] {CVE-2025-39825}
+- smb: client: fix race with concurrent opens in unlink(2) (Paulo Alcantara) [RHEL-118237]
+- e1000e: fix heap overflow in e1000_set_eeprom (Corinna Vinschen) [RHEL-123105] {CVE-2025-39898}
+- nfsd: handle get_client_locked() failure in nfsd4_setclientid_confirm() (CKI Backport Bot) [RHEL-125595] {CVE-2025-38724}
+- nbd: fix incomplete validation of ioctl arg (CKI Backport Bot) [RHEL-122965] {CVE-2023-53513}
+- arch/powerpc: commandline option to enable P11 support (Mamatha Inamdar) [RHEL-107921]
+- perf/pmu-events/powerpc: Update json mapfile with Power11 PVR (Mamatha Inamdar) [RHEL-107921]
+- perf vendor events powerpc: Add PVN for HX-C2000 CPU with Power8 Architecture (Mamatha Inamdar) [RHEL-107921]
+- tools/perf/arch/powerpc: Fix the CPU ID const char* value by adding 0x prefix (Mamatha Inamdar) [RHEL-107921]
+- powerpc/perf: Power11 Performance Monitoring support (Mamatha Inamdar) [RHEL-107921]
+- powerpc/perf: Add __init attribute to eligible functions (Mamatha Inamdar) [RHEL-107921]
+- powerpc: Add Power11 architected and raw mode (Mamatha Inamdar) [RHEL-107921]
+
 * Thu Nov 13 2025 Alexandra Hájková <ahajkova@redhat.com> [4.18.0-553.85.1.el8_10]
 - i40e: add mask to apply valid bits for itr_idx (Michal Schmidt) [RHEL-123799]
 - i40e: add max boundary check for VF filters (Michal Schmidt) [RHEL-123799] {CVE-2025-39968}
