@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.87.1.el8_10
+%define pkgrelease 553.89.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.87.1%{?dist}
+%define specrelease 553.89.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,18 @@ fi
 #
 #
 %changelog
+* Sat Nov 29 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.89.1.el8_10]
+- mm: memcg: use READ_ONCE()/WRITE_ONCE() to access stock->cached (Radostin Stoyanov) [RHEL-122774]
+- mm: kmem: fix a NULL pointer dereference in obj_stock_flush_required() (Radostin Stoyanov) [RHEL-122774] {CVE-2023-53401}
+- mm/memcg: revert ("mm/memcg: optimize user context object stock access") (Radostin Stoyanov) [RHEL-122774] {CVE-2023-53401}
+- gfs2: Add proper lockspace locking (Andreas Gruenbacher) [RHEL-88660]
+- gfs2: do_xmote cleanup (Andreas Gruenbacher) [RHEL-88660]
+
+* Thu Nov 27 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.88.1.el8_10]
+- scsi: s390: zfcp: Ensure synchronous unit_add (Mete Durlu) [RHEL-129199]
+- RDMA/rxe: Fix incomplete state save in rxe_requester (Kamal Heib) [RHEL-124700] {CVE-2023-53539}
+- RDMA/rxe: Fix mr->map double free (CKI Backport Bot) [RHEL-123715] {CVE-2022-50543}
+
 * Tue Nov 25 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.87.1.el8_10]
 - tcp: Don't call reqsk_fastopen_remove() in tcp_conn_request(). (Antoine Tenart) [RHEL-120664]
 - tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect(). (Antoine Tenart) [RHEL-120664] {CVE-2025-39955}
