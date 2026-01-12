@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.89.1.el8_10
+%define pkgrelease 553.92.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.89.1%{?dist}
+%define specrelease 553.92.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,37 @@ fi
 #
 #
 %changelog
+* Tue Jan 06 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.92.1.el8_10]
+- libceph: fix potential use-after-free in have_mon_and_osd_map() (CKI Backport Bot) [RHEL-137395] {CVE-2025-68285}
+- media: rc: fix races with imon_disconnect() (Kate Hsuan) [RHEL-124396] {CVE-2025-39993}
+- media: imon: fix a race condition in send_packet() (Kate Hsuan) [RHEL-124396]
+- media: imon: reorganize serialization (Kate Hsuan) [RHEL-124396]
+- media: imon: drop references only after device is no longer used (Kate Hsuan) [RHEL-124396]
+- media: rc: Add support for another iMON 0xffdc device (Kate Hsuan) [RHEL-124396]
+
+* Tue Dec 23 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.91.1.el8_10]
+- gfs2: Do not cancel internal demote requests (Andreas Gruenbacher) [RHEL-135355]
+- gfs2: run_queue cleanup (Andreas Gruenbacher) [RHEL-135355]
+- gfs2: simplify finish_xmote (Andreas Gruenbacher) [RHEL-135355]
+- gfs2: Get rid of unnecessary test_and_set_bit (Andreas Gruenbacher) [RHEL-135355]
+- gfs2: Retries missing in gfs2_{rename,exchange} (Andreas Gruenbacher) [RHEL-135355]
+- gfs2: glock cancelation flag fix (Andreas Gruenbacher) [RHEL-135355]
+- gfs2: Minor do_xmote cancelation fix (Andreas Gruenbacher) [RHEL-135355]
+- sctp: avoid NULL dereference when chunk data buffer is missing (CKI Backport Bot) [RHEL-133999] {CVE-2025-40240}
+- redhat: introduce RELEASE_LOCALVERSION variable (Jan Stancek)
+- cifs: fix automount with passwords that contain commas (Paulo Alcantara) [RHEL-125963]
+- perf/x86/intel/ds: Fix the conversion from TSC to perf time (Anubhav Shelat) [RHEL-127171]
+- perf/x86/intel/pebs: Fix PEBS timestamps overwritten (Anubhav Shelat) [RHEL-127171]
+- ceph: fix client race condition where r_parent becomes stale before sending message (Alex Markuze) [RHEL-120226]
+- ceph: fix client race condition validating r_parent before applying state (Alex Markuze) [RHEL-120226]
+- blk-mq: setup queue ->tag_set before initializing hctx (Ming Lei) [RHEL-30744]
+- blk-mq: add helper for checking if one CPU is mapped to specified hctx (Ming Lei) [RHEL-30744]
+- blk-mq: don't schedule block kworker on isolated CPUs (Ming Lei) [RHEL-30744]
+- sched/isolation: add cpu_is_isolated() API (Ming Lei) [RHEL-30744]
+
+* Sat Dec 13 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.90.1.el8_10]
+- NFSv4: xattr handlers should check for absent nfs filehandles (Scott Mayhew) [RHEL-129945]
+
 * Sat Nov 29 2025 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.89.1.el8_10]
 - mm: memcg: use READ_ONCE()/WRITE_ONCE() to access stock->cached (Radostin Stoyanov) [RHEL-122774]
 - mm: kmem: fix a NULL pointer dereference in obj_stock_flush_required() (Radostin Stoyanov) [RHEL-122774] {CVE-2023-53401}
