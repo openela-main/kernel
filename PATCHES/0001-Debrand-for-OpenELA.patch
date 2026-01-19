@@ -1,14 +1,15 @@
-From 3359d3d398fe2adc4c87a7ba82e49de8785098d4 Mon Sep 17 00:00:00 2001
+From c1cf00c3ef78569f4b9b9a6843987430123ded11 Mon Sep 17 00:00:00 2001
 From: Alex Burmashev <alexander.burmashev@oracle.com>
-Date: Tue, 11 Nov 2025 13:58:38 +0100
+Date: Mon, 19 Jan 2026 15:57:24 +0000
 Subject: [PATCH] Update OpenELA debranding patch
 
+Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
 ---
  SPECS/kernel.spec | 57 +++++++++++++++++++++--------------------------
  1 file changed, 26 insertions(+), 31 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 903213d..cdc1149 100644
+index c19b65d..263ab6e 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -881,19 +881,16 @@ Source82: update_scripts.sh
@@ -47,7 +48,7 @@ index 903213d..cdc1149 100644
  
  # END OF PATCH DEFINITIONS
  
-@@ -1194,11 +1192,11 @@ Summary: gcov graph and source files for coverage data collection.\
+@@ -1197,11 +1195,11 @@ Summary: gcov graph and source files for coverage data collection.\
  %{nil}
  
  %package -n kernel-abi-stablelists
@@ -62,7 +63,7 @@ index 903213d..cdc1149 100644
  external Linux kernel modules, and a yum plugin to aid enforcement.
  
  %if %{with_kabidw_base}
-@@ -1207,8 +1205,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -1210,8 +1208,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -73,7 +74,7 @@ index 903213d..cdc1149 100644
  %endif
  
  #
-@@ -1295,7 +1293,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
+@@ -1298,7 +1296,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -82,7 +83,7 @@ index 903213d..cdc1149 100644
  %{nil}
  
  #
-@@ -1454,7 +1452,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
+@@ -1457,7 +1455,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-partner\
@@ -91,7 +92,7 @@ index 903213d..cdc1149 100644
  %{nil}
  
  # Now, each variant package.
-@@ -1646,6 +1644,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
+@@ -1649,6 +1647,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
  %endif
  
  ApplyOptionalPatch linux-kernel-test.patch
@@ -99,7 +100,7 @@ index 903213d..cdc1149 100644
  
  # END OF PATCH APPLICATIONS
  
-@@ -1719,8 +1718,8 @@ done
+@@ -1722,8 +1721,8 @@ done
  # Add DUP and kpatch certificates to system trusted keys for RHEL
  %if 0%{?rhel}
  %if %{signkernel}%{signmodules}
@@ -110,7 +111,7 @@ index 903213d..cdc1149 100644
  openssl x509 -inform der -in %{SOURCE102} -out rhelimaca1.pem
  openssl x509 -inform der -in %{SOURCE105} -out nvidiagpuoot001.pem
  cat rheldup3.pem rhelkpatch1.pem rhelimaca1.pem nvidiagpuoot001.pem > ../certs/rhel.pem
-@@ -1739,7 +1738,7 @@ done
+@@ -1742,7 +1741,7 @@ done
  # Adjust FIPS module name for RHEL
  %if 0%{?rhel}
  for i in *.config; do
@@ -119,7 +120,7 @@ index 903213d..cdc1149 100644
  done
  %endif
  
-@@ -2373,7 +2372,7 @@ BuildKernel() {
+@@ -2376,7 +2375,7 @@ BuildKernel() {
  
          # RHEL/CentOS specific .SBAT entries
  %if 0%{?centos}
@@ -128,7 +129,7 @@ index 903213d..cdc1149 100644
  %else
  %if 0%{?fedora}
          SBATsuffix="fedora"
-@@ -2383,8 +2382,11 @@ BuildKernel() {
+@@ -2386,8 +2385,11 @@ BuildKernel() {
  %endif
          SBAT=$(cat <<- EOF
  	linux,1,Red Hat,linux,$KernelVer,mailto:secalert@redhat.com
@@ -140,7 +141,7 @@ index 903213d..cdc1149 100644
  	EOF
  	)
  
-@@ -2417,15 +2419,8 @@ BuildKernel() {
+@@ -2420,15 +2422,8 @@ BuildKernel() {
  
  %if %{signkernel}
  
@@ -159,5 +160,5 @@ index 903213d..cdc1149 100644
          if [ ! -s $KernelUnifiedImage.signed ]; then
            echo "pesigning failed"
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
