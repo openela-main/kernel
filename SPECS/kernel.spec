@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.107.1.el8_10
+%define pkgrelease 553.109.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.107.1%{?dist}
+%define specrelease 553.109.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,12 @@ fi
 #
 #
 %changelog
+* Tue Feb 24 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.109.1.el8_10]
+- migrate: correct lock ordering for hugetlb file folios (Luiz Capitulino) [RHEL-147261] {CVE-2026-23097}
+
+* Thu Feb 19 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.108.1.el8_10]
+- autofs: dont trigger mount if it cant succeed (Ian Kent) [RHEL-134673]
+
 * Tue Feb 17 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.107.1.el8_10]
 - autofs: use wake_up() instead of wake_up_interruptible(() (Ian Kent) [RHEL-143685]
 - autofs: fix memory leak of waitqueues in autofs_catatonic_mode (Ian Kent) [RHEL-143685] {CVE-2023-54134}
