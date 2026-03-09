@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.109.1.el8_10
+%define pkgrelease 553.111.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.109.1%{?dist}
+%define specrelease 553.111.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2682,6 +2682,16 @@ fi
 #
 #
 %changelog
+* Sat Feb 28 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.111.1.el8_10]
+- macvlan: fix possible UAF in macvlan_forward_source() (Hangbin Liu) [RHEL-144120] {CVE-2026-23001}
+
+* Thu Feb 26 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.110.1.el8_10]
+- pNFS: fix a missing wake up while waiting on NFS_LAYOUT_DRAIN (Olga Kornievskaia) [RHEL-131922]
+- fbcon: Avoid using FNTCHARCNT() and hard-coded built-in font charcount (Jocelyn Falempe) [RHEL-148636]
+- audit: Use the new {get,put}_fs_pwd_pool() APIs to get/put pwd references (Waiman Long) [RHEL-146026]
+- fs: Add a pool of extra fs->pwd references to fs_struct (Waiman Long) [RHEL-146026]
+- ipv6: BUG() in pskb_expand_head() as part of calipso_skbuff_setattr() (CKI Backport Bot) [RHEL-143535] {CVE-2025-71085}
+
 * Tue Feb 24 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.109.1.el8_10]
 - migrate: correct lock ordering for hugetlb file folios (Luiz Capitulino) [RHEL-147261] {CVE-2026-23097}
 
