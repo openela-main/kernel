@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.123.1.el8_10
+%define pkgrelease 553.124.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.123.1%{?dist}
+%define specrelease 553.124.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2684,6 +2684,9 @@ fi
 #
 #
 %changelog
+* Mon May 11 2026 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.124.1.el8_10]
+- xfrm: esp: avoid in-place decrypt on shared skb frags (Sabrina Dubroca) [RHEL-174586] {CVE-2026-43284}
+
 * Mon May 04 2026 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.123.1.el8_10]
 - crypto: algif_aead - snapshot IV for async AEAD requests (Herbert Xu) [RHEL-172187]
 - crypto: algif_aead - Fix minimum RX size check for decryption (Herbert Xu) [RHEL-172187]
