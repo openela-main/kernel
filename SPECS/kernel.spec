@@ -165,15 +165,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 611.54.1
+%define pkgrelease 611.55.1
 %define kversion 5
-%define tarfile_release 5.14.0-611.54.1.el9_7
+%define tarfile_release 5.14.0-611.55.1.el9_7
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 611.54.1%{?buildid}%{?dist}
+%define specrelease 611.55.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-611.54.1.el9_7
+%define kabiversion 5.14.0-611.55.1.el9_7
 
 #
 # End of genspec.sh variables
@@ -3689,8 +3689,11 @@ fi
 #
 #
 %changelog
-* Mon May 04 2026 Release Engineering <releng@openela.org> - %{specversion}
+* Tue May 12 2026 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Sat May 09 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.55.1.el9_7]
+- xfrm: esp: avoid in-place decrypt on shared skb frags (Sabrina Dubroca) [RHEL-174561] {CVE-2026-43284}
 
 * Sat May 02 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-611.54.1.el9_7]
 - crypto: algif_aead - snapshot IV for async AEAD requests (Vladislav Dronov) [RHEL-172201]
