@@ -38,10 +38,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.124.1.el8_10
+%define pkgrelease 553.125.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.124.1%{?dist}
+%define specrelease 553.125.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2684,6 +2684,11 @@ fi
 #
 #
 %changelog
+* Mon May 18 2026 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.125.1.el8_10]
+- net: skbuff: propagate shared-frag marker through frag-transfer helpers (Sabrina Dubroca) [RHEL-176090] {CVE-2026-46300}
+- net: skbuff: preserve shared-frag marker during coalescing (Sabrina Dubroca) [RHEL-176090] {CVE-2026-46300}
+- ptrace: slightly saner 'get_dumpable()' logic (Rafael Aquini) [RHEL-176445] {CVE-2026-46333}
+
 * Mon May 11 2026 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.124.1.el8_10]
 - xfrm: esp: avoid in-place decrypt on shared skb frags (Sabrina Dubroca) [RHEL-174586] {CVE-2026-43284}
 
