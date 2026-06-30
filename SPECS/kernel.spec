@@ -176,15 +176,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 687.19.1
+%define pkgrelease 687.20.1
 %define kversion 5
-%define tarfile_release 5.14.0-687.19.1.el9_8
+%define tarfile_release 5.14.0-687.20.1.el9_8
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 687.19.1%{?buildid}%{?dist}
+%define specrelease 687.20.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-687.19.1.el9_8
+%define kabiversion 5.14.0-687.20.1.el9_8
 
 #
 # End of genspec.sh variables
@@ -3704,8 +3704,24 @@ fi
 #
 #
 %changelog
-* Mon Jun 29 2026 Release Engineering <releng@openela.org> - %{specversion}
+* Tue Jun 30 2026 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Mon Jun 29 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-687.20.1.el9_8]
+- crypto: krb5 - filter out async aead implementations at alloc (CKI Backport Bot) [RHEL-182540]
+- crypto: krb5enc - fix async decrypt skipping hash verification (CKI Backport Bot) [RHEL-182540]
+- crypto: krb5enc - fix sleepable flag handling in encrypt dispatch (CKI Backport Bot) [RHEL-182540]
+- crypto: testmgr - allow authenc(hmac(sha{256,384}),cts(cbc(aes))) in FIPS mode (CKI Backport Bot) [RHEL-182540]
+- tcp: fix potential race in tcp_v6_syn_recv_sock() (Paolo Abeni) [RHEL-174243] {CVE-2026-43198}
+- crypto: tegra - Return ENOMEM when input buffer allocation fails for ccm (Vladislav Dronov) [RHEL-182760]
+- crypto: tegra - Fix dma_free_coherent size error (Vladislav Dronov) [RHEL-182760]
+- crypto: tegra - Don't touch bo refcount in host1x bo pin/unpin (Vladislav Dronov) [RHEL-182760]
+- crypto: tegra - Add missing CRYPTO_ALG_ASYNC (Vladislav Dronov) [RHEL-182760] {CVE-2026-31739}
+- crypto: tegra - Use int type to store negative error codes (Vladislav Dronov) [RHEL-182760]
+- crypto: tegra - Remove the use of dev_err_probe() (Vladislav Dronov) [RHEL-182760]
+- crypto: tegra - use API helpers to setup fallback request (Vladislav Dronov) [RHEL-182760]
+- scsi: qla2xxx: Add support to report MPI FW state (Ewan D. Milne) [RHEL-181886]
+- net: atm: fix crash due to unvalidated vcc pointer in sigd_send() (CKI Backport Bot) [RHEL-167051] {CVE-2026-31411}
 
 * Thu Jun 25 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-687.19.1.el9_8]
 - RDMA/mlx5: Fix error path fall-through in mlx5_ib_dev_res_srq_init() (CKI Backport Bot) [RHEL-179994] {CVE-2026-46176}
