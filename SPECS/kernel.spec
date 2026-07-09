@@ -21,6 +21,17 @@
 %global signkernel 0
 %endif
 
+# RHEL/CentOS/Fedora specific .SBAT entries
+%if 0%{?centos}
+%global sbat_suffix centos
+%else
+%if 0%{?fedora}
+%global sbat_suffix fedora
+%else
+%global sbat_suffix rhel
+%endif
+%endif
+
 # Sign modules on all arches
 %global signmodules 1
 
@@ -38,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.137.1.el8_10
+%define pkgrelease 553.141.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.137.1%{?dist}
+%define specrelease 553.141.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -458,6 +469,7 @@ Source17: mod-blacklist.sh
 Source18: mod-sign.sh
 Source19: mod-extra.list
 Source80: parallel_xz.sh
+Source85: kernel.sbat.template
 Source90: filter-x86_64.sh
 Source93: filter-aarch64.sh
 Source96: filter-ppc64le.sh
@@ -1119,6 +1131,9 @@ pathfix.py -i %{__python3} -p -n \
 
 %define make make %{?cross_opts} HOSTCFLAGS="%{?build_hostcflags}" HOSTLDFLAGS="%{?build_hostldflags}"
 
+# SBAT data
+sed -e s,@KVER,%{KVERREL}, -e s,@SBAT_SUFFIX,%{sbat_suffix}, %{SOURCE85} > kernel.sbat
+
 # only deal with configs if we are going to build for the arch
 %ifnarch %nobuildarches
 
@@ -1161,6 +1176,7 @@ cat secureboot.pem >> ../certs/rhel.pem
 %endif
 for i in *.config; do
   sed -i 's@CONFIG_SYSTEM_TRUSTED_KEYS=""@CONFIG_SYSTEM_TRUSTED_KEYS="certs/rhel.pem"@' $i
+  sed -i 's@CONFIG_EFI_SBAT_FILE=""@CONFIG_EFI_SBAT_FILE="kernel.sbat"@' $i
 done
 %endif
 %endif
@@ -2684,6 +2700,55 @@ fi
 #
 #
 %changelog
+* Mon Jul 06 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.141.1.el8_10]
+- fs/smb/client: fix out-of-bounds read in cifs_sanitize_prepath (CKI Backport Bot) [RHEL-189506] {CVE-2026-43112}
+
+* Thu Jul 02 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.140.1.el8_10]
+- Enable workaround for ARM64 ERRATUM 4118414 (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: errata: Mitigate TLBI errata on Microsoft Azure Cobalt 100 CPU (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: errata: Mitigate TLBI errata on NVIDIA Olympus CPU (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: errata: Mitigate TLBI errata on various Arm CPUs (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: Add part number for Arm Cortex-A78AE (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: Subscribe Microsoft Azure Cobalt 100 to ARM Neoverse N2 errata (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add NVIDIA Olympus definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add C1-Premium definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add C1-Ultra definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add C1-Pro definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-A720AE definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Neoverse-N3 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-A725 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-A720 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: Add Cortex-715 CPU part definition (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Neoverse-V3AE definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add MIDR_CORTEX_A76AE (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-X1C definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-X925 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-X3 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Neoverse-V3 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: cputype: Add Cortex-X4 definitions (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- arm64: Add Neoverse-V2 part (Mark Salter) [RHEL-183619] {CVE-2025-10263}
+- tcp: fix potential race in tcp_v6_syn_recv_sock() (Antoine Tenart) [RHEL-174237] {CVE-2026-43198}
+- procfs: fix missing RCU protection when reading real_parent in do_task_stat() (CKI Backport Bot) [RHEL-181898] {CVE-2026-46259}
+- drm/gem: Fix inconsistent plane dimension calculation in drm_gem_fb_init_with_funcs() (CKI Backport Bot) [RHEL-179907] {CVE-2026-46209}
+- sctp: revalidate list cursor after sctp_sendmsg_to_asoc() in SCTP_SENDALL (CKI Backport Bot) [RHEL-179857] {CVE-2026-46227}
+- netfilter: nfnetlink_cthelper: fix OOB read in nfnl_cthelper_dump_table() (CKI Backport Bot) [RHEL-179736] {CVE-2026-43450}
+- vfs: validate inode i_link before use in get_link() (Ian Kent) [RHEL-152759]
+
+* Mon Jun 29 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.139.1.el8_10]
+- NFS: improve "Server wrote zero bytes" error (Olga Kornievskaia) [RHEL-147665]
+
+* Wed Jun 24 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.138.1.el8_10]
+- redhat: Temporary stop adding 'kernel' component to SBAT (Thomas Huth) [RHEL-182788]
+- redhat: Switch to implicit enablement of CONFIG_EFI_SBAT_FILE (Thomas Huth) [RHEL-182788]
+- redhat: Add SBAT information to Linux kernel (Thomas Huth) [RHEL-182788]
+- x86/boot: Handle relative CONFIG_EFI_SBAT_FILE file paths (Thomas Huth) [RHEL-182788]
+- x86/efi: Implement support for embedding SBAT data for x86 (Thomas Huth) [RHEL-182788]
+- redhat: Add Kconfig switch for embedding SBAT section (Thomas Huth) [RHEL-182788]
+- gfs2: Fix use-after-free in iomap inline data write path (Andrew Price) [RHEL-179596] {CVE-2026-45984}
+- gfs2: Add metapath_dibh helper (Andrew Price) [RHEL-179596] {CVE-2026-45984}
+- RDMA/vmw_pvrdma: Fix double free on pvrdma_alloc_ucontext() error path (CKI Backport Bot) [RHEL-179963] {CVE-2026-46189}
+- scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count() (CKI Backport Bot) [RHEL-165556] {CVE-2026-23216}
+
 * Fri Jun 19 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.137.1.el8_10]
 - selinux: RHEL-only hotfix for execmem regression (Ondrej Mosnacek) [RHEL-179435] {CVE-2026-46054}
 - selinux: fix overlayfs mmap() and mprotect() access checks (Ondrej Mosnacek) [RHEL-179435] {CVE-2026-46054}
