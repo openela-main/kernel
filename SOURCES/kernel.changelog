@@ -1,3 +1,10 @@
+* Tue Jul 07 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.32.1.el10_2]
+- KVM: x86: Fix shadow paging use-after-free due to unexpected role (Paolo Bonzini) [RHEL-192407] {CVE-2026-53359}
+- KVM: x86: Fix shadow paging use-after-free due to unexpected GFN (CKI Backport Bot) [RHEL-186698] {CVE-2026-46113}
+- net/sched: ets: Always remove class from active list before deleting in ets_qdisc_change (CKI Backport Bot) [RHEL-183007] {CVE-2025-71066}
+- sctp: revalidate list cursor after sctp_sendmsg_to_asoc() in SCTP_SENDALL (CKI Backport Bot) [RHEL-179854] {CVE-2026-46227}
+Resolves: RHEL-179854, RHEL-183007, RHEL-186698, RHEL-192407
+
 * Mon Jul 06 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.31.1.el10_2]
 - eventpoll: refresh epi_fget() / ep_remove_file() comments (Ian Kent) [RHEL-180776]
 - eventpoll: Fix integer overflow in ep_loop_check_proc() (Ian Kent) [RHEL-180776]
