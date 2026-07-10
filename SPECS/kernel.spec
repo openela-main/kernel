@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.141.1.el8_10
+%define pkgrelease 553.140.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.141.1%{?dist}
+%define specrelease 553.140.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2700,9 +2700,6 @@ fi
 #
 #
 %changelog
-* Mon Jul 06 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.141.1.el8_10]
-- fs/smb/client: fix out-of-bounds read in cifs_sanitize_prepath (CKI Backport Bot) [RHEL-189506] {CVE-2026-43112}
-
 * Thu Jul 02 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.140.1.el8_10]
 - Enable workaround for ARM64 ERRATUM 4118414 (Mark Salter) [RHEL-183619] {CVE-2025-10263}
 - arm64: errata: Mitigate TLBI errata on Microsoft Azure Cobalt 100 CPU (Mark Salter) [RHEL-183619] {CVE-2025-10263}
