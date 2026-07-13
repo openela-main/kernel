@@ -1,4 +1,4 @@
-4cb2f27561166b3f1341472f3a66f87de91c8dd79c8f92270de9336fcc66e4f9 SOURCES/kernel-abi-stablelists-5.14.0-687.24.1.el9_8.tar.bz2
-b6efa9ae31841afe12941514c890a75613e33b44a69dab35dda6ea7d91f0d830 SOURCES/kernel-kabi-dw-5.14.0-687.24.1.el9_8.tar.bz2
-4bec902ca0c21421664969e3ebc122d0f8422cabbf5667fbcef35fdbc3141af3 SOURCES/kernel.changelog
-574a21db1553577becd5128f052c4d6cbabdef046a9e41e4c483caf938595b96 SOURCES/linux-5.14.0-687.24.1.el9_8.tar.xz
+7bab245adf57daaf78c37127f509226d481e7b85f3c49f7035133524479bf1ed SOURCES/kernel-abi-stablelists-5.14.0-687.25.1.el9_8.tar.bz2
+f0252d812b333882b5a68e7e38a20ed44ff1feef59983b949d06dfeeaf2924f8 SOURCES/kernel-kabi-dw-5.14.0-687.25.1.el9_8.tar.bz2
+7377c13ea31ee053a4b213b6f417a75a18e33a0cac013d62e6325b7215ef24a0 SOURCES/kernel.changelog
+a57a9082acab4a71cbf1b2fef89c77aa8c01cf9f7584f412bc9413760fdd9f0b SOURCES/linux-5.14.0-687.25.1.el9_8.tar.xz
