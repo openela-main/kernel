@@ -176,15 +176,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 687.31.1
+%define pkgrelease 687.33.1
 %define kversion 5
-%define tarfile_release 5.14.0-687.31.1.el9_8
+%define tarfile_release 5.14.0-687.33.1.el9_8
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 687.31.1%{?buildid}%{?dist}
+%define specrelease 687.33.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-687.31.1.el9_8
+%define kabiversion 5.14.0-687.33.1.el9_8
 
 #
 # End of genspec.sh variables
@@ -3704,8 +3704,15 @@ fi
 #
 #
 %changelog
-* Tue Jul 28 2026 Release Engineering <releng@openela.org> - %{specversion}
+* Fri Jul 31 2026 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Wed Jul 29 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-687.33.1.el9_8]
+- net/sched: cls_api: Handle TC_ACT_CONSUMED in tcf_qevent_handle (CKI Backport Bot) [RHEL-213299] {CVE-2026-64530}
+- ipc: limit next_id allocation to the valid ID range (Rafael Aquini) [RHEL-188214] {CVE-2026-52923}
+
+* Tue Jul 28 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-687.32.1.el9_8]
+- tipc: fix double-free in tipc_buf_append() (CKI Backport Bot) [RHEL-192184] {CVE-2026-52993}
 
 * Mon Jul 27 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-687.31.1.el9_8]
 - blk-mq: reinsert cached request to the list (CKI Backport Bot) [RHEL-213163] {CVE-2026-64017}
