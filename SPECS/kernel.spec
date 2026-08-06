@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.151.1.el8_10
+%define pkgrelease 553.153.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.151.1%{?dist}
+%define specrelease 553.153.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2700,6 +2700,15 @@ fi
 #
 #
 %changelog
+* Wed Aug 05 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.153.1.el8_10]
+- scsi: storvsc: Handle PERSISTENT_RESERVE_IN truncation for Hyper-V vFC (Vitaly Kuznetsov) [RHEL-188270]
+- scsi: storvsc: Process unsupported MODE_SENSE_10 (Vitaly Kuznetsov) [RHEL-188270]
+- x86/CPU/AMD: Prevent improper isolation of shared resources in Zen2's op cache (Dennis Chen) [RHEL-188786] {CVE-2025-54518}
+
+* Tue Aug 04 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.152.1.el8_10]
+- gfs2: page poisoning fix (CKI Backport Bot) [RHEL-214099]
+- bpf: Fix combination of jit blinding and pointers to bpf subprogs. (Viktor Malik) [RHEL-191844]
+
 * Mon Aug 03 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.151.1.el8_10]
 - net: dns_resolver: allow shorter names in dns_query() (Paulo Alcantara) [RHEL-213976]
 - net/dns_resolver: use kasprintf + kmemdup_nul to simplify dns_query (Paulo Alcantara) [RHEL-213976]
