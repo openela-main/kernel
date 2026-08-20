@@ -138,7 +138,7 @@ diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
 index cc58971..44c0358 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -458,37 +458,12 @@ Source9: x509.genkey
+@@ -472,37 +472,12 @@ Source9: x509.genkey
  %define signing_key_filename kernel-signing-s390.cer
  %endif
 
@@ -181,7 +181,7 @@ index cc58971..44c0358 100644
 
  Source17: mod-blacklist.sh
  Source18: mod-sign.sh
-@@ -518,8 +493,8 @@ Source43: generate_bls_conf.sh
+@@ -532,8 +507,8 @@ Source43: generate_bls_conf.sh
 
  Source44: mod-internal.list
 
@@ -192,7 +192,7 @@ index cc58971..44c0358 100644
 
  %if %{with_kabichk}
  Source200: check-kabi
-@@ -561,14 +536,15 @@ Source4001: rpminspect.yaml
+@@ -578,14 +553,15 @@ Source4001: rpminspect.yaml
 
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -210,7 +210,7 @@ index cc58971..44c0358 100644
  compatibility of a set of approved symbols, however it is heavily modified with
  backports and fixes pulled from newer upstream Linux %{name} releases. This means
  this is not a %{version} kernel anymore: it includes several components which come
-@@ -576,7 +552,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
+@@ -593,7 +569,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
  core. Some of the components/backports that may be pulled in are: changes like
  updates to the core kernel (eg.: scheduler, cgroups, memory management, security
  fixes and features), updates to block layer, supported filesystems, major driver
@@ -219,7 +219,7 @@ index cc58971..44c0358 100644
  enterprise customers, etc.
 
  #
-@@ -824,14 +800,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+@@ -852,14 +828,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
  %endif
 
  %package -n %{name}-abi-stablelists
@@ -237,7 +237,7 @@ index cc58971..44c0358 100644
  external Linux kernel modules, and a yum plugin to aid enforcement.
 
  %if %{with_kabidw_base}
-@@ -840,8 +816,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -868,8 +844,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -248,7 +248,7 @@ index cc58971..44c0358 100644
  %endif
 
  #
-@@ -915,7 +891,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
+@@ -943,7 +919,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -257,7 +257,7 @@ index cc58971..44c0358 100644
  %{nil}
 
  #
-@@ -1118,6 +1094,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
+@@ -1146,6 +1122,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
  cd linux-%{KVERREL}
 
  ApplyOptionalPatch linux-kernel-test.patch
@@ -265,7 +265,7 @@ index cc58971..44c0358 100644
 
  # END OF PATCH APPLICATIONS
 
-@@ -1777,7 +1754,7 @@ BuildKernel() {
+@@ -1805,7 +1782,7 @@ BuildKernel() {
      # build a BLS config for this kernel
      %{SOURCE43} "$KernelVer" "$RPM_BUILD_ROOT" "%{?variant}"
 
