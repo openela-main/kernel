@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.153.1.el8_10
+%define pkgrelease 553.157.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.153.1%{?dist}
+%define specrelease 553.157.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -90,6 +90,8 @@
 %define with_bpftool   %{?_without_bpftool:   0} %{?!_without_bpftool:   1}
 # kernel-debuginfo
 %define with_debuginfo %{?_without_debuginfo: 0} %{?!_without_debuginfo: 1}
+# kernel-kmap-internal: source-to-module mapping data (JSON)
+%define with_kmap      %{?_without_kmap:      0} %{?!_without_kmap:      1}
 # Want to build a the vsdo directories installed
 %define with_vdso_install %{?_without_vdso_install: 0} %{?!_without_vdso_install: 1}
 # kernel-zfcpdump (s390 specific kernel for zfcpdump)
@@ -323,6 +325,18 @@
 %define _enable_debug_packages 0
 %endif
 
+%ifnarch x86_64 ppc64le s390x aarch64
+%define with_kmap 0
+%endif
+
+# Define with_base to indicate if any non-debug variant is being built.
+# Used to conditionally build packages that only make sense for base variants.
+%if %{with_zfcpdump} || %{with_up} || %{with_realtime}
+%define with_base 1
+%else
+%define with_base 0
+%endif
+
 # Architectures we build tools/cpupower on
 %define cpupowerarchs x86_64 ppc64le aarch64
 
@@ -526,6 +540,9 @@ Source400: mod-kvm.list
 Source2000: cpupower.service
 Source2001: cpupower.config
 Source2002: kvm_stat.logrotate
+
+# kmap script for generating source-to-module mapping data
+Source2100: kmap.py
 
 # CI gating config
 Source4000: gating.yaml
@@ -742,6 +759,17 @@ This package provides debug information for package %{name}-tools.
 %{expand:%%global _find_debuginfo_opts %{?_find_debuginfo_opts} -p '.*%%{_bindir}/centrino-decode(\.debug)?|.*%%{_bindir}/powernow-k8-decode(\.debug)?|.*%%{_bindir}/cpupower(\.debug)?|.*%%{_libdir}/libcpupower.*|.*%%{_bindir}/turbostat(\.debug)?|.*%%{_bindir}/x86_energy_perf_policy(\.debug)?|.*%%{_bindir}/tmon(\.debug)?|.*%%{_bindir}/lsgpio(\.debug)?|.*%%{_bindir}/gpio-hammer(\.debug)?|.*%%{_bindir}/gpio-event-mon(\.debug)?|.*%%{_bindir}/iio_event_monitor(\.debug)?|.*%%{_bindir}/iio_generic_buffer(\.debug)?|.*%%{_bindir}/lsiio(\.debug)?|.*%%{_bindir}/intel-speed-select(\.debug)?|.*%%{_bindir}/page_owner_sort(\.debug)?|.*%%{_bindir}/slabinfo(\.debug)?|.*%%{_sbindir}/intel_sdsi(\.debug)?|XXX' -o %{name}-tools-debuginfo.list}
 
 # with_tools
+%endif
+
+%if %{with_kmap} && %{with_base}
+%package -n %{name}-kmap-internal
+Summary: Kernel source-to-module mapping data (JSON)
+AutoReqProv: no
+%description -n %{name}-kmap-internal
+This package provides a JSON file that maps kernel source files to the
+kernel objects they compile into, and maps kernel objects to source files
+with variant indices to track per-variant mappings. This data is intended
+for internal Red Hat tooling (e.g., kpatch) and is not ABI-stable.
 %endif
 
 %if !%{with_realtime}
@@ -1780,6 +1808,38 @@ BuildKernel() {
     fi
 %endif
 
+%if %{with_kmap} && %{with_base}
+    # Generate source-to-module mapping data using kmap.py.
+    # Must run before the next BuildKernel call issues make mrproper, which
+    # would wipe the .cmd files that kmap.py reads.  Skip debug variants
+    # (same source mapping as the base kernel).
+    if [[ "$Variant" != *debug* ]]; then
+        _kmap_bdir=$(pwd)
+        _kmap_basedir=%{_builddir}/kmap-data
+        _kmap_merged=$_kmap_basedir/kernel-map.json
+        _kmap_variant=${Variant:-stock}
+        _kmap_listprefix=../kernel${Variant:+-${Variant}}
+        mkdir -p $_kmap_basedir
+
+        # Build kmap.py arguments; merge with existing data if present
+        _kmap_args="--directory $_kmap_bdir --outputdir $_kmap_basedir --rhel 8 --variant $_kmap_variant --time"
+        _kmap_args="$_kmap_args --vmlinux-rpm %{name}-core-%{KVERREL}.rpm"
+        if [ -f "$_kmap_merged" ]; then
+            _kmap_args="$_kmap_args --input kernel-map.json"
+        fi
+
+        # Add module list files for module-to-RPM mapping
+        for _kmap_type in modules-core modules modules-extra modules-internal; do
+            if [ -f "${_kmap_listprefix}-${_kmap_type}.list" ]; then
+                _kmap_rpm=%{name}-${_kmap_type}-%{KVERREL}.rpm
+                _kmap_args="$_kmap_args --module-list ${_kmap_rpm}:${_kmap_listprefix}-${_kmap_type}.list"
+            fi
+        done
+
+        python3 %{SOURCE2100} $_kmap_args
+    fi
+%endif
+
 }
 
 ###
@@ -2245,6 +2305,14 @@ HEADERS_CHKSUM=$(export LC_ALL=C; find $RPM_BUILD_ROOT/usr/include -type f -name
 echo "#define KERNEL_HEADERS_CHECKSUM \"$HEADERS_CHKSUM\"" >> $RPM_BUILD_ROOT/usr/include/linux/version.h
 %endif
 
+%if %{with_kmap} && %{with_base}
+# Install kmap data files produced during %build.
+_kmap_basedir=%{_builddir}/kmap-data
+_kmap_destbase=$RPM_BUILD_ROOT%{_datadir}/%{name}-kmap-internal
+mkdir -p $_kmap_destbase
+install -m 644 $_kmap_basedir/kernel-map.json $_kmap_destbase/kernel-map-%{KVERREL}.json
+%endif
+
 ###
 ### clean
 ###
@@ -2594,6 +2662,12 @@ fi
 %{_libexecdir}/kselftests
 %endif
 
+%if %{with_kmap} && %{with_base}
+%files -n %{name}-kmap-internal
+%defattr(-,root,root)
+%{_datadir}/%{name}-kmap-internal/kernel-map-%{KVERREL}.json
+%endif
+
 # empty meta-package
 %ifnarch %nobuildarches noarch
 %files
@@ -2700,6 +2774,54 @@ fi
 #
 #
 %changelog
+* Wed Aug 19 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.157.1.el8_10]
+- smb/client: handle overlapping allocated ranges in fallocate (CKI Backport Bot) [RHEL-236195] {CVE-2026-68388}
+- mm, page_alloc: skip ->waternark_boost for atomic order-0 allocations (Jay Shin) [RHEL-219767]
+- mm, page_alloc: reset the zone->watermark_boost early (Jay Shin) [RHEL-219767]
+- scsi: target: iscsi: Fix CRC overread and double-free in iscsit_handle_text_cmd() (Maurizio Lombardi) [RHEL-213227] {CVE-2026-63888}
+- net: ieee802154: do not leave a dangling sk pointer in ieee802154_create() (Abhishek Rawal) [RHEL-224189] {CVE-2024-56602}
+- cgroup/psi: Set of->priv to NULL upon file release (Waiman Long) [RHEL-232546]
+- sched/psi: Create the psimon kthread outside of cgroup_mutex (Waiman Long) [RHEL-232546]
+- sched/psi: fix race between file release and pressure write (Waiman Long) [RHEL-232546] {CVE-2026-52991}
+- sched/psi: Remove unused parameter nbytes of psi_trigger_create() (Waiman Long) [RHEL-232546]
+- psi: fix "no previous prototype" warnings when CONFIG_CGROUPS=n (Waiman Long) [RHEL-232546]
+- smb: client: mask server-provided mode to 07777 in modefromsid (CKI Backport Bot) [RHEL-234516] {CVE-2026-64379}
+- mm/huge_memory: update file PMD counter before folio_put() (Luiz Capitulino) [RHEL-231209] {CVE-2026-53189}
+- net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot (CKI Backport Bot) [RHEL-230094] {CVE-2026-64048}
+- scsi: target: iscsi: Bound iscsi_encode_text_output() appends to rsp_buf (CKI Backport Bot) [RHEL-213200] {CVE-2026-63887}
+- ip6_gre: Use cached t->net in ip6erspan_changelink(). (CKI Backport Bot) [RHEL-180148] {CVE-2026-46120}
+
+* Mon Aug 17 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.156.1.el8_10]
+- drm/amdkfd: Fix out-of-bounds write in kfd_event_page_set() (CKI Backport Bot) [RHEL-221327] {CVE-2026-43206}
+- drm/amd/display: Validate payload length and link_index in dc_process_dmub_aux_transfer_async (CKI Backport Bot) [RHEL-222576] {CVE-2026-64219}
+- drm/amdgpu: fix amdgpu_hmm_range_get_pages (CKI Backport Bot) [RHEL-222620] {CVE-2026-63879}
+- drm/i915: Fix potential UAF in TTM object purge (CKI Backport Bot) [RHEL-222738] {CVE-2026-63884}
+- drm/amd/display: Use krealloc_array() in dal_vector_reserve() (CKI Backport Bot) [RHEL-222662] {CVE-2026-53329}
+- drm/amd/display: Clamp VBIOS HDMI retimer register count to array size (CKI Backport Bot) [RHEL-222680] {CVE-2026-53136}
+- mm/slub: avoid accessing metadata when pointer is invalid in object_err() (Luiz Capitulino) [RHEL-226551] {CVE-2025-39902}
+- drm/amdgpu: zero-initialize GART table on allocation (CKI Backport Bot) [RHEL-222656] {CVE-2026-53374}
+- vhost: reset the vring metadata cache on vring reconfiguration (CKI Backport Bot) [RHEL-224556]
+- can: bcm: extend bcm_tx_lock usage for data and timer updates (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: add locking when updating filter and timer values (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: fix locking for bcm_op runtime updates (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: add locking for bcm_op runtime updates (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: bcm_tx_setup(): fix KMSAN uninit-value in vfs_write (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: check the result of can_send() in bcm_can_tx() (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: Use hrtimer_forward_now() (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- can: bcm: switch timer to HRTIMER_MODE_SOFT and remove hrtimer_tasklet (Guillaume Nault) [RHEL-216711] {CVE-2026-17523}
+- sched/deadline: Update GRUB description in the documentation (Herton R. Krzesinski) [RHEL-189997]
+- sched/deadline: fix kABI breakage after the introduction of max_bw on dl_rq (Herton R. Krzesinski) [RHEL-189997]
+- sched/deadline: Fix bandwidth reclaim equation in GRUB (Herton R. Krzesinski) [RHEL-189997]
+- crypto: ccp - copy IV using skcipher ivsize (CKI Backport Bot) [RHEL-188453] {CVE-2026-53016}
+
+* Wed Aug 12 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.155.1.el8_10]
+- udf: fix partition descriptor append bookkeeping (Ravi Singh) [RHEL-179571] {CVE-2026-45991}
+- ice: fix double-free of tx_buf skb (Michal Schmidt) [RHEL-192193] {CVE-2026-53009}
+
+* Mon Aug 10 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.154.1.el8_10]
+- iio: event: Fix event FIFO reset race (CKI Backport Bot) [RHEL-223364] {CVE-2026-64496}
+- redhat: add kmap.py tool and kernel-kmap-internal package (Rado Vrbovsky)
+
 * Wed Aug 05 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.153.1.el8_10]
 - scsi: storvsc: Handle PERSISTENT_RESERVE_IN truncation for Hyper-V vFC (Vitaly Kuznetsov) [RHEL-188270]
 - scsi: storvsc: Process unsupported MODE_SENSE_10 (Vitaly Kuznetsov) [RHEL-188270]
