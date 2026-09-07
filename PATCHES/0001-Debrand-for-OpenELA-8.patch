@@ -1,9 +1,8 @@
-From 88c2c65d533609d244ef2eb9d3ef6475113e267b Mon Sep 17 00:00:00 2001
+From 680a9d358d6c93e146c72aec9753ccb1b72f9976 Mon Sep 17 00:00:00 2001
 From: Alex Burmashev <alexander.burmashev@oracle.com>
-Date: Thu, 9 Jul 2026 11:36:10 +0000
+Date: Mon, 7 Sep 2026 10:35:53 +0000
 Subject: [PATCH] Debrand for OpenELA 8
 
-Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
 ---
  SOURCES/kernel-aarch64-debug.config  |  2 +-
  SOURCES/kernel-aarch64.config        |  2 +-
@@ -18,10 +17,10 @@ Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
  10 files changed, 28 insertions(+), 51 deletions(-)
 
 diff --git a/SOURCES/kernel-aarch64-debug.config b/SOURCES/kernel-aarch64-debug.config
-index c99a370..60abc03 100644
+index 8a0b0bf..63b3a84 100644
 --- a/SOURCES/kernel-aarch64-debug.config
 +++ b/SOURCES/kernel-aarch64-debug.config
-@@ -2949,7 +2949,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2950,7 +2950,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -31,10 +30,10 @@ index c99a370..60abc03 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-aarch64.config b/SOURCES/kernel-aarch64.config
-index d0fd1c7..6b1ac5b 100644
+index 84e1ccc..980f9de 100644
 --- a/SOURCES/kernel-aarch64.config
 +++ b/SOURCES/kernel-aarch64.config
-@@ -3011,7 +3011,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -3012,7 +3012,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -44,10 +43,10 @@ index d0fd1c7..6b1ac5b 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-ppc64le-debug.config b/SOURCES/kernel-ppc64le-debug.config
-index 0391262..efef0a2 100644
+index 16329d0..341a46e 100644
 --- a/SOURCES/kernel-ppc64le-debug.config
 +++ b/SOURCES/kernel-ppc64le-debug.config
-@@ -2620,7 +2620,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2621,7 +2621,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -57,10 +56,10 @@ index 0391262..efef0a2 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SOURCES/kernel-ppc64le.config b/SOURCES/kernel-ppc64le.config
-index a4cd735..fa69887 100644
+index 27ef642..ee29b86 100644
 --- a/SOURCES/kernel-ppc64le.config
 +++ b/SOURCES/kernel-ppc64le.config
-@@ -2679,7 +2679,7 @@ CONFIG_CRYPTO_ECHAINIV=m
+@@ -2680,7 +2680,7 @@ CONFIG_CRYPTO_ECHAINIV=m
  CONFIG_CRYPTO_ESSIV=y
  CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_FIPS=y
@@ -135,7 +134,7 @@ index f0d3b0c..111c982 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index cc58971..44c0358 100644
+index 67f0a15..e02bae3 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -472,37 +472,12 @@ Source9: x509.genkey
