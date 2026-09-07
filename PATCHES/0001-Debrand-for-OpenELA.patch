@@ -1,18 +1,17 @@
-From ee61135b97a385fddd19813551c9c0f2ffd04f1f Mon Sep 17 00:00:00 2001
+From 29b790bf0af41b5a9ea2e72051b10e9153b764fa Mon Sep 17 00:00:00 2001
 From: Alex Burmashev <alexander.burmashev@oracle.com>
-Date: Wed, 27 May 2026 17:58:05 +0000
+Date: Mon, 7 Sep 2026 10:31:01 +0000
 Subject: [PATCH] Update OpenELA debranding patch
 
-Signed-off-by: Alex Burmashev <alexander.burmashev@oracle.com>
 ---
  SPECS/kernel.spec | 54 +++++++++++++++++++----------------------------
  1 file changed, 22 insertions(+), 32 deletions(-)
 
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 430cf6c..4222160 100644
+index df6182a..03711ab 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
-@@ -895,21 +895,16 @@ Source83: kernel.sbat.template
+@@ -908,21 +908,16 @@ Source83: kernel.sbat.template
  Source84: mod-internal.list
  Source85: mod-partner.list
 
@@ -42,7 +41,7 @@ index 430cf6c..4222160 100644
  %define ima_cert_name ima.cer
 
  Source150: dracut-virt.conf
-@@ -962,6 +957,7 @@ Patch1: patch-%{patchversion}-redhat.patch
+@@ -978,6 +973,7 @@ Patch1: patch-%{patchversion}-redhat.patch
 
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -50,7 +49,7 @@ index 430cf6c..4222160 100644
 
  # END OF PATCH DEFINITIONS
 
-@@ -1213,11 +1209,11 @@ Summary: gcov graph and source files for coverage data collection.\
+@@ -1250,11 +1246,11 @@ Summary: gcov graph and source files for coverage data collection.\
  %{nil}
 
  %package -n kernel-abi-stablelists
@@ -65,7 +64,7 @@ index 430cf6c..4222160 100644
  external Linux kernel modules, and a yum plugin to aid enforcement.
 
  %if %{with_kabidw_base}
-@@ -1226,8 +1222,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -1263,8 +1259,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -76,7 +75,7 @@ index 430cf6c..4222160 100644
  %endif
 
  #
-@@ -1314,7 +1310,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
+@@ -1351,7 +1347,7 @@ Requires: kernel%{?1:-%{1}}-modules-core-uname-r = %{KVERREL}%{uname_suffix %{?1
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -85,7 +84,7 @@ index 430cf6c..4222160 100644
  %{nil}
 
  #
-@@ -1473,7 +1469,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
+@@ -1510,7 +1506,7 @@ Requires: kernel%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{uname_suffix %{?1:%{1}
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-partner\
@@ -94,7 +93,7 @@ index 430cf6c..4222160 100644
  %{nil}
 
  # Now, each variant package.
-@@ -1665,6 +1661,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
+@@ -1702,6 +1698,7 @@ ApplyOptionalPatch patch-%{patchversion}-redhat.patch
  %endif
 
  ApplyOptionalPatch linux-kernel-test.patch
@@ -102,7 +101,7 @@ index 430cf6c..4222160 100644
 
  # END OF PATCH APPLICATIONS
 
-@@ -1741,8 +1738,8 @@ done
+@@ -1778,8 +1775,8 @@ done
  # Add DUP and kpatch certificates to system trusted keys for RHEL
  %if 0%{?rhel}
  %if %{signkernel}%{signmodules}
@@ -113,7 +112,7 @@ index 430cf6c..4222160 100644
  openssl x509 -inform der -in %{SOURCE102} -out rhelimaca1.pem
  openssl x509 -inform der -in %{SOURCE105} -out nvidiagpuoot001.pem
  openssl x509 -inform der -in %{SOURCE106} -out nvidiajetsonsoc.pem
-@@ -1764,7 +1761,7 @@ done
+@@ -1801,7 +1798,7 @@ done
  # Adjust FIPS module name for RHEL
  %if 0%{?rhel}
  for i in *.config; do
@@ -122,7 +121,7 @@ index 430cf6c..4222160 100644
  done
  %endif
 
-@@ -2432,15 +2429,8 @@ BuildKernel() {
+@@ -2469,15 +2466,8 @@ BuildKernel() {
 
  %if %{signkernel}
 
