@@ -1,3 +1,3 @@
-04fe051d6100eb8e9a83d490f09613d776c5e5a9fefe20671d9b2d94c61d4b2b SOURCES/kernel-abi-stablelists-6.12.0-211.52.1.el10_2.tar.xz
-a1abd0c18a1ae966a4a4a4a9052b2cd102ccba1dda3bacf159eadbcd52720bc2 SOURCES/kernel-kabi-dw-6.12.0-211.52.1.el10_2.tar.xz
-ccec1fa8d643176574e9521e846e1c8f2804da5b0a9d538ecc5e9fa5c6d29d93 SOURCES/linux-6.12.0-211.52.1.el10_2.tar.xz
+0f6618b3880e4586a05f8b87f4a909fa00da0b35266af22052e80183219f9ce6 SOURCES/kernel-abi-stablelists-6.12.0-211.53.1.el10_2.tar.xz
+e755f8e92800ebf11ccfd294de4e2674be06ccadd9b3303e54eb47214e78185a SOURCES/kernel-kabi-dw-6.12.0-211.53.1.el10_2.tar.xz
+7f5564f104513108322aa05cf440ecc932a4f6f6e29701324b71ba30879c8a91 SOURCES/linux-6.12.0-211.53.1.el10_2.tar.xz
