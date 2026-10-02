@@ -176,15 +176,15 @@ Summary: The Linux kernel
 %define specrpmversion 6.12.0
 %define specversion 6.12.0
 %define patchversion 6.12
-%define pkgrelease 211.56.1
+%define pkgrelease 211.61.1
 %define kversion 6
-%define tarfile_release 6.12.0-211.56.1.el10_2
+%define tarfile_release 6.12.0-211.61.1.el10_2
 # This is needed to do merge window version magic
 %define patchlevel 12
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 211.56.1%{?buildid}%{?dist}
+%define specrelease 211.61.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 6.12.0-211.56.1.el10_2
+%define kabiversion 6.12.0-211.61.1.el10_2
 
 # If this variable is set to 1, a bpf selftests build failure will cause a
 # fatal kernel package build error
@@ -922,32 +922,23 @@ Source13: redhatsecureboot501.cer
 %define signing_key_filename kernel-signing-s390.cer
 %endif
 
+# pesign cert name is auto-discovered during build from secureboot_key_0,
+# see pesign_name_0 shell variable
+#
 # Fedora/ELN pesign macro expects to see these cert file names, see:
 # https://github.com/rhboot/pesign/blob/main/src/pesign-rpmbuild-helper.in#L216
 %if 0%{?fedora}%{?eln}
-%define pesign_name_0 redhatsecureboot501
 %define secureboot_ca_0 %{SOURCE10}
 %define secureboot_key_0 %{SOURCE13}
+%define secureboot_key_uki_0 %{secureboot_key_0}
 %endif
 
 # RHEL/centos certs come from system-sb-certs
 %if 0%{?rhel} && !0%{?eln}
 %define secureboot_ca_0 %{_datadir}/pki/sb-certs/secureboot-ca-%{_arch}.cer
 %define secureboot_key_0 %{_datadir}/pki/sb-certs/secureboot-kernel-%{_arch}.cer
+%define secureboot_key_uki_0 %{_sysconfdir}/pki/sb-certs/secureboot-uki-virt-%{_arch}.cer
 
-%if 0%{?centos}
-%define pesign_name_0 centossecureboot201
-%else
-%ifarch x86_64 aarch64
-%define pesign_name_0 redhatsecureboot801
-%endif
-%ifarch s390x
-%define pesign_name_0 redhatsecureboot302
-%endif
-%ifarch ppc64le
-%define pesign_name_0 redhatsecureboot701
-%endif
-%endif
 # rhel && !eln
 %endif
 
@@ -2405,13 +2396,45 @@ BuildKernel() {
 
     SignImage=$KernelImage
 
+    get_pesign_name() {
+        # If it's a symlink, resolve it to get the pesign cert name
+        # e.g. secureboot-kernel-x86_64.cer -> redhatsecureboot801.cer
+        if [ -L "$1" ]; then
+            basename "$(readlink "$1")" .cer
+            return
+        fi
+        local fname
+        fname=$(basename "$1")
+        # If it's a regular file with a generic name (secureboot-*),
+        # find a pesign-named cert with matching content in the same dir
+        # e.g. secureboot-kernel-x86_64.cer has same md5 as centossecureboot801.cer
+        # e.g. centos-sb-certs-10.0-23.el10.noarch.rpm doesn't have symlinks
+        if [[ "$fname" == secureboot-* ]]; then
+            local dir mysum match
+            dir=$(dirname "$1")
+            mysum=$(md5sum "$1" | awk '{print $1}')
+            match=$(md5sum "$dir"/*.cer 2>/dev/null \
+                | grep -v 'secureboot-' \
+                | awk -v s="$mysum" '$1 == s {print $2; exit}')
+            if [ -n "$match" ]; then
+                basename "$match" .cer
+                return
+            fi
+        fi
+        # Fallback: use the filename as-is
+        basename "$1" .cer
+    }
+
+    pesign_name_0=$(get_pesign_name %{secureboot_key_0})
+    %{log_msg "kernel signing: secureboot_key_0=%{secureboot_key_0} pesign_name_0=$pesign_name_0"}
+
     %ifarch x86_64 aarch64
     %{log_msg "Sign kernel image"}
-    %pesign -s -i $SignImage -o vmlinuz.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n %{pesign_name_0}
+    %pesign -s -i $SignImage -o vmlinuz.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n $pesign_name_0
     %endif
     %ifarch s390x ppc64le
     if [ -x /usr/bin/rpm-sign ]; then
-	rpm-sign --key "%{pesign_name_0}" --lkmsign $SignImage --output vmlinuz.signed
+	rpm-sign --key "$pesign_name_0" --lkmsign $SignImage --output vmlinuz.signed
     elif [ "$DoModules" == "1" -a "%{signmodules}" == "1" ]; then
 	chmod +x scripts/sign-file
 	./scripts/sign-file -p sha256 certs/signing_key.pem certs/signing_key.x509 $SignImage vmlinuz.signed
@@ -2794,18 +2817,18 @@ BuildKernel() {
     cp System.map $RPM_BUILD_ROOT/.
 
     if [[ "$Variant" == "rt" || "$Variant" == "rt-debug" || "$Variant" == "rt-64k" || "$Variant" == "rt-64k-debug" || "$Variant" == "automotive" || "$Variant" == "automotive-debug" ]]; then
-	%{log_msg "Skipping efiuki build"}
+        %{log_msg "Skipping efiuki build"}
     else
 %if %{with_efiuki}
         %{log_msg "Setup the EFI UKI kernel"}
 
-	KernelUnifiedImageDir="$RPM_BUILD_ROOT/lib/modules/$KernelVer"
-    	KernelUnifiedImage="$KernelUnifiedImageDir/$InstallName-virt.efi"
-	KernelUnifiedInitrd="$KernelUnifiedImageDir/$InstallName-virt.img"
+        KernelUnifiedImageDir="$RPM_BUILD_ROOT/lib/modules/$KernelVer"
+        KernelUnifiedImage="$KernelUnifiedImageDir/$InstallName-virt.efi"
+        KernelUnifiedInitrd="$KernelUnifiedImageDir/$InstallName-virt.img"
 
-    	mkdir -p $KernelUnifiedImageDir
+        mkdir -p $KernelUnifiedImageDir
 
-    	dracut --conf=%{SOURCE86} \
+        dracut --conf=%{SOURCE86} \
            --confdir=$(mktemp -d) \
            --no-hostonly \
            --verbose \
@@ -2814,61 +2837,44 @@ BuildKernel() {
            --logfile=$(mktemp) \
            $KernelUnifiedInitrd
 
-       ukify build --linux $(realpath $KernelImage) --initrd $KernelUnifiedInitrd \
-          --sbat @uki.sbat --os-release @/etc/os-release --uname $KernelVer \
-          --cmdline 'console=tty0 console=ttyS0' --output $KernelUnifiedImage
+        ukify build --linux $(realpath $KernelImage) --initrd $KernelUnifiedInitrd \
+           --sbat @uki.sbat --os-release @/etc/os-release --uname $KernelVer \
+           --cmdline 'console=tty0 console=ttyS0' --output $KernelUnifiedImage
 
-       rm -f $KernelUnifiedInitrd
+        rm -f $KernelUnifiedInitrd
 
-  KernelAddonsDirOut="$KernelUnifiedImage.extra.d"
-  mkdir -p $KernelAddonsDirOut
-  python3 %{SOURCE151} %{SOURCE152} $KernelAddonsDirOut virt %{primary_target} %{_target_cpu} @uki-addons.sbat
+        KernelAddonsDirOut="$KernelUnifiedImage.extra.d"
+        mkdir -p $KernelAddonsDirOut
+        python3 %{SOURCE151} %{SOURCE152} $KernelAddonsDirOut virt %{primary_target} %{_target_cpu} @uki-addons.sbat
 
 %if %{signkernel}
-	%{log_msg "Sign the EFI UKI kernel"}
-%if 0%{?fedora}%{?eln}
-        %pesign -s -i $KernelUnifiedImage -o $KernelUnifiedImage.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n %{pesign_name_0}
-%else
-%if 0%{?centos}
-        UKI_secureboot_name=centossecureboot204
-        UKI_secureboot_cert=%{_datadir}/pki/sb-certs/secureboot-uki-virt-%{_arch}.cer
-%else
-	# RHEL only builds UKI for x86
-	UKI_secureboot_name=redhatsecureboot504
-	UKI_secureboot_cert=%{SOURCE153}
-%endif
-
-        %pesign -s -i $KernelUnifiedImage -o $KernelUnifiedImage.signed -a %{secureboot_ca_0} -c $UKI_secureboot_cert -n $UKI_secureboot_name
-        for addon in "$KernelAddonsDirOut"/*; do
-            %pesign -s -i $addon -o $addon.signed -a %{secureboot_ca_0} -c $UKI_secureboot_cert -n $UKI_secureboot_name
-            rm -f $addon
-            mv $addon.signed $addon
-        done
-# 0%{?fedora}%{?eln}
-%endif
+        %{log_msg "Sign the EFI UKI kernel"}
+        pesign_name_uki_0=$(get_pesign_name %{secureboot_key_uki_0})
+        %{log_msg "UKI signing: secureboot_key_uki_0=%{secureboot_key_uki_0} pesign_name_uki_0=$pesign_name_uki_0"}
+        %pesign -s -i $KernelUnifiedImage -o $KernelUnifiedImage.signed -a %{secureboot_ca_0} -c %{secureboot_key_uki_0} -n $pesign_name_uki_0
         if [ ! -s $KernelUnifiedImage.signed ]; then
             echo "pesigning failed"
             exit 1
         fi
         mv $KernelUnifiedImage.signed $KernelUnifiedImage
 
-      mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer
-      cp -a $UKI_secureboot_cert $RPM_BUILD_ROOT%{_datadir}/doc/kernel-keys/$KernelVer/secureboot-uki-%{_arch}.cer
-
-# signkernel
+        for addon in "$KernelAddonsDirOut"/*; do
+           %pesign -s -i $addon -o $addon.signed -a %{secureboot_ca_0} -c %{secureboot_key_0} -n $pesign_name_0
+           rm -f $addon
+           mv $addon.signed $addon
+        done
 %endif
 
-    # hmac sign the UKI for FIPS
-    KernelUnifiedImageHMAC="$KernelUnifiedImageDir/.$InstallName-virt.efi.hmac"
-    %{log_msg "hmac sign the UKI for FIPS"}
-    %{log_msg "Creating hmac file: $KernelUnifiedImageHMAC"}
-    (cd $KernelUnifiedImageDir && sha512hmac $InstallName-virt.efi) > $KernelUnifiedImageHMAC;
+        # hmac sign the UKI for FIPS
+        KernelUnifiedImageHMAC="$KernelUnifiedImageDir/.$InstallName-virt.efi.hmac"
+        %{log_msg "hmac sign the UKI for FIPS"}
+        %{log_msg "Creating hmac file: $KernelUnifiedImageHMAC"}
+        (cd $KernelUnifiedImageDir && sha512hmac $InstallName-virt.efi) > $KernelUnifiedImageHMAC;
 
 # with_efiuki
 %endif
-	:  # in case of empty block
+        :  # in case of empty block
     fi # "$Variant" == "rt" || "$Variant" == "rt-debug" || "$Variant" == "automotive" || "$Variant" == "automotive-debug"
-
 
     #
     # Generate the modules files lists
@@ -4574,6 +4580,138 @@ fi\
 #
 #
 %changelog
+* Mon Sep 28 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.61.1.el10_2]
+- perf: Reject exited events as group leaders (Anubhav Shelat) [RHEL-258812] {CVE-2026-74753}
+- perf/core: Detach event groups during remove_on_exec (Anubhav Shelat) [RHEL-250496] {CVE-2026-64556}
+- perf/core: Fix missing read event generation on task exit (Anubhav Shelat) [RHEL-250496]
+- KVM: arm64: Handle negative S1 walk levels in VNCR TLB size evaluation (Gavin Shan) [RHEL-261954] {CVE-2026-89775}
+- KVM: arm64: Reassign nested_mmus array behind mmu_lock (Gavin Shan) [RHEL-227043] {CVE-2026-46317}
+- nvme-tcp: reject a read that transferred too few bytes (CKI Backport Bot) [RHEL-263335] {CVE-2026-89480}
+- x86/mm/ident_map: Fix theoretical virtual address overflow to zero (Mark Langsdorf) [RHEL-260402]
+- fhandle: fix UAF due to unlocked ->mnt_ns read in may_decode_fh() (Abhi Das) [RHEL-231396] {CVE-2026-53341}
+- crypto: testmgr - block Crypto API xxhash64 in FIPS mode (Vladislav Dronov) [RHEL-254943]
+- crypto: tegra - fix rctx->cryptlen calculation in tegra_gcm_do_one_req() (CKI Backport Bot) [RHEL-254306] {CVE-2026-80522}
+- vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets (CKI Backport Bot) [RHEL-252817] {CVE-2026-68299}
+- KVM: s390: selftests: Add IRQ routing address offset tests (Christoph Schlameuss) [RHEL-188661]
+- KVM: s390: Limit adapter indicator access to mapped page (Christoph Schlameuss) [RHEL-188661]
+- KVM: nSVM: Raise #UD if unhandled VMMCALL isn't intercepted by L1 (CKI Backport Bot) [RHEL-227378] {CVE-2026-46076}
+- ext4: fix e4b bitmap inconsistency reports (CKI Backport Bot) [RHEL-225949] {CVE-2026-45942}
+
+* Wed Sep 23 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.60.1.el10_2]
+- pppoe: reload header pointer after dev_hard_header() (Guillaume Nault) [RHEL-242509] {CVE-2026-68121}
+- nvme-tcp: fix host memory disclosure on R2T for a read command (CKI Backport Bot) [RHEL-263403] {CVE-2026-89481}
+- af_unix: Drop all SCM attributes for SOCKMAP. (Davide Caratti) [RHEL-229262] {CVE-2026-53005}
+- af_unix: Don't use skb_recv_datagram() in unix_stream_read_skb(). (Davide Caratti) [RHEL-229262]
+- af_unix: Don't check SOCK_DEAD in unix_stream_read_skb(). (Davide Caratti) [RHEL-229262]
+- ipvs: do not propagate one-packet flag to synced conns (CKI Backport Bot) [RHEL-255860] {CVE-2026-80714}
+- drm/amdgpu/vce: fix integer overflow in image size (Mika Penttilä) [RHEL-257136] {CVE-2026-68108}
+- drm/amdkfd: fix 32-bit overflow in CWSR total size calculation (Mika Penttilä) [RHEL-237844] {CVE-2026-68257}
+- drm/xe: Hold a dma-buf reference for imported BOs (CKI Backport Bot) [RHEL-236300] {CVE-2026-68266}
+- drm/virtio: use uninterruptible resv lock for plane updates (CKI Backport Bot) [RHEL-229327] {CVE-2026-64098}
+- drm/amdgpu/userq: fix access to stale wptr mapping (Mika Penttilä) [RHEL-225409] {CVE-2026-46311}
+- drm/amdgpu: do not use amdgpu_bo_gpu_offset_no_check individually (Mika Penttilä) [RHEL-225409] {CVE-2026-46311}
+- drm/amdgpu: Fix context pstate override handling (CKI Backport Bot) [RHEL-236714] {CVE-2026-68273}
+- drm/xe/rtp: Add RING_FORCE_TO_NONPRIV_DENY to OA whitelists (CKI Backport Bot) [RHEL-237962] {CVE-2026-68267}
+- drm/xe/rtp: Refactor OAG MMIO trigger register whitelisting (CKI Backport Bot) [RHEL-237962] {CVE-2026-68267}
+- drm/xe/xe3: Apply wa_14024997852 (CKI Backport Bot) [RHEL-237962] {CVE-2026-68267}
+- drm/xe/eustall: Fix drm_dev_put called before stream disable in close (CKI Backport Bot) [RHEL-229371] {CVE-2026-53290}
+- drm/amdgpu/vcn: fix integer overflow in dec_msg buffer count check (Mika Penttilä) [RHEL-225316]
+- drm/amdgpu/vcn3: Avoid overflow on msg bound check (Mika Penttilä) [RHEL-225316] {CVE-2026-46230}
+- drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg (Mika Penttilä) [RHEL-225316] {CVE-2026-46230}
+- drm/amdgpu/vcn4: Prevent OOB reads when parsing IB (CKI Backport Bot) [RHEL-226047] {CVE-2026-46204}
+- fbcon: Set fb_display[i]->mode to NULL when the mode is released (Mika Penttilä) [RHEL-250108] {CVE-2025-40323}
+- drm/amdgpu/vcn4: Avoid overflow on msg bound check (Mika Penttilä) [RHEL-225444] {CVE-2026-46199}
+- drm/amdgpu/vcn4: Prevent OOB reads when parsing dec msg (Mika Penttilä) [RHEL-225444] {CVE-2026-46199}
+- powerpc/powernv/iommu: iommu incorrectly bypass DMA APIs (Jerry Snitselaar) [RHEL-252331]
+- powerpc/iommu: bypass DMA APIs for coherent allocations for pre-mapped memory (Jerry Snitselaar) [RHEL-252331]
+- accel/ivpu: Add buffer overflow check in MS get_info_ioctl (CKI Backport Bot) [RHEL-230647] {CVE-2026-53203}
+- libceph: fix potential use-after-free in have_mon_and_osd_map() (CKI Backport Bot) [RHEL-169081] {CVE-2025-68285}
+- libceph: reset sparse-read state in osd_fault() (CKI Backport Bot) [RHEL-169079] {CVE-2026-23136}
+- libceph: replace overzealous BUG_ON in osdmap_apply_incremental() (CKI Backport Bot) [RHEL-169072] {CVE-2026-22990}
+- libceph: prevent potential out-of-bounds reads in handle_auth_done() (CKI Backport Bot) [RHEL-169068] {CVE-2026-22984}
+- libceph: make decode_pool() more resilient against corrupted osdmaps (CKI Backport Bot) [RHEL-169064] {CVE-2025-71116}
+
+* Tue Sep 22 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.59.1.el10_2]
+- net: tun: bound receive headroom (CKI Backport Bot) [RHEL-264371] {CVE-2026-81000}
+- xfrm: ah6: validate routing header segments_left (CKI Backport Bot) [RHEL-264303] {CVE-2026-80844}
+- scsi: qla2xxx: Bound rsp_info_len to avoid OOB sense-data read (CKI Backport Bot) [RHEL-262556] {CVE-2026-89846}
+- netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp() (CKI Backport Bot) [RHEL-260585] {CVE-2026-74569}
+- redhat/configs: automotive: debug: enable KASAN_INLINE (Jared Kangas) [RHEL-259788]
+- watchdog: s32g_wdt: remove incorrect options in watchdog_info struct (Jared Kangas) [RHEL-259788]
+- usb: chipidea: fix usage_count leak when autosuspend_delay is negative (Jared Kangas) [RHEL-259788]
+- usb: chipidea: core: convert ci_role_switch to local variable (Jared Kangas) [RHEL-259788]
+- usb: chipidea: otg: not wait vbus drop if use role_switch (Jared Kangas) [RHEL-259788]
+- usb: chipidea: core: allow ci_irq_handler() handle both ID and VBUS change (Jared Kangas) [RHEL-259788]
+- rtc: pcf85063: fix incorrect maximum clock rate handling (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: fix resume error handling (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: make non-fatal errors non-blocking in suspend (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: use pm_runtime_resume_and_get() in suspend (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: disable irq during suspend to fix unhandled interrupt (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: restore pinctrl before restoring ios timing on resume (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: fix esdhc_change_pinstate() to allow default state restore (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: restore DLL override for DDR modes on resume (Jared Kangas) [RHEL-259788]
+- mmc: sdhci-esdhc-imx: remove unnecessary mmc_card_wake_sdio_irq check for tuning save/restore (Jared Kangas) [RHEL-259788]
+- i2c: imx: fix locked bus on SMBus block-read of 0 (IRQ) (Jared Kangas) [RHEL-259788]
+- i2c: imx: fix locked bus on SMBus block-read of 0 (atomic) (Jared Kangas) [RHEL-259788]
+- i2c: imx: Cancel hrtimer before clearing slave pointer (Jared Kangas) [RHEL-259788]
+- i2c: imx: Fix slave registration race and error handling (Jared Kangas) [RHEL-259788]
+- i2c: imx: mark I2C adapter when hardware is powered down (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: fix cache_only and IRQ state on restore_context() failure (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: fix pca953x_irq_bus_sync_unlock regmap lock (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: drop bitmap_complement() where feasible (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: enable latch only on edge-triggered inputs (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: handle short interrupt pulses on PCAL devices (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: Add support for level-triggered interrupts (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: fix wrong error probe return value (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: fix IRQ storm on system wake up (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: log an error when failing to get the reset GPIO (Jared Kangas) [RHEL-259788]
+- gpio: pca953x: Improve interrupt support (Jared Kangas) [RHEL-259788]
+- selinux: check connect-related permissions on TCP Fast Open (CKI Backport Bot) [RHEL-258024] {CVE-2026-72243}
+- smb: client: fix double-free in SMB2_flush() replay (CKI Backport Bot) [RHEL-253205] {CVE-2026-64383}
+- RHEL: revert "block: only zero non-PI metadata tuples in bio_integrity_prep" (Jeff Moyer) [RHEL-189638] {CVE-2026-23007}
+- block: always allocate integrity buffer when required (Jeff Moyer) [RHEL-189638]
+- block: don't overwrite bip_vcnt in bio_integrity_copy_user() (Jeff Moyer) [RHEL-232375] {CVE-2026-64053}
+- blk-cgroup: fix UAF in __blkcg_rstat_flush() (Jeff Moyer) [RHEL-230292] {CVE-2026-63802}
+- bnxt_en: Gate TPH enablement behind BNXT_SUPPORTS_QUEUE_API check (CKI Backport Bot) [RHEL-247283]
+- ALSA: timer: drain a slave's callback before its master detaches it (CKI Backport Bot) [RHEL-236084] {CVE-2026-68201}
+- sctp: don't free the ASCONF's own transport in DEL-IP processing (CKI Backport Bot) [RHEL-234288] {CVE-2026-64564}
+- mac802154: llsec: add skb_cow_data() before in-place crypto (CKI Backport Bot) [RHEL-231034] {CVE-2026-63831}
+- sctp: prevent peer transport count overflow (Xin Long) [RHEL-216247]
+- netfilter: bridge: make ebt_snat ARP rewrite writable (CKI Backport Bot) [RHEL-190036] {CVE-2026-53266}
+- module.lds,codetag: force 0 sh_addr for sections (Joe Lawrence) [RHEL-159298]
+
+* Mon Sep 21 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.58.1.el10_2]
+- crypto: af_alg - Fix incorrect boolean values in af_alg_ctx (CKI Backport Bot) [RHEL-264234] {CVE-2025-39964}
+- crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg (CKI Backport Bot) [RHEL-264234] {CVE-2025-39964}
+
+* Mon Sep 21 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.57.1.el10_2]
+- nvmet-tcp: check INIT_FAILED before nvmet_req_uninit in digest error path (CKI Backport Bot) [RHEL-260452] {CVE-2026-64534}
+- mm/hugetlb: fix list corruption in allocate_file_region_entries() (Rafael Aquini) [RHEL-254491] {CVE-2026-74518}
+- redhat/configs: automotive: enable PWM_FSL_FTM as a module (Mattijs Korpershoek) [RHEL-255517]
+- arm64: dts: s32g: add PWM support for s32g2 and s32g3 (Mattijs Korpershoek) [RHEL-255517]
+- pwm: Add the S32G support in the Freescale FTM driver (Mattijs Korpershoek) [RHEL-255517]
+- pwm: fsl-ftm: Drop driver local locking (Mattijs Korpershoek) [RHEL-255517]
+- pwm: fsl-ftm: Handle clk_get_rate() returning 0 (Mattijs Korpershoek) [RHEL-255517]
+- libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE (CKI Backport Bot) [RHEL-237164] {CVE-2026-68159}
+- libceph: Amend checking to fix `make W=1` build breakage (CKI Backport Bot) [RHEL-237164] {CVE-2026-68159}
+- Bluetooth: RFCOMM: Fix session UAF in set_termios (CKI Backport Bot) [RHEL-241107] {CVE-2026-68188}
+- libceph: Reject monmaps advertising zero monitors (CKI Backport Bot) [RHEL-240892] {CVE-2026-68155}
+- redhat: look for secureboot-uki-virt in /etc (Jan Stancek) [RHEL-169478]
+- redhat/kernel.spec: derive pesign_name_0 from secureboot_key_0 (Jan Stancek) [RHEL-169478]
+- redhat/kernel.spec.template: Simplify uki-virt signing (Jan Stancek) [RHEL-169478]
+- redhat/kernel.spec.template: Fix indentation of uki-virt generation code (Jan Stancek) [RHEL-169478]
+- redhat: sign centos kernel and UKIs with 800 certs (Jan Stancek) [RHEL-169478]
+- iommu/vt-d: Clear Present bit before tearing down scalable-mode context entry (Eder Zulian) [RHEL-228471]
+- iommu/vt-d: Fix race condition during PASID entry replacement (Eder Zulian) [RHEL-228471] {CVE-2026-45945}
+- iommu/vt-d: Clear Present bit before tearing down context entry (Eder Zulian) [RHEL-228471] {CVE-2026-45944}
+- iommu/vt-d: Clear Present bit before tearing down PASID entry (Eder Zulian) [RHEL-228471] {CVE-2026-45894}
+- Bluetooth: mgmt: hold reference for hci_conn in mgmt_pending_cmds (CKI Backport Bot) [RHEL-236849] {CVE-2026-68391}
+- net/mlx5: Fix MCIA register buffer overflow on 32 dword reads (CKI Backport Bot) [RHEL-236786] {CVE-2026-68293}
+- dm cache policy smq: check allocation under invalidate lock (CKI Backport Bot) [RHEL-231825] {CVE-2026-53062}
+- dm cache policy smq: fix missing locks in invalidating cache blocks (CKI Backport Bot) [RHEL-231825] {CVE-2026-53062}
+- crypto: ccp - Fix a crash due to incorrect cleanup usage of kfree (CKI Backport Bot) [RHEL-230408] {CVE-2026-45959}
+- keys: Pin request_key_auth payload in instantiate paths (CKI Backport Bot) [RHEL-225496] {CVE-2026-63823}
+
 * Wed Sep 16 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.56.1.el10_2]
 - redhat/configs: automotive: enable SENSORS_INA2XX (Jared Kangas) [RHEL-255518]
 - hwmon: (ina2xx) Use scoped_guard() to acquire the subsystem lock (Jared Kangas) [RHEL-255518]
