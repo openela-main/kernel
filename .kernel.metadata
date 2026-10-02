@@ -1,3 +1,3 @@
-ca4ac3c75c014ddb659ba25908daacde37f769918983b072cf79e67d8364e9cb SOURCES/kernel-abi-stablelists-4.18.0-553.tar.bz2
-ecbc16f834120e6d63c5ff8e76f451539cdec4bdb14e8a6d7e8e311aa4d5cd11 SOURCES/kernel-kabi-dw-4.18.0-553.tar.bz2
-632ebe99ad910236273dec90fdd8334df5ebeeacb776c95d1fc9a7e6d5258cbd SOURCES/linux-4.18.0-553.164.1.el8_10.tar.xz
+4101a47aae73bac5a454ea0ef35a0efd1cb4ef682821eb83dbf88f8f0a6e2d38 SOURCES/linux-4.18.0-553.170.1.el8_10.tar.xz
+927fb736df22a0dd98133c9940e9472b7f1488e7f0633473ce578eb82b441fa4 SOURCES/kernel-abi-stablelists-4.18.0-553.tar.bz2
+ef7f9b58eaef4ca65d32743e5896ce28ff77ee76b5cec1464268548ca25576d3 SOURCES/kernel-kabi-dw-4.18.0-553.tar.bz2

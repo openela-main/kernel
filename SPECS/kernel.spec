@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.164.1.el8_10
+%define pkgrelease 553.170.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.164.1%{?dist}
+%define specrelease 553.170.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2774,6 +2774,92 @@ fi
 #
 #
 %changelog
+* Wed Sep 30 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.170.1.el8_10]
+- keys: Do not drop the auth key's request_key_auth reference in revoke (Thomas Huth) [RHEL-270349]
+- Tracing: Fix a race condition in register_trace_kprobe() (Jerome Marchand) [RHEL-214136]
+- dm-integrity: don't increment hash_offset twice (CKI Backport Bot) [RHEL-257757] {CVE-2026-72099}
+- net/liquidio: drop cached VF pci_dev LUT (Izabela Bakollari) [RHEL-244368] {CVE-2026-72329}
+- liquidio: Use pcie_flr() instead of reimplementing it (Izabela Bakollari) [RHEL-244368]
+- vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets (CKI Backport Bot) [RHEL-252809] {CVE-2026-68299}
+- RDMA/siw: Reject MPA FPDU length underflow before signed receive math (CKI Backport Bot) [RHEL-232567] {CVE-2026-64102}
+
+* Mon Sep 28 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.169.1.el8_10]
+- net: mana: Fix TOCTOU double-fetch of hwc_msg_id from DMA buffer (Filippo Storniolo) [RHEL-230983] {CVE-2026-64034}
+- arm64: tlb: Flush walk cache when unsharing PMD tables (Rafael Aquini) [RHEL-259308] {CVE-2026-63875}
+- perf: Reject exited events as group leaders (Anubhav Shelat) [RHEL-258792] {CVE-2026-74753}
+- perf/core: Detach event groups during remove_on_exec (Anubhav Shelat) [RHEL-250500] {CVE-2026-64556}
+- drm/amdgpu: Fix context pstate override handling (Jocelyn Falempe) [RHEL-236710] {CVE-2026-68273}
+- drm/amdgpu: keep amdgpu_ctx_mgr in ctx structure (Jocelyn Falempe) [RHEL-236710]
+- drm/amdgpu/vcn: fix integer overflow in dec_msg buffer count check (Jocelyn Falempe) [RHEL-225309]
+- drm/amdgpu/vcn3: Avoid overflow on msg bound check (Jocelyn Falempe) [RHEL-225309]
+- drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg (Jocelyn Falempe) [RHEL-225309] {CVE-2026-46230}
+- drm/amdgpu/vcn4: Avoid overflow on msg bound check (Jocelyn Falempe) [RHEL-225430]
+- drm/amdgpu/vcn4: Prevent OOB reads when parsing dec msg (Jocelyn Falempe) [RHEL-225430] {CVE-2026-46199}
+- drm/amdgpu/vcn4: Prevent OOB reads when parsing IB (Jocelyn Falempe) [RHEL-226024] {CVE-2026-46204}
+- drm/amdgpu/vcn4: Fix IB parsing with multiple engine info packages (Jocelyn Falempe) [RHEL-226024]
+- fbcon: Set fb_display[i]->mode to NULL when the mode is released (Jocelyn Falempe) [RHEL-230330] {CVE-2025-40323}
+- libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE (CKI Backport Bot) [RHEL-237150] {CVE-2026-68159}
+- libceph: Amend checking to fix `make W=1` build breakage (CKI Backport Bot) [RHEL-237150] {CVE-2026-68159}
+- ext4: fix e4b bitmap inconsistency reports (Lukas Herbolt) [RHEL-225932] {CVE-2026-45942}
+- libceph: Reject monmaps advertising zero monitors (CKI Backport Bot) [RHEL-237904] {CVE-2026-68155}
+- libceph: refresh auth->authorizer_buf{,_len} after authorizer update (CKI Backport Bot) [RHEL-237472] {CVE-2026-68156}
+
+* Wed Sep 23 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.168.1.el8_10]
+- pppoe: reload header pointer after dev_hard_header() (Guillaume Nault) [RHEL-237293] {CVE-2026-68121}
+- nvme-tcp: reject a read that transferred too few bytes (CKI Backport Bot) [RHEL-263345] {CVE-2026-89480}
+- nvme: rename and document nvme_end_request (CKI Backport Bot) [RHEL-263345] {CVE-2026-89480}
+- ipvs: do not propagate one-packet flag to synced conns (CKI Backport Bot) [RHEL-255839] {CVE-2026-80714}
+- netfilter: nf_queue: hold bridge skb->dev while queued (CKI Backport Bot) [RHEL-231233] {CVE-2026-52912}
+- drm/amdgpu: Fix fence put before wait in amdgpu_amdkfd_submit_ib (CKI Backport Bot) [RHEL-221269] {CVE-2026-31566}
+
+* Tue Sep 22 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.167.1.el8_10]
+- net: tun: bound receive headroom (CKI Backport Bot) [RHEL-264385] {CVE-2026-81000}
+- xfrm: ah6: validate routing header segments_left (CKI Backport Bot) [RHEL-264314] {CVE-2026-80844}
+- scsi: qla2xxx: Bound rsp_info_len to avoid OOB sense-data read (CKI Backport Bot) [RHEL-262571] {CVE-2026-89846}
+- ASoC: SOF: ipc3-control: Validate size in snd_sof_update_control (CKI Backport Bot) [RHEL-243620] {CVE-2026-72261}
+- mac802154: llsec: add skb_cow_data() before in-place crypto (Abhishek Rawal) [RHEL-231030] {CVE-2026-63831}
+- sctp: don't free the ASCONF's own transport in DEL-IP processing (CKI Backport Bot) [RHEL-234282] {CVE-2026-64564}
+- drm/amdgpu: Fix use-after-free race in VM acquire (CKI Backport Bot) [RHEL-222381] {CVE-2026-43370}
+- sctp: prevent peer transport count overflow (Xin Long) [RHEL-216297]
+
+* Mon Sep 21 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.166.1.el8_10]
+- crypto: af_alg - Fix incorrect boolean values in af_alg_ctx (CKI Backport Bot) [RHEL-264205] {CVE-2025-39964}
+- crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg (CKI Backport Bot) [RHEL-264205] {CVE-2025-39964}
+
+* Mon Sep 21 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.165.1.el8_10]
+- nvmet-tcp: check INIT_FAILED before nvmet_req_uninit in digest error path (CKI Backport Bot) [RHEL-260522] {CVE-2026-64534}
+- nvmet-tcp: pass iov_len instead of sg->length to bvec_set_page() (Chris Leech) [RHEL-260522] {CVE-2026-64534}
+- nvmet-tcp: remove nvmet_tcp_finish_cmd (CKI Backport Bot) [RHEL-260522] {CVE-2026-64534}
+- nvmet-tcp: fix NULL pointer dereference during release (Chris Leech) [RHEL-260522] {CVE-2026-64534}
+- nvmet-tcp: don't map pages which can't come from HIGHMEM (CKI Backport Bot) [RHEL-260522] {CVE-2026-64534}
+- xfs: do not allocate the entire delalloc extent in xfs_bmapi_write (Lukas Herbolt) [RHEL-251578]
+- xfs: fix xfs_bmap_add_extent_delay_real for partial conversions (Lukas Herbolt) [RHEL-251578]
+- xfs: remove the xfs_iext_peek_prev_extent call in xfs_bmapi_allocate (Lukas Herbolt) [RHEL-251578]
+- xfs: pass the actual offset and len to allocate to xfs_bmapi_allocate (Lukas Herbolt) [RHEL-251578]
+- xfs: don't open code XFS_FILBLKS_MIN in xfs_bmapi_write (Lukas Herbolt) [RHEL-251578]
+- xfs: lift a xfs_valid_startblock into xfs_bmapi_allocate (Lukas Herbolt) [RHEL-251578]
+- xfs: remove the unusued tmp_logflags variable in xfs_bmapi_allocate (Lukas Herbolt) [RHEL-251578]
+- keys: Pin request_key_auth payload in instantiate paths (Bruno Meneguele) [RHEL-225491] {CVE-2026-63823}
+- iommu/vt-d: Remove unnecessary locking in intel_irq_remapping_alloc() (Jakub Brnak) [RHEL-243217]
+- iommu/vt-d: Clear Present bit before tearing down PASID entry (Eder Zulian) [RHEL-228475] {CVE-2026-45894}
+- iommu/amd: Fix clone_alias() to use the original device's devid (Eder Zulian) [RHEL-227450] {CVE-2026-53053}
+- Bluetooth: RFCOMM: Fix session UAF in set_termios (CKI Backport Bot) [RHEL-237326] {CVE-2026-68188}
+- net/mlx5: Fix MCIA register buffer overflow on 32 dword reads (CKI Backport Bot) [RHEL-236787] {CVE-2026-68293}
+- RDMA/rxe: Fix a use-after-free problem in rxe_mmap (Kamal Heib) [RHEL-233821] {CVE-2026-64582}
+- RDMA/rxe: Reject unknown opcodes before ICRC processing (Kamal Heib) [RHEL-226871] {CVE-2026-46133}
+- RDMA/rxe: Validate pad and ICRC before payload_size() in rxe_rcv (Kamal Heib) [RHEL-228181] {CVE-2026-46043}
+- dm cache policy smq: check allocation under invalidate lock (CKI Backport Bot) [RHEL-231810] {CVE-2026-53062}
+- dm cache policy smq: fix missing locks in invalidating cache blocks (CKI Backport Bot) [RHEL-231810] {CVE-2026-53062}
+- Bluetooth: HIDP: fix missing length checks in hidp_input_report() (CKI Backport Bot) [RHEL-231060] {CVE-2026-63947}
+- Bluetooth: L2CAP: Fix potential user-after-free (CKI Backport Bot) [RHEL-229428] {CVE-2023-54214}
+- Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp (CKI Backport Bot) [RHEL-228747] {CVE-2026-63975}
+- Bluetooth: SMP: force responder MITM requirements before building the pairing response (CKI Backport Bot) [RHEL-227528] {CVE-2026-43334}
+- Bluetooth: Fix race condition in hidp_session_thread (CKI Backport Bot) [RHEL-227382] {CVE-2023-54120}
+- Bluetooth: RFCOMM: validate skb length in MCC handlers (CKI Backport Bot) [RHEL-225633] {CVE-2026-53254}
+- Bluetooth: RFCOMM: hold listener socket in rfcomm_connect_ind() (CKI Backport Bot) [RHEL-225571] {CVE-2026-53256}
+- Bluetooth: serialize accept_q access (CKI Backport Bot) [RHEL-225535] {CVE-2026-52918}
+- Bluetooth: btusb: revert use of devm_kzalloc in btusb (CKI Backport Bot) [RHEL-225154] {CVE-2025-71082}
+
 * Wed Sep 16 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.164.1.el8_10]
 - net: qrtr: fix 32-bit integer overflow in qrtr_endpoint_post() (Izabela Bakollari) [RHEL-244096] {CVE-2026-72298}
 - ipv6: sit: reload inner IPv6 header after GSO offloads (Jamie Bainbridge) [RHEL-225905] {CVE-2026-53228}
