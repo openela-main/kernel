@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.172.1.el8_10
+%define pkgrelease 553.173.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.172.1%{?dist}
+%define specrelease 553.173.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2774,6 +2774,18 @@ fi
 #
 #
 %changelog
+* Mon Oct 12 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.173.1.el8_10]
+- drm/amdkfd: Add TLB flush after MES queue eviction/suspension (Jocelyn Falempe) [RHEL-262108] {CVE-2026-89811}
+- drm/amd/display: set new_stream to NULL after release (Jocelyn Falempe) [RHEL-260521] {CVE-2026-68236}
+- drm/vmwgfx: use check_add_overflow for shader size+offset bound (Jocelyn Falempe) [RHEL-258131] {CVE-2026-80887}
+- drm/amdgpu/vce: fix integer overflow in image size (Jocelyn Falempe) [RHEL-237823 RHEL-268877] {CVE-2026-68108}
+- drm/dp/mst: fix buffer overflows in sideband chunk accumulation (Jocelyn Falempe) [RHEL-240862] {CVE-2026-68278}
+- ipv6: validate extension header length before copying to cmsg (Antoine Tenart) [RHEL-225371] {CVE-2026-63920}
+- wifi: mac80211: defer link RX stats percpu free to RCU (CKI Backport Bot) [RHEL-263760] {CVE-2026-68409}
+- cifs: validate DFS referral string offsets (CKI Backport Bot) [RHEL-261990] {CVE-2026-72318}
+- openvswitch: vport: fix self-deadlock on release of tunnel ports (Timothy Redaelli) [RHEL-253844] {CVE-2026-31678}
+- openvswitch: defer tunnel netdev_put to RCU release (Timothy Redaelli) [RHEL-253844] {CVE-2026-31678}
+
 * Wed Oct 07 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.172.1.el8_10]
 - svcrdma: Reject inline replies that overflow the pull-up buffer (Roberto Bergantinos Corpas) [RHEL-187743] {CVE-2026-89530}
 - packet: use consistent hard_header_len in TX_RING send path (Jamie Bainbridge) [RHEL-244539]
