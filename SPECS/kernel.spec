@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.178.1.el8_10
+%define pkgrelease 553.179.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.178.1%{?dist}
+%define specrelease 553.179.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2774,6 +2774,9 @@ fi
 #
 #
 %changelog
+* Mon Oct 26 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.179.1.el8_10]
+- KVM: s390: pci: Reject adapter interrupt forwarding if already enabled (CKI Backport Bot) [RHEL-277607] {CVE-2026-74515}
+
 * Fri Oct 23 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.178.1.el8_10]
 - selinux: avoid sk_socket dereference in selinux_sctp_bind_connect() (Ondrej Mosnacek) [RHEL-243220] {CVE-2026-72242}
 - ipv4: validate checksum_start before completing checksum (Davide Caratti) [RHEL-280584] {CVE-2026-99999}
