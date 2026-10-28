@@ -176,15 +176,15 @@ Summary: The Linux kernel
 %define specrpmversion 6.12.0
 %define specversion 6.12.0
 %define patchversion 6.12
-%define pkgrelease 211.68.1
+%define pkgrelease 211.69.1
 %define kversion 6
-%define tarfile_release 6.12.0-211.68.1.el10_2
+%define tarfile_release 6.12.0-211.69.1.el10_2
 # This is needed to do merge window version magic
 %define patchlevel 12
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 211.68.1%{?buildid}%{?dist}
+%define specrelease 211.69.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 6.12.0-211.68.1.el10_2
+%define kabiversion 6.12.0-211.69.1.el10_2
 
 # If this variable is set to 1, a bpf selftests build failure will cause a
 # fatal kernel package build error
@@ -1116,6 +1116,7 @@ Source3002: Patchlist.changelog
 Source4000: README.rst
 Source4001: rpminspect.yaml
 Source4002: gating.yaml
+Source4003: plans.fmf
 
 ## Patches needed for building this package
 
@@ -4580,6 +4581,38 @@ fi\
 #
 #
 %changelog
+* Mon Oct 26 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.69.1.el10_2]
+- scsi: target: core: Fix iSCSI ISID use-after-free in REGISTER AND MOVE (CKI Backport Bot) [RHEL-283521] {CVE-2026-72083}
+- md/raid5-ppl: fix use-after-free in ppl_do_flush() (Nigel Croxon) [RHEL-278085] {CVE-2026-93262}
+- KVM: s390: pci: Reject adapter interrupt forwarding if already enabled (CKI Backport Bot) [RHEL-277647] {CVE-2026-74515}
+- vfio/pci: clear vdev->msi_perm after freeing it on init failure (Rodolfo Vick) [RHEL-270937] {CVE-2026-89777}
+- smb: client: clear setuid/setgid bit on write with cifsacl/modefromsid/posix extensions (Jorge San Emeterio Villalain) [RHEL-271266] {CVE-2026-89638}
+- net/handshake: Drain pending requests at net namespace exit (Xin Long) [RHEL-232133] {CVE-2026-63978}
+- net/handshake: Use spin_lock_bh for hn_lock (Xin Long) [RHEL-232133]
+- net/handshake: hand off the pinned file reference to accept_doit (Xin Long) [RHEL-230367] {CVE-2026-63979}
+- net/handshake: Take a long-lived file reference at submit (Xin Long) [RHEL-234161] {CVE-2026-64523}
+- x86/microcode: Add platform mask to Intel microcode "old" list (Luis Claudio R. Goncalves) [RHEL-212778]
+- x86/cpu: Add platform ID to CPU matching structure (Luis Claudio R. Goncalves) [RHEL-212778]
+- x86/cpu: Add platform ID to CPU info structure (Luis Claudio R. Goncalves) [RHEL-212778]
+- x86/microcode: Refactor platform ID enumeration into a helper (Luis Claudio R. Goncalves) [RHEL-212778]
+- fuse: re-lock request before replacing page cache folio (Miklos Szeredi) [RHEL-226096] {CVE-2026-53388}
+- sched_ext: Fix possible deadlock in the deferred_irq_workfn() (CKI Backport Bot) [RHEL-259937]
+- sched_ext: Fix unsafe locking in the scx_dump_state() (CKI Backport Bot) [RHEL-259937]
+- net: shaper: rework the VALID marking (again) (Jamie Bainbridge) [RHEL-231705] {CVE-2026-64027}
+- net: shaper: annotate the data races (Jamie Bainbridge) [RHEL-231705]
+- net: shaper: fix trivial ordering issue in net_shaper_commit() (Jamie Bainbridge) [RHEL-231705]
+- net: shaper: flip the polarity of the valid flag (Jamie Bainbridge) [RHEL-231705]
+- net: shaper: protect late read accesses to the hierarchy (Jamie Bainbridge) [RHEL-231705]
+- net/packet: avoid fanout hook re-registration after unregister (Jamie Bainbridge) [RHEL-246967] {CVE-2026-68338}
+- af_unix: Fix UAF read of tail->len in unix_stream_data_wait() (Jamie Bainbridge) [RHEL-225883] {CVE-2026-64109}
+- af_unix: Cache state->msg in unix_stream_read_generic(). (Jamie Bainbridge) [RHEL-225883]
+- net: gro: fix double aggregation of flush-marked skbs (Jamie Bainbridge) [RHEL-242620] {CVE-2026-68136}
+- tcp: restrict SO_ATTACH_FILTER to priv users (Jamie Bainbridge) [RHEL-257741] {CVE-2026-53236}
+- usb: usbfs: fix use-after-free of usb_device in usbdev_release() (CKI Backport Bot) [RHEL-258583] {CVE-2026-80824}
+- net: smc: fix splice entry lifetime imbalance in smc_rx_splice (CKI Backport Bot) [RHEL-253457] {CVE-2026-74631}
+- ipv4: fib: fix route re-dump in inet_dump_fib() on multi-batch dump (Felix Maurer) [RHEL-245489]
+- ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump (Felix Maurer) [RHEL-245489]
+
 * Wed Oct 21 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.68.1.el10_2]
 - bonding: only set speed/duplex to unknown, if getting speed failed (Abhishek Rawal) [RHEL-179066]
 - drm/amdgpu: Bound GPIO I2C table entry count from VBIOS (Anusha Srivatsa) [RHEL-278280] {CVE-2026-97493}
