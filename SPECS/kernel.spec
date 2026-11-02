@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.180.1.el8_10
+%define pkgrelease 553.182.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.180.1%{?dist}
+%define specrelease 553.182.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2774,6 +2774,18 @@ fi
 #
 #
 %changelog
+* Sat Oct 31 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.182.1.el8_10]
+- ipv4: free inet_opt and ireq_opt after an RCU grace period (Davide Caratti) [RHEL-295615] {CVE-2026-98432}
+
+* Fri Oct 30 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.181.1.el8_10]
+- net: skbuff: propagate shared-frag marker in skb_zerocopy() (Xin Long) [RHEL-291583]
+- smb: client: bound dirent name against end of SMB response in cifs_filldir (Jorge San Emeterio Villalain) [RHEL-278321] {CVE-2026-93787}
+- scsi: target: core: Fix iSCSI ISID use-after-free in REGISTER AND MOVE (CKI Backport Bot) [RHEL-283491] {CVE-2026-72083}
+- tipc: require net admin for TIPCv2 netlink mutators (CKI Backport Bot) [RHEL-273171] {CVE-2026-74283}
+- ipv6: exthdrs: refresh nh pointer after ipv6_hop_jumbo() (Antoine Tenart) [RHEL-259350] {CVE-2026-63924}
+- ipv6: exthdrs: refresh nh after handling HAO option (Antoine Tenart) [RHEL-259375] {CVE-2026-63922}
+- af_unix: Fix peek then tail dereference UAF in unix_stream_data_wait() (Jamie Bainbridge) [RHEL-225873] {CVE-2026-64109}
+
 * Wed Oct 28 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.180.1.el8_10]
 - KVM: arm64: vgic: Check the interrupt is still ours before migrating it (Mohammadfaiz Bawa) [RHEL-252475] {CVE-2026-72289}
 - KVM: arm64: vgic: Handle race between interrupt affinity change and LPI disabling (Mohammadfaiz Bawa) [RHEL-243811] {CVE-2026-72288}
