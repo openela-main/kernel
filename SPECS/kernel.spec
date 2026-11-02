@@ -176,15 +176,15 @@ Summary: The Linux kernel
 %define specrpmversion 6.12.0
 %define specversion 6.12.0
 %define patchversion 6.12
-%define pkgrelease 211.72.1
+%define pkgrelease 211.73.1
 %define kversion 6
-%define tarfile_release 6.12.0-211.72.1.el10_2
+%define tarfile_release 6.12.0-211.73.1.el10_2
 # This is needed to do merge window version magic
 %define patchlevel 12
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 211.72.1%{?buildid}%{?dist}
+%define specrelease 211.73.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 6.12.0-211.72.1.el10_2
+%define kabiversion 6.12.0-211.73.1.el10_2
 
 # If this variable is set to 1, a bpf selftests build failure will cause a
 # fatal kernel package build error
@@ -4581,6 +4581,9 @@ fi\
 #
 #
 %changelog
+* Mon Nov 02 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.73.1.el10_2]
+- ethtool: cmis: require exact CDB reply length (CKI Backport Bot) [RHEL-229674] {CVE-2026-63996}
+
 * Sun Nov 01 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.72.1.el10_2]
 - ipv4: free inet_opt and ireq_opt after an RCU grace period (CKI Backport Bot) [RHEL-295608] {CVE-2026-98432}
 - x86/CPU/AMD: Prevent improper isolation of shared resources in Zen2's op cache (Dennis Chen) [RHEL-230757] {CVE-2026-46174}
