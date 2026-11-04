@@ -1,6 +1,6 @@
-From 680a9d358d6c93e146c72aec9753ccb1b72f9976 Mon Sep 17 00:00:00 2001
+From ec284d9c4e0305a480499340a4113e5b138288f3 Mon Sep 17 00:00:00 2001
 From: Alex Burmashev <alexander.burmashev@oracle.com>
-Date: Mon, 7 Sep 2026 10:35:53 +0000
+Date: Wed, 4 Nov 2026 20:44:18 +0000
 Subject: [PATCH] Debrand for OpenELA 8
 
 ---
@@ -134,7 +134,7 @@ index f0d3b0c..111c982 100644
  CONFIG_CRYPTO_GF128MUL=y
  CONFIG_CRYPTO_GHASH=y
 diff --git a/SPECS/kernel.spec b/SPECS/kernel.spec
-index 67f0a15..e02bae3 100644
+index dd9d482..79fec6f 100644
 --- a/SPECS/kernel.spec
 +++ b/SPECS/kernel.spec
 @@ -472,37 +472,12 @@ Source9: x509.genkey
@@ -191,7 +191,7 @@ index 67f0a15..e02bae3 100644
 
  %if %{with_kabichk}
  Source200: check-kabi
-@@ -578,14 +553,15 @@ Source4001: rpminspect.yaml
+@@ -580,14 +555,15 @@ Source4002: plans.fmf
 
  # empty final patch to facilitate testing of kernel patches
  Patch999999: linux-kernel-test.patch
@@ -209,7 +209,7 @@ index 67f0a15..e02bae3 100644
  compatibility of a set of approved symbols, however it is heavily modified with
  backports and fixes pulled from newer upstream Linux %{name} releases. This means
  this is not a %{version} kernel anymore: it includes several components which come
-@@ -593,7 +569,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
+@@ -595,7 +571,7 @@ from newer upstream linux versions, while maintaining a well tested and stable
  core. Some of the components/backports that may be pulled in are: changes like
  updates to the core kernel (eg.: scheduler, cgroups, memory management, security
  fixes and features), updates to block layer, supported filesystems, major driver
@@ -218,7 +218,7 @@ index 67f0a15..e02bae3 100644
  enterprise customers, etc.
 
  #
-@@ -852,14 +828,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
+@@ -854,14 +830,14 @@ kernel-gcov includes the gcov graph and source files for gcov coverage collectio
  %endif
 
  %package -n %{name}-abi-stablelists
@@ -236,7 +236,7 @@ index 67f0a15..e02bae3 100644
  external Linux kernel modules, and a yum plugin to aid enforcement.
 
  %if %{with_kabidw_base}
-@@ -868,8 +844,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
+@@ -870,8 +846,8 @@ Summary: The baseline dataset for kABI verification using DWARF data
  Group: System Environment/Kernel
  AutoReqProv: no
  %description kernel-kabidw-base-internal
@@ -247,7 +247,7 @@ index 67f0a15..e02bae3 100644
  %endif
 
  #
-@@ -943,7 +919,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
+@@ -945,7 +921,7 @@ Requires: %{name}%{?1:-%{1}}-modules-uname-r = %{KVERREL}%{?variant}%{?1:+%{1}}\
  AutoReq: no\
  AutoProv: yes\
  %description %{?1:%{1}-}modules-internal\
@@ -256,7 +256,7 @@ index 67f0a15..e02bae3 100644
  %{nil}
 
  #
-@@ -1146,6 +1122,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
+@@ -1148,6 +1124,7 @@ mv linux-%{specversion}-%{pkgrelease} linux-%{KVERREL}
  cd linux-%{KVERREL}
 
  ApplyOptionalPatch linux-kernel-test.patch
@@ -264,7 +264,7 @@ index 67f0a15..e02bae3 100644
 
  # END OF PATCH APPLICATIONS
 
-@@ -1805,7 +1782,7 @@ BuildKernel() {
+@@ -1807,7 +1784,7 @@ BuildKernel() {
      # build a BLS config for this kernel
      %{SOURCE43} "$KernelVer" "$RPM_BUILD_ROOT" "%{?variant}"
 
