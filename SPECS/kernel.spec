@@ -176,15 +176,15 @@ Summary: The Linux kernel
 %define specrpmversion 6.12.0
 %define specversion 6.12.0
 %define patchversion 6.12
-%define pkgrelease 211.73.1
+%define pkgrelease 211.74.1
 %define kversion 6
-%define tarfile_release 6.12.0-211.73.1.el10_2
+%define tarfile_release 6.12.0-211.74.1.el10_2
 # This is needed to do merge window version magic
 %define patchlevel 12
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 211.73.1%{?buildid}%{?dist}
+%define specrelease 211.74.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 6.12.0-211.73.1.el10_2
+%define kabiversion 6.12.0-211.74.1.el10_2
 
 # If this variable is set to 1, a bpf selftests build failure will cause a
 # fatal kernel package build error
@@ -4581,6 +4581,17 @@ fi\
 #
 #
 %changelog
+* Wed Nov 04 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.74.1.el10_2]
+- sunrpc: wait for in-flight TLS handshake callback when cancel loses race (Olga Kornievskaia) [RHEL-283649] {CVE-2026-72221}
+- sunrpc: pin svc_xprt across the asynchronous TLS handshake callback (Olga Kornievskaia) [RHEL-283263] {CVE-2026-72222}
+- fs/resctrl: Fix use-after-free during unmount (Dennis Chen) [RHEL-296708] {CVE-2026-72080}
+- xfs: fix exchange-range-to-eof file size exchange (Carlos Maiolino) [RHEL-292986] {CVE-2026-98974}
+- xfs: stop exchanging reflink flags when exchanging mappings (Carlos Maiolino) [RHEL-292986] {CVE-2026-98974}
+- sctp: clear new_transport when removing a peer (CKI Backport Bot) [RHEL-275369] {CVE-2026-74586}
+- writeback: fix race between cgroup_writeback_umount() and inode_switch_wbs() (Ian Kent) [RHEL-260509] {CVE-2026-64378}
+- openvswitch: Fix CT limit teardown use-after-free (Timothy Redaelli) [RHEL-263515] {CVE-2026-89488}
+- PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers (Aristeu Rozanski) [RHEL-267082] {CVE-2026-90315}
+
 * Mon Nov 02 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [6.12.0-211.73.1.el10_2]
 - ethtool: cmis: require exact CDB reply length (CKI Backport Bot) [RHEL-229674] {CVE-2026-63996}
 
