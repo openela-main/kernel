@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.184.1.el8_10
+%define pkgrelease 553.185.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.184.1%{?dist}
+%define specrelease 553.185.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2776,6 +2776,23 @@ fi
 #
 #
 %changelog
+* Mon Nov 09 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.185.1.el8_10]
+- scsi: libiscsi: Validate the task named by a management response (CKI Backport Bot) [RHEL-298434] {CVE-2026-99152}
+- scsi: libiscsi: Validate the ITT reflected in a Reject PDU (CKI Backport Bot) [RHEL-298485] {CVE-2026-99153}
+- s390/boot: Avoid IPL parameter append past command line (CKI Backport Bot) [RHEL-292341] {CVE-2026-98403}
+- ppp: defer channel free to an RCU grace period to fix pppol2tp RX UAF (Abhishek Rawal) [RHEL-237021] {CVE-2026-68398}
+- ALSA: seq: midi: Replace scoped_guard(rcu) with explicit rcu_read_lock (Jaroslav Kysela) [RHEL-282910]
+- ALSA: seq: midi: Serialize input teardown with event_input (Jaroslav Kysela) [RHEL-282910]
+- ALSA: seq: midi: Optimize event_input locking with RCU (Jaroslav Kysela) [RHEL-282910] {CVE-2026-90207}
+- ALSA: seq: midi: Serialize output teardown with event_input (Jaroslav Kysela) [RHEL-282910]
+- ALSA: pcm: Serialize PCM mmap with buffer reallocation to fix page UAF (CKI Backport Bot) [RHEL-276104] {CVE-2026-98116}
+- openvswitch: fix GSO userspace truncation underflow (CKI Backport Bot) [RHEL-263792] {CVE-2026-68123}
+- net: bridge: mcast: fix use-after-free of a master VLAN's multicast context (CKI Backport Bot) [RHEL-258677] {CVE-2026-80842}
+- Bluetooth: mgmt: fix UAF in pair command cancellation (CKI Backport Bot) [RHEL-254633] {CVE-2026-74510}
+- net/smc: Fix build errors after TCP ULP revert (Jan Polensky) [RHEL-227557] {CVE-2026-46330}
+- libsubcmd: Fix use-after-free for realloc(..., 0) (Jan Polensky) [RHEL-227557] {CVE-2026-46330}
+- Revert "net/smc: Introduce TCP ULP support" (Jan Polensky) [RHEL-227557] {CVE-2026-46330}
+
 * Wed Nov 04 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.184.1.el8_10]
 - net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket (Jan Polensky) [RHEL-298266] {CVE-2026-64541}
 - s390/smp: Remove conditional emergency signal order code usage (Jan Polensky) [RHEL-298849]
