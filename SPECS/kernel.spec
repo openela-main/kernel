@@ -49,10 +49,10 @@
 # define buildid .local
 
 %define specversion 4.18.0
-%define pkgrelease 553.189.1.el8_10
+%define pkgrelease 553.190.1.el8_10
 
 # allow pkg_release to have configurable %%{?dist} tag
-%define specrelease 553.189.1%{?dist}
+%define specrelease 553.190.1%{?dist}
 
 %define pkg_release %{specrelease}%{?buildid}
 
@@ -2776,6 +2776,15 @@ fi
 #
 #
 %changelog
+* Wed Nov 25 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.190.1.el8_10]
+- nfsd: preflight SEQUENCE replies before accepting a slot (CKI Backport Bot) [RHEL-311258] {CVE-2026-99362}
+- scsi: core: Restrict legal sdev_state transitions via sysfs (Laurence Oberman) [RHEL-307720]
+- net: skb_vlan_untag(): don't reset transport offset if set by GRO layer (Thomas Walsh) [RHEL-307055]
+- mm: list_lru: fix the return value of list_lru_count_one() (Luiz Capitulino) [RHEL-300411]
+- tracing: Reject incomplete event filter expressions (CKI Backport Bot) [RHEL-301041] {CVE-2026-99236}
+- ALSA: ua101: reject mismatched capture/playback packet sizes (CKI Backport Bot) [RHEL-290823] {CVE-2026-98741}
+- HID: wacom: Fix OOB write in wacom_hid_set_device_mode() (CKI Backport Bot) [RHEL-232281] {CVE-2026-63916}
+
 * Mon Nov 23 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [4.18.0-553.189.1.el8_10]
 - mm/swapfile: really fix integer overflow in swap_show() and swapon() (Oleksandr Natalenko) [RHEL-302561]
 - mm/gup: check for overflow when converting nr_pages to bytes in GUP-fast (CKI Backport Bot) [RHEL-312402] {CVE-2026-99661}
