@@ -176,15 +176,15 @@ Summary: The Linux kernel
 # define buildid .local
 %define specversion 5.14.0
 %define patchversion 5.14
-%define pkgrelease 741.27.1
+%define pkgrelease 741.28.1
 %define kversion 5
-%define tarfile_release 5.14.0-741.27.1.el9_9
+%define tarfile_release 5.14.0-741.28.1.el9_9
 # This is needed to do merge window version magic
 %define patchlevel 14
 # This allows pkg_release to have configurable %%{?dist} tag
-%define specrelease 741.27.1%{?buildid}%{?dist}
+%define specrelease 741.28.1%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 5.14.0-741.27.1.el9_9
+%define kabiversion 5.14.0-741.28.1.el9_9
 
 #
 # End of genspec.sh variables
@@ -3871,8 +3871,50 @@ fi
 #
 #
 %changelog
-* Tue Nov 24 2026 Release Engineering <releng@openela.org> - %{specversion}
+* Fri Nov 27 2026 Release Engineering <releng@openela.org> - %{specversion}
 - Debranding patches copied from Rocky Linux (Louis Abel and Sherif Nagy from RESF)
+
+* Wed Nov 25 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-741.28.1.el9_9]
+- gitlab-ci: use rhel9.9 builder image (Tales da Aparecida)
+- wifi: mac80211: set assoc_encrypted for EPP associations (Filip Balluch) [RHEL-284238] {CVE-2026-93806}
+- wifi: cfg80211: derive S1G beacon TSF from S1G fields (Filip Balluch) [RHEL-284238] {CVE-2026-68470}
+- wifi: iwlwifi: mld: don't flush async_handlers_wk when canceling notifications (Filip Balluch) [RHEL-284238] {CVE-2026-97474}
+- wifi: ath11k: add MSDU length validation for TKIP MIC error (Filip Balluch) [RHEL-284238] {CVE-2026-97442}
+- wifi: cfg80211: validate assoc response length before status and IE access (Filip Balluch) [RHEL-284238] {CVE-2026-93806}
+- wifi: cfg80211: validate rx/tx MLME callback frame lengths before access (Filip Balluch) [RHEL-284238] {CVE-2026-93806}
+- wifi: cfg80211: indicate (Re)Association frame encryption to userspace (Filip Balluch) [RHEL-284238] {CVE-2026-93806}
+- wifi: mac80211: validate individual TWT params before driver setup (Filip Balluch) [RHEL-284238] {CVE-2026-80722}
+- wifi: ath12k: fix out-of-bounds clear_bit in ath12k_mac_dp_peer_cleanup() (Filip Balluch) [RHEL-284238] {CVE-2026-74554}
+- wifi: mac80211: fix tid_tx use-after-free on BA session stop (Filip Balluch) [RHEL-284238] {CVE-2026-74489}
+- wifi: mwifiex: use the subframe length when parsing A-MSDU TDLS frames (Filip Balluch) [RHEL-284238] {CVE-2026-74488}
+- wifi: iwlwifi: pcie: null RX pointers after free (Filip Balluch) [RHEL-284238] {CVE-2026-93796}
+- wifi: mac80211: tear down new links on vif update error path (Filip Balluch) [RHEL-284238] {CVE-2026-64574}
+- wifi: iwlwifi: mvm: validate sta_id in BA window status notif (Filip Balluch) [RHEL-284238] {CVE-2026-93799}
+- wifi: iwlwifi: mvm: validate TX_CMD response layout (Filip Balluch) [RHEL-284238] {CVE-2026-93793}
+- wifi: iwlwifi: mvm: fix out-of-bounds tid_data access in BA notif (Filip Balluch) [RHEL-284238] {CVE-2026-93790}
+- wifi: mwifiex: bound uAP association event IEs to the event buffer (Filip Balluch) [RHEL-284238] {CVE-2026-68326}
+- wifi: brcmfmac: drain bus_reset work on device removal (Filip Balluch) [RHEL-284238] {CVE-2026-64586}
+- wifi: brcmfmac: make release_scratchbuffers idempotent (Filip Balluch) [RHEL-284238] {CVE-2026-64586}
+- wifi: cfg80211: cancel sched scan results work on unregister (Filip Balluch) [RHEL-284238] {CVE-2026-68414}
+- wifi: rt2x00: avoid full teardown before work setup in probe (Filip Balluch) [RHEL-284238] {CVE-2026-72005}
+- wifi: mac80211: fix fils_discovery double free on alloc failure (Filip Balluch) [RHEL-284238] {CVE-2026-64570}
+- wifi: mac80211: fix unsol_bcast_probe_resp double free on alloc failure (Filip Balluch) [RHEL-284238] {CVE-2026-64568}
+- wifi: cfg80211: validate EHT MLE before MLD ID read (Filip Balluch) [RHEL-284238] {CVE-2026-68472}
+- wifi: ieee80211: validate MLE common info length (Filip Balluch) [RHEL-284238] {CVE-2026-68471}
+- wifi: mac80211: validate extension-frame layout before RX (Filip Balluch) [RHEL-284238 RHEL-289969] {CVE-2026-68470}
+- wifi: iwlwifi: mld: purge async notifications upon nic error (Filip Balluch) [RHEL-284238] {CVE-2026-97474}
+- wifi: mt76: use kfree_rcu for offchannel link in mt76_put_vif_phy_link (Filip Balluch) [RHEL-284238] {CVE-2026-74325}
+- wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer (Filip Balluch) [RHEL-284238] {CVE-2026-74410}
+- wifi: ath11k: fix invalid data access in ath11k_dp_rx_h_undecap_nwifi (Filip Balluch) [RHEL-284238] {CVE-2026-97442}
+- wifi: rtw89: fix wrong pci_get_drvdata type in AER handlers (Filip Balluch) [RHEL-284238] {CVE-2026-74413}
+- wifi: rtw88: fix wrong pci_get_drvdata type in AER handlers (Filip Balluch) [RHEL-284238] {CVE-2026-74412}
+- wifi: rtw89: Correct data type for scan index to avoid infinite loop (Filip Balluch) [RHEL-284238] {CVE-2026-74411}
+- wifi: rtw89: add bounds check on firmware mac_id in link lookup (Filip Balluch) [RHEL-284238] {CVE-2026-74409}
+- wifi: ath9k: fix OOB access from firmware tx status queue ID (Filip Balluch) [RHEL-284238] {CVE-2026-74408}
+- wifi: ath11k: cancel SSR work items during PCI shutdown (Filip Balluch) [RHEL-284238] {CVE-2026-74407}
+- wifi: mt76: add wcid publish check in mt76_sta_add (Filip Balluch) [RHEL-284238] {CVE-2026-63832}
+- crypto: rng - Fix sleeping with preemption disabled (Vladislav Dronov) [RHEL-291338]
+- vdpa_sim_blk: reject out-of-range sector starts (CKI Backport Bot) [RHEL-276171] {CVE-2026-97991}
 
 * Mon Nov 23 2026 CKI KWF Bot <cki-ci-bot+kwf-gitlab-com@redhat.com> [5.14.0-741.27.1.el9_9]
 - mm/gup: check for overflow when converting nr_pages to bytes in GUP-fast (CKI Backport Bot) [RHEL-312418] {CVE-2026-99661}
